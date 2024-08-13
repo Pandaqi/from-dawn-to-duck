@@ -1,0 +1,6 @@
+[gd_resource type="Resource" script_class="MapData" load_steps=2 format=3 uid="uid://x8qqsqbmai1n"]
+
+[ext_resource type="Script" path="res://map/data/map_data.gd" id="1_tyw43"]
+
+[resource]
+script = ExtResource("1_tyw43")

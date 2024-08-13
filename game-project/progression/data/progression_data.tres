@@ -1,0 +1,6 @@
+[gd_resource type="Resource" script_class="ProgressionData" load_steps=2 format=3 uid="uid://bfvbjf7w1catl"]
+
+[ext_resource type="Script" path="res://progression/data/progression_data.gd" id="1_rea4k"]
+
+[resource]
+script = ExtResource("1_rea4k")

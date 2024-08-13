@@ -1,0 +1,21 @@
+[gd_scene load_steps=6 format=3 uid="uid://cmglwu6iyaalg"]
+
+[ext_resource type="Script" path="res://suns/sun.gd" id="1_8gapa"]
+[ext_resource type="Script" path="res://suns/modules/sun_rotator.gd" id="2_ardx4"]
+[ext_resource type="Resource" uid="uid://bfvbjf7w1catl" path="res://progression/data/progression_data.tres" id="3_3y31m"]
+[ext_resource type="PackedScene" uid="uid://fw8nddm4510o" path="res://suns/modules/light_source.tscn" id="4_5n6py"]
+[ext_resource type="Texture2D" uid="uid://cv647ka5rxl4e" path="res://icon.svg" id="4_x4wup"]
+
+[node name="Sun" type="Node2D"]
+position = Vector2(153, 41)
+script = ExtResource("1_8gapa")
+
+[node name="SunRotator" type="Node2D" parent="."]
+script = ExtResource("2_ardx4")
+prog_data = ExtResource("3_3y31m")
+
+[node name="LightSource" parent="." instance=ExtResource("4_5n6py")]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 0.842333, 0.14, 1)
+texture = ExtResource("4_x4wup")
