@@ -4,7 +4,7 @@ var enabled := false
 @export var input : ModuleInput
 
 func activate() -> void:
-	input.button_pressed.connect(lure_nearby_tourists)
+	input.button_released.connect(lure_nearby_tourists)
 
 func lure_nearby_tourists() -> void:
 	if not enabled: return

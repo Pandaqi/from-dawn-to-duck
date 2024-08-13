@@ -14,8 +14,8 @@ func regenerate(prog_data:ProgressionData) -> void:
 		events.append(SpawnEvent.new(time))
 	
 	# then randomly push and pull them, favoring a midday peak
-	var random_steps := events.size() * 3
-	var offset_per_randomization := 0.1
+	var random_steps := events.size() * Global.config.spawner_random_steps_factor
+	var offset_per_randomization := Global.config.spawner_random_offset_max
 	var dur_bounds := Global.config.stay_duration_bounds
 	
 	for i in range(random_steps):

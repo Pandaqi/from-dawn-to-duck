@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://ocfbx6ggqvn2"]
+[gd_scene load_steps=18 format=3 uid="uid://ocfbx6ggqvn2"]
 
 [ext_resource type="PackedScene" uid="uid://d1eqndktyw2nh" path="res://parasols/parasol.tscn" id="1_06w87"]
 [ext_resource type="Script" path="res://game_loop/main/main.gd" id="1_8usxl"]
@@ -11,21 +11,12 @@
 [ext_resource type="Script" path="res://map/map_layers.gd" id="3_ragrm"]
 [ext_resource type="PackedScene" uid="uid://b8m1s3o1gkuyn" path="res://tourists/tourist.tscn" id="4_8rgfn"]
 [ext_resource type="Script" path="res://map/camera.gd" id="4_n6in6"]
-[ext_resource type="Texture2D" uid="uid://cv647ka5rxl4e" path="res://icon.svg" id="4_ppchj"]
 [ext_resource type="Resource" uid="uid://x8qqsqbmai1n" path="res://map/data/map_data.tres" id="5_52y3m"]
 [ext_resource type="PackedScene" uid="uid://cmglwu6iyaalg" path="res://suns/sun.tscn" id="7_6iiti"]
-[ext_resource type="Shader" path="res://map/water/water.gdshader" id="7_48ud4"]
+[ext_resource type="Script" path="res://map/areas/area_drawer.gd" id="8_3sibe"]
 [ext_resource type="Script" path="res://players/players.gd" id="9_i06n6"]
 [ext_resource type="PackedScene" uid="uid://cpixp7bpg8lr8" path="res://players/player.tscn" id="11_h3yax"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_xu106"]
-shader = ExtResource("7_48ud4")
-shader_parameter/WATER_COL = Color(0.044, 0.88, 0.8382, 1)
-shader_parameter/WATER2_COL = Color(0.2184, 0.78, 0.74256, 1)
-shader_parameter/FOAM_COL = Color(0.7826, 0.91, 0.907877, 1)
-shader_parameter/distortion_speed = 2.0
-shader_parameter/tile = Vector2(10, 10)
-shader_parameter/wave_speed = 1.5
+[ext_resource type="Resource" uid="uid://deg0e6fl14je3" path="res://parasols/data/parasols_data.tres" id="12_a2ij7"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_8usxl")
@@ -46,27 +37,27 @@ script = ExtResource("2_i4iav")
 prog_data = ExtResource("3_mk46c")
 tourists = NodePath("../Tourists")
 
+[node name="CanvasModulate" type="CanvasModulate" parent="Progression"]
+
 [node name="Map" type="Node2D" parent="."]
 script = ExtResource("2_1jgw0")
 map_data = ExtResource("5_52y3m")
 
-[node name="BG" type="Sprite2D" parent="Map"]
-position = Vector2(628, 324.5)
-scale = Vector2(10.8125, 6.07031)
-texture = ExtResource("4_ppchj")
+[node name="BG" type="Node2D" parent="Map"]
+script = ExtResource("8_3sibe")
+color = Color(0.462745, 0.576471, 0.168627, 1)
 
-[node name="WaterTest" type="Sprite2D" parent="Map"]
-material = SubResource("ShaderMaterial_xu106")
-position = Vector2(327.5, 68)
-scale = Vector2(6.11719, 2.0625)
-texture = ExtResource("4_ppchj")
+[node name="Beach" type="Node2D" parent="Map"]
+script = ExtResource("8_3sibe")
+color = Color(0.988235, 0.878431, 0.682353, 1)
+
+[node name="Water" type="Node2D" parent="Map"]
+script = ExtResource("8_3sibe")
+color = Color(0.4, 0.760784, 0.768627, 1)
 
 [node name="MapLayers" type="Node2D" parent="Map"]
 script = ExtResource("3_ragrm")
-layer_names = Array[String](["floor", "entities", "top"])
-
-[node name="CanvasModulate" type="CanvasModulate" parent="Map"]
-color = Color(0.853653, 0.354728, 0.537264, 1)
+layer_names = Array[String](["floor", "entities", "parasols", "top"])
 
 [node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("map")]
 script = ExtResource("4_n6in6")
@@ -76,6 +67,8 @@ map = NodePath("../Map")
 script = ExtResource("2_gitjo")
 parasol_scene = ExtResource("1_06w87")
 map = NodePath("../Map")
+parasols_data = ExtResource("12_a2ij7")
+prog_data = ExtResource("3_mk46c")
 suns = NodePath("../Suns")
 players = NodePath("../Players")
 tourists = NodePath("../Tourists")

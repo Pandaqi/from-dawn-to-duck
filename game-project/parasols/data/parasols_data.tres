@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ParasolsData" load_steps=8 format=3 uid="uid://deg0e6fl14je3"]
+
+[ext_resource type="Script" path="res://parasols/shapes/parasol_shape.gd" id="1_v1jg1"]
+[ext_resource type="Resource" uid="uid://8edpjfhjvtq" path="res://parasols/shapes/shape_circle.tres" id="2_0cpyv"]
+[ext_resource type="Script" path="res://parasols/data/parasols_data.gd" id="2_xtspe"]
+[ext_resource type="Resource" uid="uid://cfabbry58ft66" path="res://parasols/shapes/shape_crescent.tres" id="3_n2l2t"]
+[ext_resource type="Resource" uid="uid://dkk1naeg8hcqo" path="res://parasols/shapes/shape_rectangle.tres" id="4_77w4p"]
+[ext_resource type="Resource" uid="uid://dq83rmwxujr3g" path="res://parasols/shapes/shape_square.tres" id="5_nwmrt"]
+[ext_resource type="Resource" uid="uid://8evb8xdyd2tq" path="res://parasols/shapes/shape_triangle.tres" id="6_8kpyx"]
+
+[resource]
+script = ExtResource("2_xtspe")
+all_shapes = Array[ExtResource("1_v1jg1")]([ExtResource("2_0cpyv"), ExtResource("3_n2l2t"), ExtResource("4_77w4p"), ExtResource("5_nwmrt"), ExtResource("6_8kpyx")])

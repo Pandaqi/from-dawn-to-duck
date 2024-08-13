@@ -1,8 +1,15 @@
-[gd_scene load_steps=4 format=3 uid="uid://d1eqndktyw2nh"]
+[gd_scene load_steps=6 format=3 uid="uid://d1eqndktyw2nh"]
 
 [ext_resource type="Script" path="res://parasols/modules/shadow_caster.gd" id="1_b4vnv"]
 [ext_resource type="Script" path="res://parasols/parasol.gd" id="1_nta3i"]
+[ext_resource type="Shader" path="res://parasols/shapes/striped_shape.gdshader" id="3_fsixp"]
 [ext_resource type="Texture2D" uid="uid://cv647ka5rxl4e" path="res://icon.svg" id="3_n85eq"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_abbio"]
+shader = ExtResource("3_fsixp")
+shader_parameter/scale = 5.0
+shader_parameter/color1 = Color(1, 1, 1, 1)
+shader_parameter/color2 = Color(1, 0, 0, 1)
 
 [node name="Parasol" type="Node2D" groups=["Parasols"]]
 script = ExtResource("1_nta3i")
@@ -15,6 +22,8 @@ scale = Vector2(0.109375, 1)
 texture = ExtResource("3_n85eq")
 
 [node name="ShadowCaster" type="Node2D" parent="." groups=["ShadowCasters"]]
+material = SubResource("ShaderMaterial_abbio")
 position = Vector2(0, -128)
 script = ExtResource("1_b4vnv")
 poly = Array[Vector2]([Vector2(100, 0), Vector2(0, 100), Vector2(-100, 0), Vector2(0, -100)])
+poly_uvs = null

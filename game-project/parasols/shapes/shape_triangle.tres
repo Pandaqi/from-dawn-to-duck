@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ParasolShape" load_steps=2 format=3 uid="uid://8evb8xdyd2tq"]
+
+[ext_resource type="Script" path="res://parasols/shapes/parasol_shape.gd" id="1_4wxtj"]
+
+[resource]
+script = ExtResource("1_4wxtj")
+points = Array[Vector2]([Vector2(-1, 1), Vector2(0, -1), Vector2(1, 1)])
+circle_resolution = 0
+circle_angles = {
+"max": 6.28319,
+"min": 0.0
+}

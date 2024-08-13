@@ -17,7 +17,7 @@ func place_players() -> void:
 func place_player(num:int) -> void:
 	var p : Player = player_scene.instantiate()
 	map.layers.add_to_layer("entities", p)
-	var pos := map.map_data.query_position()
+	var pos := map.map_data.query_position({ "area": "beach" })
 	p.set_position(pos)
 	p.activate(num)
 	

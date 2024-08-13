@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="ParasolShape" load_steps=2 format=3 uid="uid://dq83rmwxujr3g"]
+
+[ext_resource type="Script" path="res://parasols/shapes/parasol_shape.gd" id="1_uyy7k"]
+
+[resource]
+script = ExtResource("1_uyy7k")
+points = Array[Vector2]([Vector2(1, 0), Vector2(0, 1), Vector2(-1, 0), Vector2(0, -1)])

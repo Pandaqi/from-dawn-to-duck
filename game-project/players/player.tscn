@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://cpixp7bpg8lr8"]
+[gd_scene load_steps=9 format=3 uid="uid://cpixp7bpg8lr8"]
 
 [ext_resource type="Script" path="res://players/player.gd" id="1_nu2pa"]
 [ext_resource type="Texture2D" uid="uid://cv647ka5rxl4e" path="res://icon.svg" id="2_xjqjf"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://players/modules/mover.gd" id="4_cyjhf"]
 [ext_resource type="Script" path="res://players/modules/parasol_grabber.gd" id="4_gj6w2"]
 [ext_resource type="Script" path="res://players/modules/tourist_lure.gd" id="5_kss0w"]
+[ext_resource type="Resource" uid="uid://x8qqsqbmai1n" path="res://map/data/map_data.tres" id="5_qybbl"]
 [ext_resource type="PackedScene" uid="uid://fw8nddm4510o" path="res://suns/modules/light_source.tscn" id="6_om7sc"]
 
 [node name="Player" type="Node2D"]
@@ -21,6 +22,7 @@ script = ExtResource("3_gth62")
 [node name="Mover" type="Node2D" parent="." node_paths=PackedStringArray("input")]
 script = ExtResource("4_cyjhf")
 input = NodePath("../Input")
+map_data = ExtResource("5_qybbl")
 
 [node name="ParasolGrabber" type="Node2D" parent="." node_paths=PackedStringArray("input")]
 script = ExtResource("4_gj6w2")

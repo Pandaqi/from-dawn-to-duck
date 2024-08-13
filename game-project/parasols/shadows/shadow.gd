@@ -5,6 +5,7 @@ var points : PackedVector2Array = []
 var active := false
 
 func reset() -> void:
+	show_behind_parent = true
 	points_raw = []
 	points = []
 	active = false
@@ -23,4 +24,8 @@ func update() -> void:
 
 func _draw() -> void:
 	if not active: return
-	draw_polygon(points, [Color(1,1,1,0.5)])
+	var points_local : PackedVector2Array = [] 
+	for p in points:
+		points_local.append(to_local(p))
+	
+	draw_polygon(points_local, [Global.config.shadow_color])

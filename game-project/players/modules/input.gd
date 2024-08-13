@@ -6,6 +6,7 @@ var epsilon := 0.03
 
 signal movement_vector_update(vec, dt)
 signal button_pressed()
+signal button_released()
 
 func activate(num:int) -> void:
 	player_num = num
@@ -26,5 +27,8 @@ func get_vector() -> Vector2:
 	return prev_move_vec
 
 func _input(ev:InputEvent) -> void:
-	if GInput.is_action_released(ev, "interact", player_num):
+	if GInput.is_action_pressed(ev, "interact", player_num):
 		button_pressed.emit()
+	
+	if GInput.is_action_released(ev, "interact", player_num):
+		button_released.emit()

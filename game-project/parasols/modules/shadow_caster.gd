@@ -1,7 +1,24 @@
 class_name ModuleShadowCaster extends Node2D
 
 @export var poly : Array[Vector2] = []
+@export var poly_uvs : Array[Vector2] = []
 @export var shadows : Array[Shadow] = []
+@onready var entity = get_parent()
+
+func set_shape(shp:ParasolShape) -> void:
+	var points := shp.get_points()
+	
+	var random_scale := Vector2(
+		Global.config.shape_scale_bounds.rand_float(),
+		Global.config.shape_scale_bounds.rand_float(), 
+	)
+	
+	poly = []
+	poly_uvs = []
+	for point in points:
+		var final_point := Global.config.scale_vector(point) * random_scale
+		poly.append(final_point)
+		poly_uvs.append(0.5 * (point + Vector2.ONE))
 
 func get_polygon_local() -> Array[Vector2]:
 	return poly.duplicate()
@@ -9,11 +26,15 @@ func get_polygon_local() -> Array[Vector2]:
 func get_polygon_global() -> Array[Vector2]:
 	var arr : Array[Vector2] = []
 	for point in poly:
-		arr.append(global_position + point)
+		arr.append(to_global(point))
 	return arr
 
 func is_valid() -> bool:
 	return poly.size() >= 3
+
+func update_rotation(dr:float) -> void:
+	set_rotation( get_rotation() + dr )
+	queue_redraw()
 
 func _process(_dt:float) -> void:
 	cast_shadows()
@@ -38,7 +59,7 @@ func cast_shadows() -> void:
 		else:
 			shadow = Shadow.new()
 			shadows.append(shadow)
-			get_tree().get_root().add_child(shadow)
+			entity.add_child(shadow)
 		
 		# extend points from sun direction
 		for point in points:
@@ -57,4 +78,4 @@ func _draw() -> void:
 	for shadow in shadows:
 		shadow.update()
 	
-	draw_polygon(poly, [Color(1,0,0)])
+	draw_polygon(poly, [Color(1,1,1)], poly_uvs)

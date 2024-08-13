@@ -6,6 +6,9 @@ var button_grabs_parasol := false
 var enabled := true
 var last_parasol_dropped : Parasol = null
 
+var holding_button := false
+var button_press_time := 0.0
+
 @export var input : ModuleInput
 
 signal changed(p:Parasol)
@@ -13,15 +16,25 @@ signal dropped()
 
 func activate() -> void:
 	input.button_pressed.connect(on_button_pressed)
+	input.button_released.connect(on_button_released)
 
-func _process(_dt:float) -> void:
+func _process(dt:float) -> void:
 	keep_with_player()
+	rotate_parasol(dt)
 	if not button_grabs_parasol:
 		check_for_parasols_in_range()
 
 func keep_with_player() -> void:
 	if not has_parasol(): return
 	parasol.set_position(global_position)
+
+func rotate_parasol(dt:float) -> void:
+	if not has_parasol(): return
+	if not holding_button: return
+	if not Global.config.parasol_rotate_button_hold: return
+	if not input_was_held(): return
+	var rotate_speed := Global.config.parasol_rotate_speed * dt
+	parasol.shadow_caster.update_rotation(rotate_speed)
 
 func check_for_parasols_in_range() -> void:
 	if has_parasol(): return
@@ -65,9 +78,22 @@ func drop() -> void:
 	parasol = null
 	dropped.emit()
 
+func get_time_since_button_press() -> float:
+	return (Time.get_ticks_msec() - button_press_time) / 1000.0
+
 func on_button_pressed() -> void:
-	if button_drops_parasol: 
+	holding_button = true
+	button_press_time = Time.get_ticks_msec()
+
+func input_was_held() -> bool:
+	if not Global.config.input_hold_enabled: return false
+	return get_time_since_button_press() > Global.config.input_hold_threshold
+
+func on_button_released() -> void:
+	holding_button = false
+	
+	if button_drops_parasol and not input_was_held(): 
 		drop()
 	
-	if button_grabs_parasol: 
+	if button_grabs_parasol and not input_was_held(): 
 		check_for_parasols_in_range()
