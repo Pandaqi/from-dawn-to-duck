@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://0queh80kw3a2"]
+
+[ext_resource type="Texture2D" uid="uid://be3pbwbvqi5d4" path="res://powerups/powerups.webp" id="1_2554p"]
+
+[node name="Sprite2D" type="Sprite2D"]
+texture = ExtResource("1_2554p")
+hframes = 4
+vframes = 4

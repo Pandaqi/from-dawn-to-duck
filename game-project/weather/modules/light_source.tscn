@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://fw8nddm4510o"]
+
+[ext_resource type="Script" path="res://weather/modules/light_source.gd" id="1_r1js6"]
+[ext_resource type="Texture2D" uid="uid://b2lubsiuj5ani" path="res://weather/sunray.webp" id="2_uulhl"]
+
+[node name="LightSource" type="Node2D" groups=["LightSources"]]
+script = ExtResource("1_r1js6")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+position = Vector2(991, 0)
+texture = ExtResource("2_uulhl")
+texture_scale = 2.0

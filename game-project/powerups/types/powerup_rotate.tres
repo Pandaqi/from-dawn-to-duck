@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="PowerupRotate" load_steps=2 format=3 uid="uid://dgpqocpqrqa00"]
+
+[ext_resource type="Script" path="res://powerups/types/powerup_rotate.gd" id="1_dsfxi"]
+
+[resource]
+script = ExtResource("1_dsfxi")
+frame = 1
+desc = "Rotates your parasol."
+color = Color(1, 1, 1, 1)
+instant_process = true
+single_use = false
+continuous = true
+needs_visit = true
+completion_duration_factor = 1.0
+cost = 0.0

@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://dovns8xh36uru"]
+
+[ext_resource type="Texture2D" uid="uid://bhpylh6fjw75y" path="res://game_loop/main/misc.webp" id="1_q0o8q"]
+
+[node name="Sprite2D" type="Sprite2D"]
+texture = ExtResource("1_q0o8q")
+hframes = 4
+vframes = 4

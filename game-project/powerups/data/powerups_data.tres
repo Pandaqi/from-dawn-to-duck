@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="PowerupsData" load_steps=10 format=3 uid="uid://b6l60klui64s7"]
+
+[ext_resource type="Script" path="res://powerups/types/powerup_type.gd" id="1_nk4tu"]
+[ext_resource type="Resource" uid="uid://bfb33bfnfxibg" path="res://powerups/types/powerup_drop.tres" id="2_1qoxf"]
+[ext_resource type="Script" path="res://powerups/data/powerups_data.gd" id="2_r5kki"]
+[ext_resource type="Resource" uid="uid://csb5m04e5hh8i" path="res://powerups/types/powerup_life.tres" id="3_h6olx"]
+[ext_resource type="Resource" uid="uid://d07pflcp37qcf" path="res://powerups/types/powerup_lure.tres" id="4_x6uby"]
+[ext_resource type="Resource" uid="uid://dgpqocpqrqa00" path="res://powerups/types/powerup_rotate.tres" id="5_wxbdo"]
+[ext_resource type="Resource" uid="uid://csq4w5rul5by" path="res://powerups/types/powerup_scalar.tres" id="6_jl7h1"]
+[ext_resource type="Resource" uid="uid://bgat7kwp01frp" path="res://powerups/types/powerup_shop.tres" id="7_sdfni"]
+[ext_resource type="Resource" uid="uid://bt1725cq66387" path="res://powerups/types/powerup_time.tres" id="8_w1gq5"]
+
+[resource]
+script = ExtResource("2_r5kki")
+all_powerups = Array[ExtResource("1_nk4tu")]([ExtResource("2_1qoxf"), ExtResource("3_h6olx"), ExtResource("4_x6uby"), ExtResource("5_wxbdo"), ExtResource("6_jl7h1"), ExtResource("7_sdfni"), ExtResource("8_w1gq5")])

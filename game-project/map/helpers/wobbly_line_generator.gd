@@ -19,3 +19,10 @@ func generate(start_pos:Vector2, end_pos:Vector2) -> void:
 		var displacement := noise.get_noise_1d(cur_pos.x * noise_scale)
 		cur_pos = Vector2(cur_pos.x + increment, start_pos.y + displacement * displacement_scale)
 		points.append(cur_pos)
+
+func get_points_within_bounds(bds:Rect2, margin:float = 0.0) -> Array[Vector2]:
+	var arr : Array[Vector2] = []
+	for point in points:
+		if point.x < (bds.position.x + margin) or point.x > (bds.position.x + bds.size.x - margin): continue
+		arr.append(point)
+	return arr

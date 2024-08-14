@@ -1,0 +1,14 @@
+[gd_resource type="Theme" load_steps=4 format=3 uid="uid://crexjyt0afkk7"]
+
+[ext_resource type="FontFile" uid="uid://da8iqdtvt75o4" path="res://ui/fonts/SeaweedScript-Regular.ttf" id="1_4qyb4"]
+[ext_resource type="StyleBox" uid="uid://m6kfgl28vwd4" path="res://ui/button_tex_hover.tres" id="1_ldkm3"]
+[ext_resource type="StyleBox" uid="uid://bs7ft4kdn77d7" path="res://ui/button_tex_normal.tres" id="2_qcdgo"]
+
+[resource]
+default_font = ExtResource("1_4qyb4")
+Button/colors/font_color = Color(0.903598, 0.903598, 0.903598, 1)
+Button/colors/font_focus_color = Color(0.129412, 0.101961, 0.0352941, 1)
+Button/colors/font_hover_color = Color(0.129412, 0.101961, 0.0352941, 1)
+Button/styles/focus = ExtResource("1_ldkm3")
+Button/styles/hover = ExtResource("1_ldkm3")
+Button/styles/normal = ExtResource("2_qcdgo")

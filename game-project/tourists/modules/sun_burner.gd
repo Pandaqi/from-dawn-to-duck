@@ -2,22 +2,21 @@ class_name ModuleSunBurner extends Node2D
 
 @export var shadow_tracker : ModuleShadowTracker
 @export var state_tourist : ModuleStateTourist
-@onready var prog_bar := $TextureProgressBar
+@onready var prog_bar_cont := $ProgBar
+@onready var prog_bar := $ProgBar/TextureProgressBar
 @export var prog_data : ProgressionData
+@export var state : ModuleState
 
 var burn := 0.0
 var base_burn := 100.0
-
-const BURN_SPEED := 10.0
-const COOLDOWN_SPEED := 5.0
-const BURN_FACTOR_MIN := 0.1
-const BURN_FACTOR_MAX := 1.0
 
 signal protected()
 signal burned()
 
 func activate() -> void:
+	GSignal.hand_to_ui.emit(prog_bar_cont)
 	set_base_burn(Global.config.burn_base_health)
+	state.died.connect(on_died)
 
 func set_base_burn(bb:float, refresh := true) -> void:
 	base_burn = bb
@@ -27,7 +26,13 @@ func reset() -> void:
 	change(-burn)
 
 func _process(dt:float) -> void:
+	keep_prog_bar_with_us()
 	update_burn_status(dt)
+
+func keep_prog_bar_with_us() -> void:
+	var screen_pos := (get_viewport().get_screen_transform() * get_viewport().get_canvas_transform()) * global_position
+	prog_bar_cont.set_position(screen_pos)
+	prog_bar_cont.set_scale(Global.config.progress_bars_scale*Vector2.ONE)
 
 func update_burn_status(dt:float) -> void:
 	if not state_tourist.is_burnable(): return
@@ -51,8 +56,12 @@ func change(db:float) -> void:
 	
 	var ratio := get_burn_ratio()
 	prog_bar.set_value(ratio * 100.0)
+	prog_bar.tint_progress = Global.config.burn_color_start.lerp(Global.config.burn_color_end, ratio)
 	
 	if ratio <= 0.0:
 		protected.emit()
 	elif ratio >= 1.0:
 		burned.emit()
+
+func on_died(_n:Node2D) -> void:
+	prog_bar_cont.queue_free()

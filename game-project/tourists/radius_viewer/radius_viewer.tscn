@@ -1,0 +1,65 @@
+[gd_scene load_steps=8 format=3 uid="uid://dc45fbxoj0qt"]
+
+[ext_resource type="Script" path="res://tourists/radius_viewer/radius_viewer.gd" id="1_16xg2"]
+[ext_resource type="Shader" path="res://tourists/radius_viewer/dotted_circle.gdshader" id="2_ithqo"]
+[ext_resource type="Texture2D" uid="uid://c57f5ftmdknaq" path="res://game_loop/main/shader_placeholder.webp" id="3_6wy3g"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3pdby"]
+resource_local_to_scene = false
+resource_name = ""
+shader = ExtResource("2_ithqo")
+shader_parameter/color = Color(0.46, 0.250853, 0.0552, 1)
+shader_parameter/diameter = 1.0
+shader_parameter/thickness = 0.025
+shader_parameter/frequency = 25.0
+shader_parameter/phase = 0.0
+shader_parameter/alpha = 1.0
+
+[sub_resource type="Animation" id="Animation_f8osn"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:material:shader_parameter/alpha")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+
+[sub_resource type="Animation" id="Animation_dpa1t"]
+resource_name = "fade_in_out"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:material:shader_parameter/alpha")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [1.0, 0.5, 1.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_o8ynp"]
+_data = {
+"RESET": SubResource("Animation_f8osn"),
+"fade_in_out": SubResource("Animation_dpa1t")
+}
+
+[node name="RadiusViewer" type="Node2D"]
+script = ExtResource("1_16xg2")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_3pdby")
+texture = ExtResource("3_6wy3g")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_o8ynp")
+}

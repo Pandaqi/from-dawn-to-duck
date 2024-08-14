@@ -1,41 +1,192 @@
-[gd_scene load_steps=18 format=3 uid="uid://ocfbx6ggqvn2"]
+[gd_scene load_steps=38 format=3 uid="uid://ocfbx6ggqvn2"]
 
 [ext_resource type="PackedScene" uid="uid://d1eqndktyw2nh" path="res://parasols/parasol.tscn" id="1_06w87"]
 [ext_resource type="Script" path="res://game_loop/main/main.gd" id="1_8usxl"]
 [ext_resource type="Script" path="res://map/map.gd" id="2_1jgw0"]
 [ext_resource type="Script" path="res://tourists/tourists.gd" id="2_2keun"]
 [ext_resource type="Script" path="res://parasols/parasols.gd" id="2_gitjo"]
-[ext_resource type="Script" path="res://suns/suns.gd" id="2_hnb8u"]
+[ext_resource type="Script" path="res://weather/suns.gd" id="2_hnb8u"]
 [ext_resource type="Script" path="res://progression/progression.gd" id="2_i4iav"]
 [ext_resource type="Resource" uid="uid://bfvbjf7w1catl" path="res://progression/data/progression_data.tres" id="3_mk46c"]
 [ext_resource type="Script" path="res://map/map_layers.gd" id="3_ragrm"]
 [ext_resource type="PackedScene" uid="uid://b8m1s3o1gkuyn" path="res://tourists/tourist.tscn" id="4_8rgfn"]
 [ext_resource type="Script" path="res://map/camera.gd" id="4_n6in6"]
 [ext_resource type="Resource" uid="uid://x8qqsqbmai1n" path="res://map/data/map_data.tres" id="5_52y3m"]
-[ext_resource type="PackedScene" uid="uid://cmglwu6iyaalg" path="res://suns/sun.tscn" id="7_6iiti"]
+[ext_resource type="PackedScene" uid="uid://cmglwu6iyaalg" path="res://weather/sun.tscn" id="7_6iiti"]
 [ext_resource type="Script" path="res://map/areas/area_drawer.gd" id="8_3sibe"]
 [ext_resource type="Script" path="res://players/players.gd" id="9_i06n6"]
 [ext_resource type="PackedScene" uid="uid://cpixp7bpg8lr8" path="res://players/player.tscn" id="11_h3yax"]
 [ext_resource type="Resource" uid="uid://deg0e6fl14je3" path="res://parasols/data/parasols_data.tres" id="12_a2ij7"]
+[ext_resource type="Resource" uid="uid://bgat7kwp01frp" path="res://powerups/types/powerup_shop.tres" id="13_mb2f3"]
+[ext_resource type="Script" path="res://ui/ui.gd" id="18_3obf8"]
+[ext_resource type="Script" path="res://powerups/powerups.gd" id="18_noreh"]
+[ext_resource type="Resource" uid="uid://b2jfk46w23ddu" path="res://weather/data/weather_data.tres" id="19_8ykcs"]
+[ext_resource type="PackedScene" uid="uid://qjnt52kcxcvi" path="res://powerups/powerup.tscn" id="19_77uo7"]
+[ext_resource type="PackedScene" uid="uid://dovns8xh36uru" path="res://game_loop/main/misc_sprite.tscn" id="19_hgyu3"]
+[ext_resource type="Script" path="res://ui/game_ui.gd" id="19_o0jmb"]
+[ext_resource type="Theme" uid="uid://crexjyt0afkk7" path="res://ui/default_theme.tres" id="20_6yfs1"]
+[ext_resource type="Resource" uid="uid://b6l60klui64s7" path="res://powerups/data/powerups_data.tres" id="20_jdoce"]
+[ext_resource type="Script" path="res://powerups/tutorials/powerup_tutorials.gd" id="23_6csrg"]
+[ext_resource type="PackedScene" uid="uid://ksir5sff1si1" path="res://powerups/tutorials/powerup_tutorial.tscn" id="24_v4oxp"]
+[ext_resource type="Script" path="res://ui/game_over/game_over.gd" id="29_88oh1"]
+[ext_resource type="Script" path="res://ui/day_over/day_over.gd" id="29_xtt26"]
+[ext_resource type="Texture2D" uid="uid://628wubg34qiv" path="res://ui/modals.webp" id="30_ffbii"]
+
+[sub_resource type="Animation" id="Animation_hijmq"]
+resource_name = "appear"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Container:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.233333),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1e-05, 1e-05), Vector2(1.1, 1.1), Vector2(0.9, 0.9), Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Container/Button:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.2, 0.266667, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1e-05, 1e-05), Vector2(1.2, 1.2), Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_x418c"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Container:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1e-05, 1e-05)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Container/Button:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1e-05, 1e-05)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1syl6"]
+_data = {
+"RESET": SubResource("Animation_x418c"),
+"appear": SubResource("Animation_hijmq")
+}
+
+[sub_resource type="Animation" id="Animation_tw6uf"]
+resource_name = "appear"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Container:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.133333, 0.2, 0.233333),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1e-05, 1e-05), Vector2(1.2, 1.2), Vector2(0.95, 0.95), Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Container:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.133333, 0.2, 0.233333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.0, -0.174533, 0.0872665, 0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Container/Buttons:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.2, 0.233333, 0.266667),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1e-05, 1e-05), Vector2(1.2, 1.2), Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_1lrle"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Container:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1e-05, 1e-05)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Container:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Container/Buttons:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1e-05, 1e-05)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_aqsad"]
+_data = {
+"RESET": SubResource("Animation_1lrle"),
+"appear": SubResource("Animation_tw6uf")
+}
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_8usxl")
 
-[node name="BG" type="CanvasLayer" parent="."]
-layer = -1
-
-[node name="ColorRect" type="ColorRect" parent="BG"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.462745, 0.576471, 0.168627, 1)
-
-[node name="Progression" type="Node2D" parent="." node_paths=PackedStringArray("tourists")]
+[node name="Progression" type="Node2D" parent="." node_paths=PackedStringArray("tourists", "day_over")]
 script = ExtResource("2_i4iav")
 prog_data = ExtResource("3_mk46c")
 tourists = NodePath("../Tourists")
+weather_data = ExtResource("19_8ykcs")
+day_over = NodePath("../UI/DayOver")
 
 [node name="CanvasModulate" type="CanvasModulate" parent="Progression"]
 
@@ -69,7 +220,9 @@ parasol_scene = ExtResource("1_06w87")
 map = NodePath("../Map")
 parasols_data = ExtResource("12_a2ij7")
 prog_data = ExtResource("3_mk46c")
-suns = NodePath("../Suns")
+powerups_data = ExtResource("20_jdoce")
+shop_type = ExtResource("13_mb2f3")
+suns = NodePath("../Weather")
 players = NodePath("../Players")
 tourists = NodePath("../Tourists")
 parasols = NodePath(".")
@@ -79,8 +232,7 @@ script = ExtResource("2_2keun")
 tourist_scene = ExtResource("4_8rgfn")
 map = NodePath("../Map")
 prog_data = ExtResource("3_mk46c")
-enabled = false
-suns = NodePath("../Suns")
+suns = NodePath("../Weather")
 players = NodePath("../Players")
 tourists = NodePath(".")
 parasols = NodePath("../Parasols")
@@ -89,16 +241,487 @@ parasols = NodePath("../Parasols")
 script = ExtResource("9_i06n6")
 player_scene = ExtResource("11_h3yax")
 map = NodePath("../Map")
-suns = NodePath("../Suns")
+suns = NodePath("../Weather")
 players = NodePath(".")
 tourists = NodePath("../Tourists")
 parasols = NodePath("../Parasols")
 
-[node name="Suns" type="Node2D" parent="." node_paths=PackedStringArray("map", "suns", "players", "tourists", "parasols")]
+[node name="Weather" type="Node2D" parent="." node_paths=PackedStringArray("map", "suns", "players", "tourists", "parasols")]
 script = ExtResource("2_hnb8u")
+weather_data = ExtResource("19_8ykcs")
+prog_data = ExtResource("3_mk46c")
 sun_scene = ExtResource("7_6iiti")
 map = NodePath("../Map")
 suns = NodePath(".")
 players = NodePath("../Players")
 tourists = NodePath("../Tourists")
 parasols = NodePath("../Parasols")
+
+[node name="Powerups" type="Node2D" parent="." node_paths=PackedStringArray("map")]
+script = ExtResource("18_noreh")
+map = NodePath("../Map")
+powerup_scene = ExtResource("19_77uo7")
+powerups_data = ExtResource("20_jdoce")
+type_shop = ExtResource("13_mb2f3")
+
+[node name="Timer" type="Timer" parent="Powerups"]
+one_shot = true
+
+[node name="PowerupTutorials" type="Node2D" parent="Powerups" node_paths=PackedStringArray("map")]
+script = ExtResource("23_6csrg")
+powerups_data = ExtResource("20_jdoce")
+map = NodePath("../../Map")
+powerup_tutorial_scene = ExtResource("24_v4oxp")
+
+[node name="UI" type="CanvasLayer" parent="."]
+process_mode = 3
+script = ExtResource("18_3obf8")
+
+[node name="GameOverlay" type="Node2D" parent="UI"]
+
+[node name="GameUI" type="Node2D" parent="UI"]
+scale = Vector2(0.175, 0.175)
+script = ExtResource("19_o0jmb")
+prog_data = ExtResource("3_mk46c")
+
+[node name="Time" type="Node2D" parent="UI/GameUI"]
+position = Vector2(0, 128)
+
+[node name="Sprite2D" parent="UI/GameUI/Time" instance=ExtResource("19_hgyu3")]
+position = Vector2(139, 0)
+
+[node name="Label" type="Label" parent="UI/GameUI/Time"]
+_import_path = NodePath("")
+unique_name_in_owner = false
+process_mode = 0
+process_priority = 0
+process_physics_priority = 0
+process_thread_group = 0
+physics_interpolation_mode = 2
+auto_translate_mode = 0
+editor_description = ""
+visible = true
+modulate = Color(1, 1, 1, 1)
+self_modulate = Color(1, 1, 1, 1)
+show_behind_parent = false
+top_level = false
+clip_children = 0
+light_mask = 1
+visibility_layer = 1
+z_index = 0
+z_as_relative = true
+y_sort_enabled = false
+texture_filter = 0
+texture_repeat = 0
+material = null
+use_parent_material = false
+clip_contents = false
+custom_minimum_size = Vector2(0, 0)
+layout_direction = 0
+layout_mode = 3
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 288.0
+offset_top = -119.0
+offset_right = 866.0
+offset_bottom = 154.0
+grow_horizontal = 1
+grow_vertical = 1
+rotation = 0.0
+scale = Vector2(1, 1)
+pivot_offset = Vector2(0, 0)
+size_flags_horizontal = 1
+size_flags_vertical = 4
+size_flags_stretch_ratio = 1.0
+localize_numeral_system = true
+tooltip_text = ""
+focus_neighbor_left = NodePath("")
+focus_neighbor_top = NodePath("")
+focus_neighbor_right = NodePath("")
+focus_neighbor_bottom = NodePath("")
+focus_next = NodePath("")
+focus_previous = NodePath("")
+focus_mode = 0
+mouse_filter = 2
+mouse_force_pass_scroll_events = true
+mouse_default_cursor_shape = 0
+theme = ExtResource("20_6yfs1")
+theme_type_variation = &""
+theme_override_colors/font_color = Color(0.23, 0.134397, 0.0322, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 32
+theme_override_font_sizes/font_size = 200
+text = "00:00"
+label_settings = null
+horizontal_alignment = 0
+vertical_alignment = 1
+autowrap_mode = 0
+justification_flags = 163
+clip_text = false
+text_overrun_behavior = 0
+ellipsis_char = "…"
+uppercase = false
+tab_stops = PackedFloat32Array()
+lines_skipped = 0
+max_lines_visible = -1
+visible_characters = -1
+visible_characters_behavior = 0
+visible_ratio = 1.0
+text_direction = 0
+language = ""
+structured_text_bidi_override = 0
+structured_text_bidi_override_options = []
+script = null
+
+[node name="Day" type="Node2D" parent="UI/GameUI"]
+position = Vector2(0, 384)
+
+[node name="Sprite2D" parent="UI/GameUI/Day" instance=ExtResource("19_hgyu3")]
+position = Vector2(139, 0)
+frame = 1
+
+[node name="Label" type="Label" parent="UI/GameUI/Day"]
+_import_path = NodePath("")
+unique_name_in_owner = false
+process_mode = 0
+process_priority = 0
+process_physics_priority = 0
+process_thread_group = 0
+physics_interpolation_mode = 2
+auto_translate_mode = 0
+editor_description = ""
+visible = true
+modulate = Color(1, 1, 1, 1)
+self_modulate = Color(1, 1, 1, 1)
+show_behind_parent = false
+top_level = false
+clip_children = 0
+light_mask = 1
+visibility_layer = 1
+z_index = 0
+z_as_relative = true
+y_sort_enabled = false
+texture_filter = 0
+texture_repeat = 0
+material = null
+use_parent_material = false
+clip_contents = false
+custom_minimum_size = Vector2(0, 0)
+layout_direction = 0
+layout_mode = 3
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 288.0
+offset_top = -119.0
+offset_right = 866.0
+offset_bottom = 154.0
+grow_horizontal = 1
+grow_vertical = 1
+rotation = 0.0
+scale = Vector2(1, 1)
+pivot_offset = Vector2(0, 0)
+size_flags_horizontal = 1
+size_flags_vertical = 4
+size_flags_stretch_ratio = 1.0
+localize_numeral_system = true
+tooltip_text = ""
+focus_neighbor_left = NodePath("")
+focus_neighbor_top = NodePath("")
+focus_neighbor_right = NodePath("")
+focus_neighbor_bottom = NodePath("")
+focus_next = NodePath("")
+focus_previous = NodePath("")
+focus_mode = 0
+mouse_filter = 2
+mouse_force_pass_scroll_events = true
+mouse_default_cursor_shape = 0
+theme = ExtResource("20_6yfs1")
+theme_type_variation = &""
+theme_override_colors/font_color = Color(0.23, 0.134397, 0.0322, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 32
+theme_override_font_sizes/font_size = 200
+text = "00:00"
+label_settings = null
+horizontal_alignment = 0
+vertical_alignment = 1
+autowrap_mode = 0
+justification_flags = 163
+clip_text = false
+text_overrun_behavior = 0
+ellipsis_char = "…"
+uppercase = false
+tab_stops = PackedFloat32Array()
+lines_skipped = 0
+max_lines_visible = -1
+visible_characters = -1
+visible_characters_behavior = 0
+visible_ratio = 1.0
+text_direction = 0
+language = ""
+structured_text_bidi_override = 0
+structured_text_bidi_override_options = []
+script = null
+
+[node name="Lives" type="Node2D" parent="UI/GameUI"]
+position = Vector2(0, 682)
+
+[node name="Sprite2D" parent="UI/GameUI/Lives" instance=ExtResource("19_hgyu3")]
+position = Vector2(-148, 0)
+frame = 2
+
+[node name="Label" type="Label" parent="UI/GameUI/Lives"]
+_import_path = NodePath("")
+unique_name_in_owner = false
+process_mode = 0
+process_priority = 0
+process_physics_priority = 0
+process_thread_group = 0
+physics_interpolation_mode = 2
+auto_translate_mode = 0
+editor_description = ""
+visible = true
+modulate = Color(1, 1, 1, 1)
+self_modulate = Color(1, 1, 1, 1)
+show_behind_parent = false
+top_level = false
+clip_children = 0
+light_mask = 1
+visibility_layer = 1
+z_index = 0
+z_as_relative = true
+y_sort_enabled = false
+texture_filter = 0
+texture_repeat = 0
+material = null
+use_parent_material = false
+clip_contents = false
+custom_minimum_size = Vector2(0, 0)
+layout_direction = 0
+layout_mode = 3
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = -884.0
+offset_top = -119.0
+offset_right = -306.0
+offset_bottom = 154.0
+grow_horizontal = 1
+grow_vertical = 1
+rotation = 0.0
+scale = Vector2(1, 1)
+pivot_offset = Vector2(0, 0)
+size_flags_horizontal = 1
+size_flags_vertical = 4
+size_flags_stretch_ratio = 1.0
+localize_numeral_system = true
+tooltip_text = ""
+focus_neighbor_left = NodePath("")
+focus_neighbor_top = NodePath("")
+focus_neighbor_right = NodePath("")
+focus_neighbor_bottom = NodePath("")
+focus_next = NodePath("")
+focus_previous = NodePath("")
+focus_mode = 0
+mouse_filter = 2
+mouse_force_pass_scroll_events = true
+mouse_default_cursor_shape = 0
+theme = ExtResource("20_6yfs1")
+theme_type_variation = &""
+theme_override_colors/font_color = Color(0.23, 0.134397, 0.0322, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 32
+theme_override_font_sizes/font_size = 200
+text = "00:00"
+label_settings = null
+horizontal_alignment = 2
+vertical_alignment = 1
+autowrap_mode = 0
+justification_flags = 163
+clip_text = false
+text_overrun_behavior = 0
+ellipsis_char = "…"
+uppercase = false
+tab_stops = PackedFloat32Array()
+lines_skipped = 0
+max_lines_visible = -1
+visible_characters = -1
+visible_characters_behavior = 0
+visible_ratio = 1.0
+text_direction = 0
+language = ""
+structured_text_bidi_override = 0
+structured_text_bidi_override_options = []
+script = null
+
+[node name="Coins" type="Node2D" parent="UI/GameUI"]
+position = Vector2(0, 941)
+
+[node name="Sprite2D" parent="UI/GameUI/Coins" instance=ExtResource("19_hgyu3")]
+position = Vector2(-148, 0)
+frame = 3
+
+[node name="Label" type="Label" parent="UI/GameUI/Coins"]
+_import_path = NodePath("")
+unique_name_in_owner = false
+process_mode = 0
+process_priority = 0
+process_physics_priority = 0
+process_thread_group = 0
+physics_interpolation_mode = 2
+auto_translate_mode = 0
+editor_description = ""
+visible = true
+modulate = Color(1, 1, 1, 1)
+self_modulate = Color(1, 1, 1, 1)
+show_behind_parent = false
+top_level = false
+clip_children = 0
+light_mask = 1
+visibility_layer = 1
+z_index = 0
+z_as_relative = true
+y_sort_enabled = false
+texture_filter = 0
+texture_repeat = 0
+material = null
+use_parent_material = false
+clip_contents = false
+custom_minimum_size = Vector2(0, 0)
+layout_direction = 0
+layout_mode = 3
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = -880.0
+offset_top = -119.0
+offset_right = -302.0
+offset_bottom = 154.0
+grow_horizontal = 1
+grow_vertical = 1
+rotation = 0.0
+scale = Vector2(1, 1)
+pivot_offset = Vector2(0, 0)
+size_flags_horizontal = 1
+size_flags_vertical = 4
+size_flags_stretch_ratio = 1.0
+localize_numeral_system = true
+tooltip_text = ""
+focus_neighbor_left = NodePath("")
+focus_neighbor_top = NodePath("")
+focus_neighbor_right = NodePath("")
+focus_neighbor_bottom = NodePath("")
+focus_next = NodePath("")
+focus_previous = NodePath("")
+focus_mode = 0
+mouse_filter = 2
+mouse_force_pass_scroll_events = true
+mouse_default_cursor_shape = 0
+theme = ExtResource("20_6yfs1")
+theme_type_variation = &""
+theme_override_colors/font_color = Color(0.23, 0.134397, 0.0322, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 32
+theme_override_font_sizes/font_size = 200
+text = "00:00"
+label_settings = null
+horizontal_alignment = 2
+vertical_alignment = 1
+autowrap_mode = 0
+justification_flags = 163
+clip_text = false
+text_overrun_behavior = 0
+ellipsis_char = "…"
+uppercase = false
+tab_stops = PackedFloat32Array()
+lines_skipped = 0
+max_lines_visible = -1
+visible_characters = -1
+visible_characters_behavior = 0
+visible_ratio = 1.0
+text_direction = 0
+language = ""
+structured_text_bidi_override = 0
+structured_text_bidi_override_options = []
+script = null
+
+[node name="DayOver" type="Node2D" parent="UI"]
+script = ExtResource("29_xtt26")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="UI/DayOver"]
+libraries = {
+"": SubResource("AnimationLibrary_1syl6")
+}
+
+[node name="Container" type="Node2D" parent="UI/DayOver"]
+scale = Vector2(1e-05, 1e-05)
+
+[node name="BG" type="Sprite2D" parent="UI/DayOver/Container"]
+texture = ExtResource("30_ffbii")
+hframes = 2
+
+[node name="Button" type="Node2D" parent="UI/DayOver/Container"]
+position = Vector2(0, 173)
+scale = Vector2(1e-05, 1e-05)
+
+[node name="Continue" type="Button" parent="UI/DayOver/Container/Button"]
+offset_left = -108.0
+offset_top = -60.0
+offset_right = 117.0
+offset_bottom = 70.0
+theme = ExtResource("20_6yfs1")
+theme_override_font_sizes/font_size = 48
+text = "Continue!"
+
+[node name="GameOver" type="Node2D" parent="UI"]
+script = ExtResource("29_88oh1")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="UI/GameOver"]
+libraries = {
+"": SubResource("AnimationLibrary_aqsad")
+}
+
+[node name="Container" type="Node2D" parent="UI/GameOver"]
+scale = Vector2(1e-05, 1e-05)
+
+[node name="BG" type="Sprite2D" parent="UI/GameOver/Container"]
+texture = ExtResource("30_ffbii")
+hframes = 2
+frame = 1
+
+[node name="Buttons" type="Node2D" parent="UI/GameOver/Container"]
+position = Vector2(0, 195)
+scale = Vector2(1e-05, 1e-05)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/GameOver/Container/Buttons"]
+offset_left = -301.0
+offset_top = -94.0
+offset_right = 288.0
+offset_bottom = 36.0
+alignment = 1
+
+[node name="Back" type="Button" parent="UI/GameOver/Container/Buttons/HBoxContainer"]
+layout_mode = 2
+theme = ExtResource("20_6yfs1")
+theme_override_font_sizes/font_size = 48
+text = "Back to Menu!"
+
+[node name="Restart" type="Button" parent="UI/GameOver/Container/Buttons/HBoxContainer"]
+layout_mode = 2
+theme = ExtResource("20_6yfs1")
+theme_override_font_sizes/font_size = 48
+text = "Play again!"
+
+[connection signal="pressed" from="UI/DayOver/Container/Button/Continue" to="UI/DayOver" method="_on_continue_pressed"]
+[connection signal="pressed" from="UI/GameOver/Container/Buttons/HBoxContainer/Back" to="UI/GameOver" method="_on_back_pressed"]
+[connection signal="pressed" from="UI/GameOver/Container/Buttons/HBoxContainer/Restart" to="UI/GameOver" method="_on_restart_pressed"]

@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="PowerupDrop" load_steps=2 format=3 uid="uid://bfb33bfnfxibg"]
+
+[ext_resource type="Script" path="res://powerups/types/powerup_drop.gd" id="1_8v0hs"]
+
+[resource]
+script = ExtResource("1_8v0hs")
+frame = 0
+desc = "Instantly drops your parasol."
+color = Color(1, 1, 1, 1)
+instant_process = true
+single_use = false
+continuous = false
+needs_visit = true
+completion_duration_factor = 1.0
+cost = 0.0

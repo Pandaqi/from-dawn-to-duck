@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="PowerupShop" load_steps=2 format=3 uid="uid://bgat7kwp01frp"]
+
+[ext_resource type="Script" path="res://powerups/types/powerup_shop.gd" id="1_vsrci"]
+
+[resource]
+script = ExtResource("1_vsrci")
+frame = 4
+desc = "Gain an extra parasol."
+color = Color(1, 1, 1, 1)
+instant_process = false
+single_use = false
+continuous = false
+needs_visit = false
+completion_duration_factor = 1.0
+cost = 1.0
+reset_on_failure_only = false

@@ -53,6 +53,9 @@ func reposition() -> void:
 func leave() -> void:
 	target_follower.reset_to_starting_target()
 	state = TouristState.LEAVING
+	
+	var reward : int = round(Global.config.tourist_coin_reward.rand_float() * Global.config.base_price)
+	prog_data.change_coins(reward)
 
 func is_burnable() -> bool:
 	return state == TouristState.SUNBATHING

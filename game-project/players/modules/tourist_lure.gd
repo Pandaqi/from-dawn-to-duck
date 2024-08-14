@@ -4,11 +4,14 @@ var enabled := false
 @export var input : ModuleInput
 
 func activate() -> void:
-	input.button_released.connect(lure_nearby_tourists)
+	input.button_released.connect(on_button_pressed)
 
-func lure_nearby_tourists() -> void:
+func on_button_pressed() -> void:
 	if not enabled: return
-	
+	if not Global.config.lure_on_button_press: return
+	lure()
+
+func lure() -> void:
 	var tourists := get_tree().get_nodes_in_group("Tourists")
 	var lure_dist := Global.config.scale(Global.config.lure_dist)
 	for tourist in tourists:

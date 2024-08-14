@@ -6,6 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://cv647ka5rxl4e" path="res://icon.svg" id="3_n85eq"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_abbio"]
+resource_local_to_scene = false
+resource_name = ""
 shader = ExtResource("3_fsixp")
 shader_parameter/scale = 5.0
 shader_parameter/color1 = Color(1, 1, 1, 1)
@@ -26,4 +28,3 @@ material = SubResource("ShaderMaterial_abbio")
 position = Vector2(0, -128)
 script = ExtResource("1_b4vnv")
 poly = Array[Vector2]([Vector2(100, 0), Vector2(0, 100), Vector2(-100, 0), Vector2(0, -100)])
-poly_uvs = null

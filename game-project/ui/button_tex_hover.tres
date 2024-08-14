@@ -1,0 +1,16 @@
+[gd_resource type="StyleBoxTexture" load_steps=3 format=3 uid="uid://m6kfgl28vwd4"]
+
+[ext_resource type="Texture2D" uid="uid://bhpylh6fjw75y" path="res://game_loop/main/misc.webp" id="1_2jtfd"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uks1s"]
+atlas = ExtResource("1_2jtfd")
+region = Rect2(768, 256, 256, 256)
+
+[resource]
+texture = SubResource("AtlasTexture_uks1s")
+texture_margin_left = 32.0
+texture_margin_top = 32.0
+texture_margin_right = 32.0
+texture_margin_bottom = 32.0
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2

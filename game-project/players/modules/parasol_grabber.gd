@@ -11,6 +11,10 @@ var button_press_time := 0.0
 
 @export var input : ModuleInput
 
+@export var powerups_data : PowerupsData
+@export var rotate_type : PowerupType
+@export var drop_type : PowerupType
+
 signal changed(p:Parasol)
 signal dropped()
 
@@ -20,7 +24,7 @@ func activate() -> void:
 
 func _process(dt:float) -> void:
 	keep_with_player()
-	rotate_parasol(dt)
+	rotate_parasol_if_needed(dt)
 	if not button_grabs_parasol:
 		check_for_parasols_in_range()
 
@@ -28,11 +32,18 @@ func keep_with_player() -> void:
 	if not has_parasol(): return
 	parasol.set_position(global_position)
 
-func rotate_parasol(dt:float) -> void:
+func rotate_parasol_if_needed(dt:float) -> void:
 	if not has_parasol(): return
 	if not holding_button: return
 	if not Global.config.parasol_rotate_button_hold: return
 	if not input_was_held(): return
+	
+	var can_rotate_another_way := powerups_data.has_of_type(rotate_type)
+	if can_rotate_another_way: return
+	
+	rotate_parasol(dt)
+
+func rotate_parasol(dt:float) -> void:
 	var rotate_speed := Global.config.parasol_rotate_speed * dt
 	parasol.shadow_caster.update_rotation(rotate_speed)
 
@@ -73,13 +84,18 @@ func grab(p:Parasol) -> void:
 
 func drop() -> void:
 	if not has_parasol(): return
-	parasol.set_position(global_position)
+	if not can_drop(): return
+	
+	parasol.set_position(get_drop_position())
 	last_parasol_dropped = parasol
 	parasol = null
 	dropped.emit()
 
 func get_time_since_button_press() -> float:
 	return (Time.get_ticks_msec() - button_press_time) / 1000.0
+
+func get_drop_position() -> Vector2:
+	return global_position
 
 func on_button_pressed() -> void:
 	holding_button = true
@@ -93,7 +109,19 @@ func on_button_released() -> void:
 	holding_button = false
 	
 	if button_drops_parasol and not input_was_held(): 
-		drop()
+		var can_drop_another_way := powerups_data.has_of_type(drop_type)
+		if not can_drop_another_way: 
+			drop()
 	
 	if button_grabs_parasol and not input_was_held(): 
 		check_for_parasols_in_range()
+
+func can_drop() -> bool:
+	if Global.config.parasols_can_be_inside_tourists: return true
+	
+	var bodies = get_tree().get_nodes_in_group("Bodies")
+	var pos := get_drop_position()
+	for body in bodies:
+		if body.is_in_range(pos):
+			return false
+	return true

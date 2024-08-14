@@ -1,0 +1,230 @@
+[gd_scene load_steps=14 format=3 uid="uid://qjnt52kcxcvi"]
+
+[ext_resource type="Script" path="res://powerups/powerup.gd" id="1_ng4j8"]
+[ext_resource type="Script" path="res://powerups/modules/visuals.gd" id="2_vngvt"]
+[ext_resource type="Material" uid="uid://cvjamkirrjd07" path="res://powerups/random_blob_shader.tres" id="3_ay87f"]
+[ext_resource type="Texture2D" uid="uid://c57f5ftmdknaq" path="res://game_loop/main/shader_placeholder.webp" id="4_hci1y"]
+[ext_resource type="PackedScene" uid="uid://0queh80kw3a2" path="res://powerups/powerup_sprite.tscn" id="5_3mcs7"]
+[ext_resource type="Theme" uid="uid://crexjyt0afkk7" path="res://ui/default_theme.tres" id="6_6i3ba"]
+[ext_resource type="Script" path="res://tourists/modules/shadow_tracker.gd" id="6_xfkce"]
+[ext_resource type="FontFile" uid="uid://rvcnhiyn15ho" path="res://ui/fonts/Beach-Regular.otf" id="7_3o76u"]
+[ext_resource type="Script" path="res://powerups/modules/powerup_completer.gd" id="7_a40fm"]
+[ext_resource type="PackedScene" uid="uid://dovns8xh36uru" path="res://game_loop/main/misc_sprite.tscn" id="8_7tkvg"]
+[ext_resource type="Script" path="res://powerups/modules/powerup_executer.gd" id="8_eehdv"]
+[ext_resource type="Resource" uid="uid://bfvbjf7w1catl" path="res://progression/data/progression_data.tres" id="9_fksc6"]
+[ext_resource type="Texture2D" uid="uid://d4ks7dxeborwo" path="res://ui/progbar_powerup_tex.tres" id="11_sm124"]
+
+[node name="Powerup" type="Node2D" groups=["Powerups"]]
+script = ExtResource("1_ng4j8")
+
+[node name="Visuals" type="Node2D" parent="."]
+script = ExtResource("2_vngvt")
+
+[node name="BG" type="Sprite2D" parent="Visuals"]
+material = ExtResource("3_ay87f")
+texture = ExtResource("4_hci1y")
+
+[node name="Icon" parent="Visuals" instance=ExtResource("5_3mcs7")]
+scale = Vector2(0.25, 0.25)
+
+[node name="Price" type="Node2D" parent="Visuals"]
+position = Vector2(0, 47)
+scale = Vector2(0.125, 0.125)
+
+[node name="Label" type="Label" parent="Visuals/Price"]
+_import_path = NodePath("")
+unique_name_in_owner = false
+process_mode = 0
+process_priority = 0
+process_physics_priority = 0
+process_thread_group = 0
+physics_interpolation_mode = 2
+auto_translate_mode = 0
+editor_description = ""
+visible = true
+modulate = Color(1, 1, 1, 1)
+self_modulate = Color(1, 1, 1, 1)
+show_behind_parent = false
+top_level = false
+clip_children = 0
+light_mask = 1
+visibility_layer = 1
+z_index = 0
+z_as_relative = true
+y_sort_enabled = false
+texture_filter = 0
+texture_repeat = 0
+material = null
+use_parent_material = false
+clip_contents = false
+custom_minimum_size = Vector2(0, 0)
+layout_direction = 0
+layout_mode = 3
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 0.0
+offset_top = -432.0
+offset_right = 200.0
+offset_bottom = 385.0
+grow_horizontal = 1
+grow_vertical = 1
+rotation = 0.0
+scale = Vector2(1, 1)
+pivot_offset = Vector2(0, 0)
+size_flags_horizontal = 1
+size_flags_vertical = 4
+size_flags_stretch_ratio = 1.0
+localize_numeral_system = true
+tooltip_text = ""
+focus_neighbor_left = NodePath("")
+focus_neighbor_top = NodePath("")
+focus_neighbor_right = NodePath("")
+focus_neighbor_bottom = NodePath("")
+focus_next = NodePath("")
+focus_previous = NodePath("")
+focus_mode = 0
+mouse_filter = 2
+mouse_force_pass_scroll_events = true
+mouse_default_cursor_shape = 0
+theme = ExtResource("6_6i3ba")
+theme_type_variation = &""
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 32
+theme_override_fonts/font = ExtResource("7_3o76u")
+theme_override_font_sizes/font_size = 512
+text = "9"
+label_settings = null
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 0
+justification_flags = 163
+clip_text = false
+text_overrun_behavior = 0
+ellipsis_char = "…"
+uppercase = false
+tab_stops = PackedFloat32Array()
+lines_skipped = 0
+max_lines_visible = -1
+visible_characters = -1
+visible_characters_behavior = 0
+visible_ratio = 1.0
+text_direction = 0
+language = ""
+structured_text_bidi_override = 0
+structured_text_bidi_override_options = []
+script = null
+
+[node name="Icon" parent="Visuals/Price" instance=ExtResource("8_7tkvg")]
+position = Vector2(-134, -3)
+frame = 3
+
+[node name="ShadowTracker" type="Node2D" parent="."]
+script = ExtResource("6_xfkce")
+
+[node name="LabelDebug" type="Label" parent="ShadowTracker"]
+_import_path = NodePath("")
+unique_name_in_owner = false
+process_mode = 0
+process_priority = 0
+process_physics_priority = 0
+process_thread_group = 0
+physics_interpolation_mode = 2
+auto_translate_mode = 0
+editor_description = ""
+visible = true
+modulate = Color(1, 1, 1, 1)
+self_modulate = Color(1, 1, 1, 1)
+show_behind_parent = false
+top_level = false
+clip_children = 0
+light_mask = 1
+visibility_layer = 1
+z_index = 0
+z_as_relative = true
+y_sort_enabled = false
+texture_filter = 0
+texture_repeat = 0
+material = null
+use_parent_material = false
+clip_contents = false
+custom_minimum_size = Vector2(0, 0)
+layout_direction = 0
+layout_mode = 3
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 40.0
+offset_bottom = 23.0
+grow_horizontal = 1
+grow_vertical = 1
+rotation = 0.0
+scale = Vector2(1, 1)
+pivot_offset = Vector2(0, 0)
+size_flags_horizontal = 1
+size_flags_vertical = 4
+size_flags_stretch_ratio = 1.0
+localize_numeral_system = true
+tooltip_text = ""
+focus_neighbor_left = NodePath("")
+focus_neighbor_top = NodePath("")
+focus_neighbor_right = NodePath("")
+focus_neighbor_bottom = NodePath("")
+focus_next = NodePath("")
+focus_previous = NodePath("")
+focus_mode = 0
+mouse_filter = 2
+mouse_force_pass_scroll_events = true
+mouse_default_cursor_shape = 0
+theme = null
+theme_type_variation = &""
+text = ""
+label_settings = null
+horizontal_alignment = 0
+vertical_alignment = 0
+autowrap_mode = 0
+justification_flags = 163
+clip_text = false
+text_overrun_behavior = 0
+ellipsis_char = "…"
+uppercase = false
+tab_stops = PackedFloat32Array()
+lines_skipped = 0
+max_lines_visible = -1
+visible_characters = -1
+visible_characters_behavior = 0
+visible_ratio = 1.0
+text_direction = 0
+language = ""
+structured_text_bidi_override = 0
+structured_text_bidi_override_options = []
+script = null
+
+[node name="PowerupCompleter" type="Node2D" parent="." node_paths=PackedStringArray("shadow_tracker")]
+scale = Vector2(0.5, 0.5)
+script = ExtResource("7_a40fm")
+shadow_tracker = NodePath("../ShadowTracker")
+
+[node name="ProgBar" type="Node2D" parent="PowerupCompleter"]
+position = Vector2(0, -110)
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="PowerupCompleter/ProgBar"]
+offset_left = -126.0
+offset_top = -130.0
+offset_right = 130.0
+offset_bottom = 126.0
+texture_under = ExtResource("11_sm124")
+texture_progress = ExtResource("11_sm124")
+tint_progress = Color(0.411927, 0.98, 0.0588, 1)
+
+[node name="PowerupExecuter" type="Node2D" parent="." node_paths=PackedStringArray("powerup_completer")]
+script = ExtResource("8_eehdv")
+powerup_completer = NodePath("../PowerupCompleter")
+prog_data = ExtResource("9_fksc6")

@@ -2,6 +2,8 @@ extends Node
 
 signal game_over(we_won:bool)
 signal life_lost()
+signal hand_to_ui(node:Node2D)
+signal spawn_parasol()
 
 func _ready() -> void:
 	add_background_music()

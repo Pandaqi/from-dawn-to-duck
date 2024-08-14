@@ -1,0 +1,11 @@
+[gd_scene load_steps=4 format=3 uid="uid://rmrmkkrdksey"]
+
+[ext_resource type="Script" path="res://tourists/modules/body.gd" id="1_bt8ax"]
+[ext_resource type="Resource" uid="uid://dwjs0l1bk6wbi" path="res://parasols/shapes/shape_tourist.tres" id="2_rtj0j"]
+[ext_resource type="PackedScene" uid="uid://dc45fbxoj0qt" path="res://tourists/radius_viewer/radius_viewer.tscn" id="3_vdpqx"]
+
+[node name="Body" type="Node2D" groups=["Bodies"]]
+script = ExtResource("1_bt8ax")
+shape = ExtResource("2_rtj0j")
+
+[node name="RadiusViewer" parent="." instance=ExtResource("3_vdpqx")]

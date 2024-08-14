@@ -1,20 +1,27 @@
-[gd_scene load_steps=10 format=3 uid="uid://b8m1s3o1gkuyn"]
+[gd_scene load_steps=13 format=3 uid="uid://b8m1s3o1gkuyn"]
 
 [ext_resource type="Texture2D" uid="uid://cv647ka5rxl4e" path="res://icon.svg" id="1_ab5xh"]
 [ext_resource type="Script" path="res://tourists/tourist.gd" id="1_juevs"]
 [ext_resource type="Script" path="res://tourists/modules/shadow_tracker.gd" id="2_hdg86"]
+[ext_resource type="Script" path="res://tourists/modules/visuals.gd" id="2_unlv4"]
 [ext_resource type="Script" path="res://players/modules/state.gd" id="3_kp2qp"]
 [ext_resource type="Script" path="res://tourists/modules/sun_burner.gd" id="3_rt4ha"]
 [ext_resource type="Script" path="res://tourists/modules/state_tourist.gd" id="4_6elje"]
 [ext_resource type="Script" path="res://tourists/modules/target_follower.gd" id="5_6s6p5"]
 [ext_resource type="Resource" uid="uid://bfvbjf7w1catl" path="res://progression/data/progression_data.tres" id="6_gpbxq"]
+[ext_resource type="Texture2D" uid="uid://bjeny631rg5qp" path="res://ui/progbar_sunburn_tex.tres" id="9_n0el7"]
 [ext_resource type="Resource" uid="uid://x8qqsqbmai1n" path="res://map/data/map_data.tres" id="9_pkx2e"]
+[ext_resource type="PackedScene" uid="uid://rmrmkkrdksey" path="res://tourists/modules/body.tscn" id="11_844bp"]
 
 [node name="Tourist" type="Node2D" groups=["Tourists"]]
 position = Vector2(331, 204)
 script = ExtResource("1_juevs")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Visuals" type="Node2D" parent="." node_paths=PackedStringArray("body")]
+script = ExtResource("2_unlv4")
+body = NodePath("../Body")
+
+[node name="Sprite2D" type="Sprite2D" parent="Visuals"]
 texture = ExtResource("1_ab5xh")
 
 [node name="State" type="Node2D" parent="."]
@@ -28,44 +35,197 @@ target_follower = NodePath("../TargetFollower")
 prog_data = ExtResource("6_gpbxq")
 
 [node name="LabelDebug" type="Label" parent="StateTourist"]
+_import_path = NodePath("")
+unique_name_in_owner = false
+process_mode = 0
+process_priority = 0
+process_physics_priority = 0
+process_thread_group = 0
+physics_interpolation_mode = 2
+auto_translate_mode = 0
+editor_description = ""
+visible = true
+modulate = Color(1, 1, 1, 1)
+self_modulate = Color(1, 1, 1, 1)
+show_behind_parent = false
+top_level = false
+clip_children = 0
+light_mask = 1
+visibility_layer = 1
+z_index = 0
+z_as_relative = true
+y_sort_enabled = false
+texture_filter = 0
+texture_repeat = 0
+material = null
+use_parent_material = false
+clip_contents = false
+custom_minimum_size = Vector2(0, 0)
+layout_direction = 0
+layout_mode = 3
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
 offset_left = -58.0
 offset_top = -31.0
 offset_right = 57.0
 offset_bottom = 23.0
+grow_horizontal = 1
+grow_vertical = 1
+rotation = 0.0
+scale = Vector2(1, 1)
+pivot_offset = Vector2(0, 0)
+size_flags_horizontal = 1
+size_flags_vertical = 4
+size_flags_stretch_ratio = 1.0
+localize_numeral_system = true
+tooltip_text = ""
+focus_neighbor_left = NodePath("")
+focus_neighbor_top = NodePath("")
+focus_neighbor_right = NodePath("")
+focus_neighbor_bottom = NodePath("")
+focus_next = NodePath("")
+focus_previous = NodePath("")
+focus_mode = 0
+mouse_filter = 2
+mouse_force_pass_scroll_events = true
+mouse_default_cursor_shape = 0
+theme = null
+theme_type_variation = &""
 text = "Lala"
+label_settings = null
 horizontal_alignment = 1
 vertical_alignment = 1
+autowrap_mode = 0
+justification_flags = 163
+clip_text = false
+text_overrun_behavior = 0
+ellipsis_char = "…"
+uppercase = false
+tab_stops = PackedFloat32Array()
+lines_skipped = 0
+max_lines_visible = -1
+visible_characters = -1
+visible_characters_behavior = 0
+visible_ratio = 1.0
+text_direction = 0
+language = ""
+structured_text_bidi_override = 0
+structured_text_bidi_override_options = []
+script = null
 
-[node name="ShadowTracker" type="Node2D" parent="."]
+[node name="ShadowTracker" type="Node2D" parent="." node_paths=PackedStringArray("body")]
 script = ExtResource("2_hdg86")
+body = NodePath("../Body")
 
 [node name="LabelDebug" type="Label" parent="ShadowTracker"]
+_import_path = NodePath("")
+unique_name_in_owner = false
+process_mode = 0
+process_priority = 0
+process_physics_priority = 0
+process_thread_group = 0
+physics_interpolation_mode = 2
+auto_translate_mode = 0
+editor_description = ""
+visible = true
+modulate = Color(1, 1, 1, 1)
+self_modulate = Color(1, 1, 1, 1)
+show_behind_parent = false
+top_level = false
+clip_children = 0
+light_mask = 1
+visibility_layer = 1
+z_index = 0
+z_as_relative = true
+y_sort_enabled = false
+texture_filter = 0
+texture_repeat = 0
+material = null
+use_parent_material = false
+clip_contents = false
+custom_minimum_size = Vector2(0, 0)
+layout_direction = 0
+layout_mode = 3
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
 offset_left = -58.0
 offset_top = -31.0
 offset_right = 57.0
 offset_bottom = 23.0
+grow_horizontal = 1
+grow_vertical = 1
+rotation = 0.0
+scale = Vector2(1, 1)
+pivot_offset = Vector2(0, 0)
+size_flags_horizontal = 1
+size_flags_vertical = 4
+size_flags_stretch_ratio = 1.0
+localize_numeral_system = true
+tooltip_text = ""
+focus_neighbor_left = NodePath("")
+focus_neighbor_top = NodePath("")
+focus_neighbor_right = NodePath("")
+focus_neighbor_bottom = NodePath("")
+focus_next = NodePath("")
+focus_previous = NodePath("")
+focus_mode = 0
+mouse_filter = 2
+mouse_force_pass_scroll_events = true
+mouse_default_cursor_shape = 0
+theme = null
+theme_type_variation = &""
 text = "Lala"
+label_settings = null
 horizontal_alignment = 1
 vertical_alignment = 1
+autowrap_mode = 0
+justification_flags = 163
+clip_text = false
+text_overrun_behavior = 0
+ellipsis_char = "…"
+uppercase = false
+tab_stops = PackedFloat32Array()
+lines_skipped = 0
+max_lines_visible = -1
+visible_characters = -1
+visible_characters_behavior = 0
+visible_ratio = 1.0
+text_direction = 0
+language = ""
+structured_text_bidi_override = 0
+structured_text_bidi_override_options = []
+script = null
 
-[node name="SunBurner" type="Node2D" parent="." node_paths=PackedStringArray("shadow_tracker", "state_tourist")]
+[node name="SunBurner" type="Node2D" parent="." node_paths=PackedStringArray("shadow_tracker", "state_tourist", "state")]
 position = Vector2(0, -91)
+scale = Vector2(0.66, 0.66)
 script = ExtResource("3_rt4ha")
 shadow_tracker = NodePath("../ShadowTracker")
 state_tourist = NodePath("../StateTourist")
 prog_data = ExtResource("6_gpbxq")
+state = NodePath("../State")
 
-[node name="TextureProgressBar" type="TextureProgressBar" parent="SunBurner"]
-offset_left = -64.0
-offset_top = -18.0
-offset_right = 64.0
-offset_bottom = 17.0
+[node name="ProgBar" type="Node2D" parent="SunBurner"]
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="SunBurner/ProgBar"]
+offset_left = -128.0
+offset_top = -127.0
+offset_right = 128.0
+offset_bottom = 129.0
 value = 50.0
-nine_patch_stretch = true
-texture_under = ExtResource("1_ab5xh")
-texture_progress = ExtResource("1_ab5xh")
-tint_progress = Color(1, 0.00999999, 0.00999999, 1)
+texture_under = ExtResource("9_n0el7")
+texture_progress = ExtResource("9_n0el7")
+tint_under = Color(0.493545, 0.493546, 0.493546, 1)
+tint_progress = Color(1, 0, 0, 1)
 
 [node name="TargetFollower" type="Node2D" parent="."]
 script = ExtResource("5_6s6p5")
 map_data = ExtResource("9_pkx2e")
+
+[node name="Body" parent="." instance=ExtResource("11_844bp")]

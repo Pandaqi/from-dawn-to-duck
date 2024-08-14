@@ -5,20 +5,43 @@ class_name ModuleShadowCaster extends Node2D
 @export var shadows : Array[Shadow] = []
 @onready var entity = get_parent()
 
+var shape : ParasolShape
+var scale_factor := Vector2.ONE
+
+signal shape_changed(shape:ParasolShape, polygon:Array[Vector2])
+
+func _ready() -> void:
+	material = material.duplicate(false)
+
+func set_color(c:Color) -> void:
+	# @NOTE: color1 is just the white or some other neutral
+	material.set_shader_parameter("color2", c)
+
 func set_shape(shp:ParasolShape) -> void:
-	var points := shp.get_points()
-	
+	shape = shp
+
 	var random_scale := Vector2(
 		Global.config.shape_scale_bounds.rand_float(),
 		Global.config.shape_scale_bounds.rand_float(), 
 	)
 	
+	scale_shape(random_scale)
+	
+func scale_shape(factor:Vector2) -> void:
+	scale_factor *= factor
+	
+	var points := shape.get_points()
 	poly = []
 	poly_uvs = []
 	for point in points:
-		var final_point := Global.config.scale_vector(point) * random_scale
+		var final_point := Global.config.scale_vector(point) * factor
 		poly.append(final_point)
 		poly_uvs.append(0.5 * (point + Vector2.ONE))
+	
+	shape_changed.emit(shape, poly)
+	
+	var avg_scale := 0.5 * (scale_factor.x + scale_factor.y)
+	material.set_shader_parameter("scale", 5 * avg_scale)
 
 func get_polygon_local() -> Array[Vector2]:
 	return poly.duplicate()

@@ -4,9 +4,12 @@ class_name Parasols extends MainSystem
 @export var map : Map
 @export var parasols_data : ParasolsData
 @export var prog_data : ProgressionData
+@export var powerups_data : PowerupsData
+@export var shop_type : PowerupType
 
 func activate() -> void:
 	prog_data.day_started.connect(on_day_started)
+	GSignal.spawn_parasol.connect(on_spawn_requested)
 	
 	# if parasols are not enabled, we start with all of them already in the level 
 	# (as none can be bought/grabbed/added over time)
@@ -18,7 +21,7 @@ func on_day_started() -> void:
 	auto_buy_parasols_if_needed()
 
 func auto_buy_parasols_if_needed() -> void:
-	if map.map_data.has_shops(): return
+	if powerups_data.has_of_type(shop_type): return
 	if prog_data.day % Global.config.parasols_auto_spawn_interval != 0: return
 	spawn_multiple(Global.config.parasols_auto_spawn_per_day)
 
@@ -42,4 +45,6 @@ func get_random_valid_position() -> Vector2:
 		"area": "beach",
 		"dist": Global.config.parasols_min_spawn_dist
 	})
-		
+
+func on_spawn_requested() -> void:
+	spawn()

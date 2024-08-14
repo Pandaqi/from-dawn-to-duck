@@ -4,7 +4,7 @@ class_name ModuleState extends Node2D
 
 var dead := false
 
-signal died()
+signal died(e:Node2D)
 
 func kill(is_bad := false) -> void:
 	if dead: return
@@ -13,5 +13,5 @@ func kill(is_bad := false) -> void:
 		GSignal.life_lost.emit()
 	
 	dead = true
-	died.emit()
+	died.emit(entity)
 	entity.queue_free()

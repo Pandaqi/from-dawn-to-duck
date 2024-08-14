@@ -11,13 +11,13 @@ enum LightSourceType
 @export var type := LightSourceType.DIRECTIONAL
 @export var shadow_dist_min := 10.0
 @export var shadow_dist_max := 50.0
+@onready var light_node : PointLight2D = $PointLight2D
 
 var enabled := true
 
-# @TODO: Here we'd probably have variables about distance of light, color, strength, any other special properties, etcetera
-
 func set_enabled(val:bool) -> void:
 	enabled = val
+	light_node.set_visible(enabled)
 
 func get_origin() -> Vector2:
 	return global_position

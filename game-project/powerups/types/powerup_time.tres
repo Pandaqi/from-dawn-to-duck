@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="PowerupTime" load_steps=2 format=3 uid="uid://bt1725cq66387"]
+
+[ext_resource type="Script" path="res://powerups/types/powerup_time.gd" id="1_33hdb"]
+
+[resource]
+script = ExtResource("1_33hdb")
+frame = 6
+desc = "Speeds up time."
+color = Color(1, 1, 1, 1)
+instant_process = false
+single_use = false
+continuous = false
+needs_visit = false
+completion_duration_factor = 1.0
+cost = 0.0
+reset_on_failure_only = false

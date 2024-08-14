@@ -10,7 +10,7 @@ var areas : Dictionary = {
 	"water": null
 }
 
-const EXT := Vector2(600, 400)
+const EXT := Vector2(600, 600)
 
 func set_bounds(b:Rect2) -> void:
 	bounds = b
@@ -31,6 +31,7 @@ func query_position(params: Dictionary = {}) -> Vector2:
 	
 	var avoid = params.avoid if ("avoid" in params) else []
 	var min_dist = params.dist if ("dist" in params) else 0.0
+	var fixed_points = params.points if ("points" in params) else []
 	
 	var area : MapArea = null
 	if "area" in params:
@@ -46,6 +47,9 @@ func query_position(params: Dictionary = {}) -> Vector2:
 		if area:
 			rand_pos = area.get_random_position()
 		
+		if fixed_points.size() > 0:
+			rand_pos = fixed_points.pick_random()
+		
 		num_tries += 1
 		
 		for node in avoid:
@@ -59,6 +63,12 @@ func query_position(params: Dictionary = {}) -> Vector2:
 func generate() -> void:
 	generate_lines()
 	generate_areas()
+
+func get_beach_y() -> float:
+	return bounds.position.y + Global.config.map_y_beach_line * bounds.size.y
+
+func get_water_y() -> float:
+	return bounds.position.y + Global.config.map_y_water_line * bounds.size.y
 
 func generate_lines() -> void:
 	var bds := get_bounds()
@@ -85,8 +95,10 @@ func generate_areas() -> void:
 	# the trees area
 	var a1 := MapArea.new()
 	var tree_points := tree_line.points.duplicate()
-	var top_left : Vector2 = tree_points.back() + Vector2(0, -EXT.y)
-	var top_right : Vector2 = tree_points.front() + Vector2(0, -EXT.y)
+	var top_left : Vector2 = tree_points.back()
+	top_left.y = -EXT.y
+	var top_right : Vector2 = tree_points.front()
+	top_right.y = -EXT.y
 	tree_points.append(top_left)
 	tree_points.append(top_right)
 	a1.points = tree_points
@@ -103,8 +115,11 @@ func generate_areas() -> void:
 	var a3 = MapArea.new()
 	var shore_points := shore_line.points.duplicate()
 	var water_points : Array[Vector2] = []
-	var bottom_right : Vector2 = shore_points.back() + Vector2(0, EXT.y)
-	var bottom_left : Vector2 = shore_points.front() + Vector2(0, EXT.y)
+	var bottom_right : Vector2 = shore_points.back()
+	bottom_right.y = bounds.position.y + bounds.size.y + EXT.y
+	var bottom_left : Vector2 = shore_points.front()
+	bottom_left.y = bounds.position.y + bounds.size.y + EXT.y
+	
 	water_points.append(bottom_right)
 	water_points.append(bottom_left)
 	water_points += shore_points
@@ -123,8 +138,3 @@ func wrap_position(pos:Vector2) -> Vector2:
 	if pos.y < bounds.position.y: pos.y += bounds.size.y
 	if pos.y >= (bounds.position.y + bounds.size.y): pos.y -= bounds.size.y
 	return pos
-	
-
-# @TODO: Actually track all special elements in this world? And then loop through and see the type?
-func has_shops() -> bool:
-	return false

@@ -2,6 +2,8 @@ class_name Progression extends Node2D
 
 @export var prog_data : ProgressionData
 @export var tourists : Tourists
+@export var weather_data : WeatherData
+@export var day_over : DayOver
 @onready var canv_mod : CanvasModulate = $CanvasModulate
 
 func activate() -> void:
@@ -24,7 +26,8 @@ func start_day() -> void:
 func end_day() -> void:
 	prog_data.end_day()
 	canv_mod.color = Global.config.night_color
-	await get_tree().create_timer(1.0).timeout
+	day_over.appear()
+	await day_over.dismissed
 	start_day()
 
 func _process(dt:float) -> void:
@@ -37,7 +40,10 @@ func advance_time(dt:float) -> void:
 	if tourists.can_end_day():
 		day_dur *= Global.config.day_duration_quick_end_factor
 	
-	prog_data.advance_time(dt / day_dur)
+	var factor := dt / day_dur
+	factor *= weather_data.time_scale
+	
+	prog_data.advance_time(factor)
 	
 	# change the sky to the right color
 	var color_a := Global.config.dawn_color
