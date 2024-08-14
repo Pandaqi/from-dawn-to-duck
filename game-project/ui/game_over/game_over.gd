@@ -4,6 +4,7 @@ class_name GameOver extends Node2D
 @onready var anim_player : AnimationPlayer = $AnimationPlayer
 
 var active := false
+var edge_margin := 32.0
 
 func activate() -> void:
 	GSignal.game_over.connect(on_game_over)
@@ -18,7 +19,10 @@ func on_game_over(we_won:bool) -> void:
 	var vp_size := get_viewport_rect().size
 	set_position(0.5 * vp_size)
 	
-	var match_scale : float = min(vp_size.x / 1280.0, vp_size.y / 720.0)
+	var match_scale : float = min(
+		(vp_size.x - 2*edge_margin) / 1280.0, 
+		(vp_size.y - 2*edge_margin) / 720.0
+	)
 	if match_scale < 1.0:
 		set_scale(Vector2.ONE * match_scale)
 	

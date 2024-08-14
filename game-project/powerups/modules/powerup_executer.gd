@@ -15,16 +15,23 @@ func activate() -> void:
 	prog_data.day_started.connect(on_day_started)
 
 func on_day_started() -> void:
+	remove_if_too_old()
+
+func remove_if_too_old() -> void:
+	if not type: return
+	if type.never_remove: return
+	
 	var days_passed := prog_data.day - day_added
-	if days_passed < Global.config.powerups_day_stay_duration: return
+	var max_stay : int = round(Global.config.powerups_day_stay_duration * type.days_until_removal_factor)
+	if days_passed < max_stay: return
 	entity.kill()
 
 func is_valid() -> bool:
 	return type != null and open_for_visit
 
 func reset() -> void:
-	powerup_completer.reset()
 	open_for_visit = false
+	powerup_completer.reset()
 
 func on_completed(tp:PowerupType) -> void:
 	type = tp
@@ -53,6 +60,11 @@ func execute(dt := 0.0) -> void:
 	var success := false
 	if type.can_pay_with(prog_data.coins):
 		success = type.execute(self, dt)
+	else:
+		GSignal.feedback.emit(global_position, "Need Money!")
+	
+	if success:
+		prog_data.change_coins(-type.get_cost())
 	
 	if type.single_use:
 		entity.kill()

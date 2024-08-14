@@ -23,7 +23,7 @@ func on_powerup_removed(p:Powerup) -> void:
 	remove_for_type(p.type)
 
 func add_for_type(tp:PowerupType) -> void:
-	var p = powerup_tutorial_scene.instantiate()
+	var p : PowerupTutorial = powerup_tutorial_scene.instantiate()
 	
 	var rand_pos := map.map_data.query_position({
 		"points": possible_spawn_points,
@@ -38,6 +38,9 @@ func add_for_type(tp:PowerupType) -> void:
 	# @NOTE: the 0.85 is just to shrink them a tiny bit, to prevent hugging the edge which looks ugly
 	var target_size := map.map_data.get_beach_y()
 	p.set_scale(target_size / Global.config.sprite_size * Vector2.ONE * 0.85)
+	
+	nodes.append(p)
+	types_covered.append(p.type)
 
 func remove_for_type(tp:PowerupType) -> void:
 	for node in nodes:

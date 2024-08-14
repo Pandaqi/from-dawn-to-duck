@@ -189,4 +189,122 @@ These things aren't much work, but they simply remove the most annoying or unint
 
 It was finally time for that extra spice. And actually being able to buy more parasols and progress to later and later days :p
 
+For the most part, this was nothing special.
+
+* The spawner simply checks how many powerups are on the field, and if it's less than some minimum, it adds more.
+* I discovered I already had a perfect place to _explain_ each powerup: the little area of green at the top (the "tree line" in my code). You can't visit it, nothing else spawns there, yet it's easily viewable. A great place to put little fences explaining what specific powerups do.
+* Every powerup is its own Resource, with only 5 lines of code on average. (The powerups all execute simple actions, so their unique code really only has to call the right function or connect the right two variables.)
+* For now, it simply adds an extra tourist for each day, and tourists yield a random number of coins (between a min/max I set myself).
+* I created some simple images/modals for when you go to the next day or when it's game over. (I decided to _not_ make it automatic: you have to press the button that you're ready for the next day. I noticed players like this little breather---which my previous similar game didn't have---and it's a natural moment to do it.)
+* I quickly picked colors and drew recognizable icons for the powerups.
+
+With that done, the game was "done" in the sense that it had a finished core loop that was bug-free and close to the original vision.
+
+Time to let someone else test it!
+
+### First rough playtest
+
+My little sister spent 15 minutes with the game. This, as usual, showed many areas of improvement. Fortunately, it also showed that the idea was working quite well. It was easy to grasp and play with.
+
+The biggest issues were as follows.
+
+* The numbers weren't balanced/finetuned. (Parasols too cheap, earning too much for each tourist, etcetera.) 
+  * **Solution?** This is just a matter of tweaking and playing a bit more myself.
+* While holding a parasol, you often couldn't see yourself. This made it hard to know where you stood, and if you stood too close to a tourist (which forbids placement). 
+  * **Solution?** Make the handle longer, so the parasol shape is further away from you. 
+  * _Also_ check if any entity is behind the parasol shape, and if so, fade it out a little bit. (We have all these polygons and point-in-polygon checks anyway, so it's easy to reuse them like this.)
+* Similarly, it's a bit ... hard to tell if your parasol is actually doing what it should. Because there is no extra feedback/animation/whatever that tells you if a tourist is in shade or not! 
+  * **Solution?** I should prioritize clear feedback and signs to tell the player these crucial details: if something's in shadow or not, if you're in placement range, if a tourist is leaving or not, if you're holding an umbrella.
+  * Simply adding nice tweens and an outline to the parasol (on grab/drop) already does wonders.
+* I tried a few different levels of "input complexity". For example, you can play the game while rotating/dropping parasols with an extra key (spacebar), or I could disable all that and you only need to learn the arrow keys. 
+  * This clearly showed that **having the spacebar is better**. Being able to freely rotate/drop parasols and lure tourists is far more interesting; without it, it almost feels as if the game imprisons you, restricting the player too much. As such, I'll just have to be smarter with my tutorial so I can _explain_ this extra control to a player without overwhelming them.
+  * **Solution?** Spread the tutorial over the first few days. Write the instructions in the sand; don't start time until they've all faded into view.
+* The game stagnates a bit over time. The things you're doing are slightly _too_ repetitive and same-y. For example, I got the feeling that you should _lose_ a parasol once in a while for some reason, otherwise the beach just gets fuller and fuller until you have no clue what you're doing anymore.
+  * **Solution?** This was the hardest to solve, as it's about core game design principles, instead of superficial mistakes or effects.
+
+And when you feel something's missing, or just a bit "off", it's usually a combination of several factors. In this case, I made the following changes.
+
+* The beach became bigger, tourists and player smaller. (Simply more space to move, less cramped, less tourists hiding underneath a bunch of parasols, less repetitive movement in a small space. At the same time, luring and rotating now becomes more interesting, because you can actually get multiple tourists in the same shadow.)
+* When you try to activate a powerup _but it fails_ (usually because you lack the money), that's when it becomes a CURSE. It executes itself, but inverted. (So, "Gain a life!" becomes "Lose a life!" and such.)
+  * I'd been trying to find a good way to mix powerups and curses for two days now, but found everything convoluted or just not fun. This idea finally did the trick, because I saw (in the playtest) that my sister often _accidentally_ activated powerups because she wasn't paying attention to that portion of the beach.
+* The powerups system _was_ broken in the playtest, though, and testing it again while it actually worked already helped a lot.
+* Every time you lose a life, you also lose a parasol. => This was the simplest rule I could come up with at the time to also _lose_ something once in a while.
+* The **weather system**. At some point, I looked at my list of ideas and noticed half of them were themed around weather. So I renamed the `Suns` system to `Weather` and gave every day varying weather conditions.
+  * Different peak heat.
+  * Different number of _clouds_ that will temporarily block the sun.
+
+Or, rather, I _planned_ to do most of these things tomorrow. So let's skip to that moment.
+
+## Day 3: Things are coming together
+
+### Tutorial
+
+I implemented that tutorial system. I always want to do that relatively early, because it
+
+* Always takes more time than you think ...
+* Is more important than basically anything else, because if the player doesn't understand your game (within 30 seconds), they won't play ...
+* And it is a good measure of how simple your game is, and/or where you should simplify further.
+
+If I can't get you playing within 1 or 2 simple images/instructions, then I want to reconsider what I'm doing.
+
+I'd never done something like this before: placing the tutorial completely in the game world, and just stopping the current level/wave/day until it's displayed fully. (But allowing the player to roam around and _try_ the things explained already.) That's also why I was quite motivated to work on this first.
+
+It's not that hard to make, while I still feel it is one of the more superior methods for tutorials. Very simple, very interactive, very natural.
+
+@TODO: IMAGE OF THAT?
+
+### Weather System
+
+For the most part, this just picks random numbers. (For example, the heat of the day is a number between 0.5 and 1.0, and that ratio just scales the burn factor for that day. There is no other logic of algorithm there.)
+
+The clouds were the most interesting part. When I conceived the idea, I strongly felt that it would do the game a lot of good.
+
+* At this moment, the sun is always shining and anybody not in shadow is always burning.
+* But with clouds ... there will be varied (but predictable!) moments when the sun is blocked for a few seconds. 
+* This creates much-needed variety and possible strategies.
+
+That's why this was the second item on my list of priorities.
+
+Because I still didn't want to use physics (or overcomplicate the game), I used the following trick:
+
+* Clouds simply store a straight _line_ from their left edge to their right edge.
+* The sun knows its vector between itself and the center of the screen. (It arcs around that point and rotates to face it already.)
+* So we ask Godot's handy `Geometry2D` tools if those two lines intersect. If so, the sun is `blocked`, and everybody is considered to be "in shadow".
+
+The cloud itself simply spawns on one edge of the screen and travels to the other. When off-screen again, it destroys itself.
+
+### Fixes & Completions
+
+By this point in the project I always have a lot of `@TODO` notes scattered across the project. Many tiny bugs to fix, many pieces of code that should be expanded or written in a cleaner way, many questions about whether to change some number/variable somewhere.
+
+For example, the money you get from a tourist was just _random_ at the start: 1 to 4 coins. That's what you do when you're just prototyping a game for the first time: cut corners, make everything random or "whatever" just to get it going. Now that the entire game had taken shape, though, I rewrote the code to change the reward based on how burned the tourist is. (And to keep it within certain _bounds_ provided by my big config file, to prevent tourists rewarding negative numbers in weird cases :p)
+
+So I went through all of them and fixed most of them. Yes, _most_. Some ideas I had two days ago were just bad or irrelevant now, so I removed the note an did nothing else. A few things were still uncertain, so I left the notes in.
+
+I also added my final ideas for powerups to the full list, "completing" that part so to speak. (I usually add some powerups that end up being disabled anyway. But I just want to _try everything_ and see what sticks. It's easy to write a new powerup in 10 minutes, test it, see it's rubbish, then disable it. It's much harder to know what the "best powerups" are just by brainstorming or thinking about it.)
+
+Of course, my brain instantly jumped to "but what if we also add 10 different types of tourists!?" and "but what if we have 5 different types of parasols with their own properties!?"
+
+And yes, these would surely make the game more interesting. A tourist that constantly repositions/moves around requires a new strategy. A parasol that is "shadow locked" is also a nice break from all the others that rotate with the sun.
+
+But it's also a lot of work and an explosion of scope. I want to keep it small, I don't want to work 24/7 on these game jam games. Thus, I wrote down these ideas, but didn't actually do any of it.
+
+For this jam, all tourists and parasols are just the same old regular thing. The only system with more content/variety are the _powerups_, because that was one of the optional requirements of the jam.
+
+## Day 4: Finishing
+
+This day started by adding sound effects, some background music, some more shaders or decorations to make the beach look more alive. The usual polishing that takes a few hours but simply makes the game feel so much more alive.
+
+I couldn't delay any longer: I had to start drawing the actual ducks for the players and tourists. Those were the only sprites missing at this point. 
+
+I barely have any experience with animating animal characters, which is both why I dreaded this part ... and why I wanted to go for it and learn from it. 
+
+In the end, I think they look fine, if a bit simplistic and wonky. It fits the general feel of the game. It would never pass the test in any more realistic or serious game :p
+
+A few marketing assets, a few final tweaks to numbers or visuals, nothing interesting.
+
+And then the game was _done_.
+
+Just in time, because the GMTK Jam started that same evening. Being a far shorter (and perhaps more prestigious) jam, I knew I needed all my time for that.
+
 @TODO

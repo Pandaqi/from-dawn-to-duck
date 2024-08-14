@@ -6,7 +6,7 @@
 script = ExtResource("1_vsrci")
 frame = 4
 desc = "Gain an extra parasol."
-color = Color(1, 1, 1, 1)
+color = Color(0.886275, 0.34902, 0.819608, 1)
 instant_process = false
 single_use = false
 continuous = false
@@ -14,3 +14,5 @@ needs_visit = false
 completion_duration_factor = 1.0
 cost = 1.0
 reset_on_failure_only = false
+days_until_removal_factor = 1.0
+never_remove = true

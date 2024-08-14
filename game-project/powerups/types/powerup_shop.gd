@@ -1,6 +1,7 @@
 extends PowerupType
 class_name PowerupShop
 
-func execute(_pe:ModulePowerupExecuter, _dt:float) -> bool:
+func execute(pe:ModulePowerupExecuter, _dt:float) -> bool:
+	GSignal.feedback.emit(pe.global_position, "New Parasol!")
 	GSignal.spawn_parasol.emit()
 	return true

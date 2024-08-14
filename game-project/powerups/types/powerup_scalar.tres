@@ -6,7 +6,7 @@
 script = ExtResource("1_etuhr")
 frame = 5
 desc = "Scales your parasol (if holding any)."
-color = Color(1, 1, 1, 1)
+color = Color(0.964706, 0.564706, 0.2, 1)
 instant_process = false
 single_use = true
 continuous = false

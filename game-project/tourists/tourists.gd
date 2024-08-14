@@ -46,6 +46,7 @@ func get_random_valid_position() -> Vector2:
 	return map.map_data.query_position({ 
 		"avoid": get_all(),
 		"area": "beach",
+		"area_margin": 1.5*Global.config.sprite_size,
 		"dist": Global.config.tourists_min_spawn_dist
 	})
 

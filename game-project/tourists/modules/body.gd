@@ -42,5 +42,4 @@ func is_in_range(pos:Vector2) -> bool:
 
 func _draw() -> void:
 	if not (OS.is_debug_build() and Global.config.debug_bodies): return
-	print(polygon)
 	draw_polygon(polygon, [Color(1,1,1)])

@@ -26,6 +26,7 @@ func restart_timer() -> void:
 
 func on_timer_timeout() -> void:
 	refresh()
+	restart_timer()
 
 func get_all() -> Array[Node]:
 	return get_tree().get_nodes_in_group("Powerups")
@@ -50,6 +51,7 @@ func spawn(type_forced : PowerupType = null) -> void:
 	var rand_pos := map.map_data.query_position({
 		"avoid": get_all(),
 		"area": "beach",
+		"area_margin": 2.0 * Global.config.sprite_size,
 		"dist": Global.config.scale(Global.config.powerups_min_dist)
 	})
 	

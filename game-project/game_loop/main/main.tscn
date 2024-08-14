@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://ocfbx6ggqvn2"]
+[gd_scene load_steps=40 format=3 uid="uid://ocfbx6ggqvn2"]
 
 [ext_resource type="PackedScene" uid="uid://d1eqndktyw2nh" path="res://parasols/parasol.tscn" id="1_06w87"]
 [ext_resource type="Script" path="res://game_loop/main/main.gd" id="1_8usxl"]
@@ -28,9 +28,38 @@
 [ext_resource type="Resource" uid="uid://b6l60klui64s7" path="res://powerups/data/powerups_data.tres" id="20_jdoce"]
 [ext_resource type="Script" path="res://powerups/tutorials/powerup_tutorials.gd" id="23_6csrg"]
 [ext_resource type="PackedScene" uid="uid://ksir5sff1si1" path="res://powerups/tutorials/powerup_tutorial.tscn" id="24_v4oxp"]
+[ext_resource type="Script" path="res://ui/feedback/feedback.gd" id="25_s7jby"]
+[ext_resource type="PackedScene" uid="uid://cpqplp2nlwr7n" path="res://ui/feedback/feedback_scene.tscn" id="26_acdh7"]
 [ext_resource type="Script" path="res://ui/game_over/game_over.gd" id="29_88oh1"]
 [ext_resource type="Script" path="res://ui/day_over/day_over.gd" id="29_xtt26"]
 [ext_resource type="Texture2D" uid="uid://628wubg34qiv" path="res://ui/modals.webp" id="30_ffbii"]
+
+[sub_resource type="Animation" id="Animation_x418c"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Container:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1e-05, 1e-05)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Container/Button:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1e-05, 1e-05)]
+}
 
 [sub_resource type="Animation" id="Animation_hijmq"]
 resource_name = "appear"
@@ -60,7 +89,13 @@ tracks/1/keys = {
 "values": [Vector2(1e-05, 1e-05), Vector2(1.2, 1.2), Vector2(1, 1)]
 }
 
-[sub_resource type="Animation" id="Animation_x418c"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1syl6"]
+_data = {
+"RESET": SubResource("Animation_x418c"),
+"appear": SubResource("Animation_hijmq")
+}
+
+[sub_resource type="Animation" id="Animation_1lrle"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -77,20 +112,26 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Container/Button:scale")
+tracks/1/path = NodePath("Container:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(1e-05, 1e-05)]
+"values": [0.0]
 }
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_1syl6"]
-_data = {
-"RESET": SubResource("Animation_x418c"),
-"appear": SubResource("Animation_hijmq")
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Container/Buttons:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1e-05, 1e-05)]
 }
 
 [sub_resource type="Animation" id="Animation_tw6uf"]
@@ -131,45 +172,6 @@ tracks/2/keys = {
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [Vector2(1e-05, 1e-05), Vector2(1.2, 1.2), Vector2(1, 1)]
-}
-
-[sub_resource type="Animation" id="Animation_1lrle"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Container:scale")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(1e-05, 1e-05)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Container:rotation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Container/Buttons:scale")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(1e-05, 1e-05)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_aqsad"]
@@ -273,6 +275,10 @@ powerups_data = ExtResource("20_jdoce")
 map = NodePath("../../Map")
 powerup_tutorial_scene = ExtResource("24_v4oxp")
 
+[node name="Feedback" type="Node2D" parent="."]
+script = ExtResource("25_s7jby")
+feedback_scene = ExtResource("26_acdh7")
+
 [node name="UI" type="CanvasLayer" parent="."]
 process_mode = 3
 script = ExtResource("18_3obf8")
@@ -291,90 +297,17 @@ position = Vector2(0, 128)
 position = Vector2(139, 0)
 
 [node name="Label" type="Label" parent="UI/GameUI/Time"]
-_import_path = NodePath("")
-unique_name_in_owner = false
-process_mode = 0
-process_priority = 0
-process_physics_priority = 0
-process_thread_group = 0
-physics_interpolation_mode = 2
-auto_translate_mode = 0
-editor_description = ""
-visible = true
-modulate = Color(1, 1, 1, 1)
-self_modulate = Color(1, 1, 1, 1)
-show_behind_parent = false
-top_level = false
-clip_children = 0
-light_mask = 1
-visibility_layer = 1
-z_index = 0
-z_as_relative = true
-y_sort_enabled = false
-texture_filter = 0
-texture_repeat = 0
-material = null
-use_parent_material = false
-clip_contents = false
-custom_minimum_size = Vector2(0, 0)
-layout_direction = 0
-layout_mode = 3
-anchors_preset = 0
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
 offset_left = 288.0
 offset_top = -119.0
 offset_right = 866.0
 offset_bottom = 154.0
-grow_horizontal = 1
-grow_vertical = 1
-rotation = 0.0
-scale = Vector2(1, 1)
-pivot_offset = Vector2(0, 0)
-size_flags_horizontal = 1
-size_flags_vertical = 4
-size_flags_stretch_ratio = 1.0
-localize_numeral_system = true
-tooltip_text = ""
-focus_neighbor_left = NodePath("")
-focus_neighbor_top = NodePath("")
-focus_neighbor_right = NodePath("")
-focus_neighbor_bottom = NodePath("")
-focus_next = NodePath("")
-focus_previous = NodePath("")
-focus_mode = 0
-mouse_filter = 2
-mouse_force_pass_scroll_events = true
-mouse_default_cursor_shape = 0
 theme = ExtResource("20_6yfs1")
-theme_type_variation = &""
 theme_override_colors/font_color = Color(0.23, 0.134397, 0.0322, 1)
 theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
 theme_override_constants/outline_size = 32
 theme_override_font_sizes/font_size = 200
 text = "00:00"
-label_settings = null
-horizontal_alignment = 0
 vertical_alignment = 1
-autowrap_mode = 0
-justification_flags = 163
-clip_text = false
-text_overrun_behavior = 0
-ellipsis_char = "…"
-uppercase = false
-tab_stops = PackedFloat32Array()
-lines_skipped = 0
-max_lines_visible = -1
-visible_characters = -1
-visible_characters_behavior = 0
-visible_ratio = 1.0
-text_direction = 0
-language = ""
-structured_text_bidi_override = 0
-structured_text_bidi_override_options = []
-script = null
 
 [node name="Day" type="Node2D" parent="UI/GameUI"]
 position = Vector2(0, 384)
@@ -384,90 +317,17 @@ position = Vector2(139, 0)
 frame = 1
 
 [node name="Label" type="Label" parent="UI/GameUI/Day"]
-_import_path = NodePath("")
-unique_name_in_owner = false
-process_mode = 0
-process_priority = 0
-process_physics_priority = 0
-process_thread_group = 0
-physics_interpolation_mode = 2
-auto_translate_mode = 0
-editor_description = ""
-visible = true
-modulate = Color(1, 1, 1, 1)
-self_modulate = Color(1, 1, 1, 1)
-show_behind_parent = false
-top_level = false
-clip_children = 0
-light_mask = 1
-visibility_layer = 1
-z_index = 0
-z_as_relative = true
-y_sort_enabled = false
-texture_filter = 0
-texture_repeat = 0
-material = null
-use_parent_material = false
-clip_contents = false
-custom_minimum_size = Vector2(0, 0)
-layout_direction = 0
-layout_mode = 3
-anchors_preset = 0
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
 offset_left = 288.0
 offset_top = -119.0
 offset_right = 866.0
 offset_bottom = 154.0
-grow_horizontal = 1
-grow_vertical = 1
-rotation = 0.0
-scale = Vector2(1, 1)
-pivot_offset = Vector2(0, 0)
-size_flags_horizontal = 1
-size_flags_vertical = 4
-size_flags_stretch_ratio = 1.0
-localize_numeral_system = true
-tooltip_text = ""
-focus_neighbor_left = NodePath("")
-focus_neighbor_top = NodePath("")
-focus_neighbor_right = NodePath("")
-focus_neighbor_bottom = NodePath("")
-focus_next = NodePath("")
-focus_previous = NodePath("")
-focus_mode = 0
-mouse_filter = 2
-mouse_force_pass_scroll_events = true
-mouse_default_cursor_shape = 0
 theme = ExtResource("20_6yfs1")
-theme_type_variation = &""
 theme_override_colors/font_color = Color(0.23, 0.134397, 0.0322, 1)
 theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
 theme_override_constants/outline_size = 32
 theme_override_font_sizes/font_size = 200
 text = "00:00"
-label_settings = null
-horizontal_alignment = 0
 vertical_alignment = 1
-autowrap_mode = 0
-justification_flags = 163
-clip_text = false
-text_overrun_behavior = 0
-ellipsis_char = "…"
-uppercase = false
-tab_stops = PackedFloat32Array()
-lines_skipped = 0
-max_lines_visible = -1
-visible_characters = -1
-visible_characters_behavior = 0
-visible_ratio = 1.0
-text_direction = 0
-language = ""
-structured_text_bidi_override = 0
-structured_text_bidi_override_options = []
-script = null
 
 [node name="Lives" type="Node2D" parent="UI/GameUI"]
 position = Vector2(0, 682)
@@ -477,90 +337,18 @@ position = Vector2(-148, 0)
 frame = 2
 
 [node name="Label" type="Label" parent="UI/GameUI/Lives"]
-_import_path = NodePath("")
-unique_name_in_owner = false
-process_mode = 0
-process_priority = 0
-process_physics_priority = 0
-process_thread_group = 0
-physics_interpolation_mode = 2
-auto_translate_mode = 0
-editor_description = ""
-visible = true
-modulate = Color(1, 1, 1, 1)
-self_modulate = Color(1, 1, 1, 1)
-show_behind_parent = false
-top_level = false
-clip_children = 0
-light_mask = 1
-visibility_layer = 1
-z_index = 0
-z_as_relative = true
-y_sort_enabled = false
-texture_filter = 0
-texture_repeat = 0
-material = null
-use_parent_material = false
-clip_contents = false
-custom_minimum_size = Vector2(0, 0)
-layout_direction = 0
-layout_mode = 3
-anchors_preset = 0
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
 offset_left = -884.0
 offset_top = -119.0
 offset_right = -306.0
 offset_bottom = 154.0
-grow_horizontal = 1
-grow_vertical = 1
-rotation = 0.0
-scale = Vector2(1, 1)
-pivot_offset = Vector2(0, 0)
-size_flags_horizontal = 1
-size_flags_vertical = 4
-size_flags_stretch_ratio = 1.0
-localize_numeral_system = true
-tooltip_text = ""
-focus_neighbor_left = NodePath("")
-focus_neighbor_top = NodePath("")
-focus_neighbor_right = NodePath("")
-focus_neighbor_bottom = NodePath("")
-focus_next = NodePath("")
-focus_previous = NodePath("")
-focus_mode = 0
-mouse_filter = 2
-mouse_force_pass_scroll_events = true
-mouse_default_cursor_shape = 0
 theme = ExtResource("20_6yfs1")
-theme_type_variation = &""
 theme_override_colors/font_color = Color(0.23, 0.134397, 0.0322, 1)
 theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
 theme_override_constants/outline_size = 32
 theme_override_font_sizes/font_size = 200
 text = "00:00"
-label_settings = null
 horizontal_alignment = 2
 vertical_alignment = 1
-autowrap_mode = 0
-justification_flags = 163
-clip_text = false
-text_overrun_behavior = 0
-ellipsis_char = "…"
-uppercase = false
-tab_stops = PackedFloat32Array()
-lines_skipped = 0
-max_lines_visible = -1
-visible_characters = -1
-visible_characters_behavior = 0
-visible_ratio = 1.0
-text_direction = 0
-language = ""
-structured_text_bidi_override = 0
-structured_text_bidi_override_options = []
-script = null
 
 [node name="Coins" type="Node2D" parent="UI/GameUI"]
 position = Vector2(0, 941)
@@ -570,90 +358,18 @@ position = Vector2(-148, 0)
 frame = 3
 
 [node name="Label" type="Label" parent="UI/GameUI/Coins"]
-_import_path = NodePath("")
-unique_name_in_owner = false
-process_mode = 0
-process_priority = 0
-process_physics_priority = 0
-process_thread_group = 0
-physics_interpolation_mode = 2
-auto_translate_mode = 0
-editor_description = ""
-visible = true
-modulate = Color(1, 1, 1, 1)
-self_modulate = Color(1, 1, 1, 1)
-show_behind_parent = false
-top_level = false
-clip_children = 0
-light_mask = 1
-visibility_layer = 1
-z_index = 0
-z_as_relative = true
-y_sort_enabled = false
-texture_filter = 0
-texture_repeat = 0
-material = null
-use_parent_material = false
-clip_contents = false
-custom_minimum_size = Vector2(0, 0)
-layout_direction = 0
-layout_mode = 3
-anchors_preset = 0
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
 offset_left = -880.0
 offset_top = -119.0
 offset_right = -302.0
 offset_bottom = 154.0
-grow_horizontal = 1
-grow_vertical = 1
-rotation = 0.0
-scale = Vector2(1, 1)
-pivot_offset = Vector2(0, 0)
-size_flags_horizontal = 1
-size_flags_vertical = 4
-size_flags_stretch_ratio = 1.0
-localize_numeral_system = true
-tooltip_text = ""
-focus_neighbor_left = NodePath("")
-focus_neighbor_top = NodePath("")
-focus_neighbor_right = NodePath("")
-focus_neighbor_bottom = NodePath("")
-focus_next = NodePath("")
-focus_previous = NodePath("")
-focus_mode = 0
-mouse_filter = 2
-mouse_force_pass_scroll_events = true
-mouse_default_cursor_shape = 0
 theme = ExtResource("20_6yfs1")
-theme_type_variation = &""
 theme_override_colors/font_color = Color(0.23, 0.134397, 0.0322, 1)
 theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
 theme_override_constants/outline_size = 32
 theme_override_font_sizes/font_size = 200
 text = "00:00"
-label_settings = null
 horizontal_alignment = 2
 vertical_alignment = 1
-autowrap_mode = 0
-justification_flags = 163
-clip_text = false
-text_overrun_behavior = 0
-ellipsis_char = "…"
-uppercase = false
-tab_stops = PackedFloat32Array()
-lines_skipped = 0
-max_lines_visible = -1
-visible_characters = -1
-visible_characters_behavior = 0
-visible_ratio = 1.0
-text_direction = 0
-language = ""
-structured_text_bidi_override = 0
-structured_text_bidi_override_options = []
-script = null
 
 [node name="DayOver" type="Node2D" parent="UI"]
 script = ExtResource("29_xtt26")

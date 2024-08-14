@@ -15,6 +15,8 @@ var button_press_time := 0.0
 @export var rotate_type : PowerupType
 @export var drop_type : PowerupType
 
+@onready var entity = get_parent()
+
 signal changed(p:Parasol)
 signal dropped()
 
@@ -80,6 +82,8 @@ func grab(p:Parasol) -> void:
 	if has_parasol(): return
 	if not can_grab(p): return
 	parasol = p
+	parasol.on_grabbed(entity)
+	animate_pop_up(parasol)
 	changed.emit(parasol)
 
 func drop() -> void:
@@ -88,8 +92,19 @@ func drop() -> void:
 	
 	parasol.set_position(get_drop_position())
 	last_parasol_dropped = parasol
+	parasol.on_dropped()
 	parasol = null
+	animate_pop_up(last_parasol_dropped)
 	dropped.emit()
+
+func animate_pop_up(p:Parasol) -> void:
+	var tw := get_tree().create_tween()
+	var rand_dur := randf_range(0.04, 0.08)
+	var rand_scale := randf_range(0.9, 1.1)
+	
+	tw.tween_property(p, "scale", Vector2(1.2, 0.8) * rand_scale, rand_dur)
+	tw.tween_property(p, "scale", Vector2(0.8, 1.2) * rand_scale, rand_dur)
+	tw.tween_property(p, "scale", Vector2.ONE, rand_dur)
 
 func get_time_since_button_press() -> float:
 	return (Time.get_ticks_msec() - button_press_time) / 1000.0
@@ -123,5 +138,6 @@ func can_drop() -> bool:
 	var pos := get_drop_position()
 	for body in bodies:
 		if body.is_in_range(pos):
+			GSignal.feedback.emit(global_position, "Too close!")
 			return false
 	return true

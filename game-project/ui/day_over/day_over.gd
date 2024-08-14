@@ -1,6 +1,7 @@
 class_name DayOver extends Node2D
 
 var active := false
+var edge_margin := 32.0
 
 @onready var continue_btn := $Container/Button/Continue
 @onready var anim_player : AnimationPlayer = $AnimationPlayer
@@ -17,7 +18,10 @@ func appear() -> void:
 	var vp_size := get_viewport_rect().size
 	set_position(0.5 * vp_size)
 	
-	var match_scale : float = min(vp_size.x / 1280.0, vp_size.y / 720.0)
+	var match_scale : float = min(
+		(vp_size.x - 2*edge_margin) / 1280.0, 
+		(vp_size.y - 2*edge_margin) / 720.0
+	)
 	if match_scale < 1.0:
 		set_scale(Vector2.ONE * match_scale)
 		

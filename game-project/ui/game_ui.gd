@@ -41,12 +41,15 @@ func on_time_changed(t:float) -> void:
 
 func on_day_changed(d:int) -> void:
 	day_label.set_text("Day " + str(d))
+	animate_pop_up(day_cont)
 
 func on_lives_changed(l:int) -> void:
 	lives_label.set_text(str(l))
+	animate_pop_up(lives_cont)
 
 func on_coins_changed(c:int) -> void:
 	coins_label.set_text(str(c))
+	animate_pop_up(coins_cont)
 
 func to_pretty_time_string(ratio:float) -> String:
 	var time_bounds := Global.config.day_time_bounds_hours
@@ -61,3 +64,12 @@ func to_pretty_time_string(ratio:float) -> String:
 		minutes_only = "0" + str(minutes_only)
 	
 	return str(hours_only) + ":" + str(minutes_only)
+
+func animate_pop_up(node:Node2D) -> void:
+	var tw := get_tree().create_tween()
+	var rand_dur := randf_range(0.06, 0.12)
+	var rand_scale := randf_range(1.125, 1.35) 
+	tw.tween_property(node, "scale", Vector2.ONE * rand_scale, 0.5*rand_dur)
+	tw.parallel().tween_property(node, "modulate", Color(2,1.5,1.5), 0.5*rand_dur)
+	tw.tween_property(node, "scale", Vector2.ONE, rand_dur)
+	tw.parallel().tween_property(node, "modulate", Color(1,1,1), rand_dur)

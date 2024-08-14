@@ -13,18 +13,18 @@ class_name Config
 @export var shore_line_displacement := 0.5 # ~sprite_size
 @export var shore_line_increments := 0.1 # ~sprite_size
 @export var shore_line_noise_scale := 0.25
-@export var y_squash_factor := 0.75 ## some things are squashed in Y-scale by this amount to make it fit the perspective better
+@export var y_squash_factor := 0.925 ## some things are squashed in Y-scale by this amount to make it fit the perspective better
 
 @export_subgroup("Camera")
 @export var camera_edge_margin := Vector2.ZERO
 
 @export_group("Light & Shadows")
-var shadow_length_bounds := Bounds.new(0.5, 1.5) # ~sprite_size
+var shadow_length_bounds := Bounds.new(0.6, 1.66) # ~sprite_size
 @export var shadow_color := Color(0,0,0,0.75)
 @export var burn_base_health := 100.0
-@export var burn_speed := 8.0 # per second
-@export var cooldown_speed := 5.0
-var burn_factor_bounds := Bounds.new(0.45, 1.0) ## how the sun's intensity changes during the day
+@export var burn_speed := 9.0 # per second
+@export var cooldown_speed := 3.5
+var burn_factor_bounds := Bounds.new(0.475, 1.0) ## how the sun's intensity changes during the day
 @export var burn_color_start := Color(1,1,1)
 @export var burn_color_end := Color(1,1,1)
 
@@ -36,7 +36,7 @@ var burn_factor_bounds := Bounds.new(0.45, 1.0) ## how the sun's intensity chang
 @export var shadow_overlap_ratio_needed := 0.2 ## at least this % of a tourist's polygon points must be in shade before they are considered in shade
 
 @export_group("Movement")
-@export var lure_dist := 4.0 # ~sprite_size
+@export var lure_dist := 2.0 # ~sprite_size
 @export var lure_on_button_press := true
 @export var grab_dist := 1.0 # ~sprite_size
 @export var move_speed_player := 6.0 # ~sprite_size
@@ -44,7 +44,7 @@ var burn_factor_bounds := Bounds.new(0.45, 1.0) ## how the sun's intensity chang
 
 @export_group("Input & Actions")
 @export var input_hold_enabled := true
-@export var input_hold_threshold := 0.3 # seconds
+@export var input_hold_threshold := 0.215 # seconds
 
 @export_group("Tourists")
 @export_subgroup("Spawning")
@@ -55,7 +55,7 @@ var tourist_body_scale_bounds := Bounds.new(0.5, 2.0) # ~sprite_size
 
 @export_group("Progression")
 @export_subgroup("Day & Night")
-@export var day_duration := 60.0
+@export var day_duration := 47.5
 @export var day_duration_quick_end_factor := 0.275 ## to make the day end much faster if all tourists are gone
 var day_time_bounds_hours := Bounds.new(6, 18) ## from 6 AM to 18 PM; must be symmetrical around midday
 @export var sun_always_off_screen := true
@@ -84,11 +84,15 @@ var shape_scale_bounds := Bounds.new(0.9, 1.35)
 @export var parasols_auto_spawn_per_day := 1 ## only activates if there are no shops on the map (i.e. that "system" is disabled)
 @export var parasols_auto_spawn_interval := 2 ## "every X days, spawn the number above"
 @export var parasol_colors : Array[Color] = []
+@export var parasol_handle_size := 1.875 # ~sprite_size
+@export var parasol_alpha_reveal_behind := 0.45 ## the alpha value when the parasol should reveal what is behind it
+@export var parasol_outline_color_darken := 0.66
+@export var parasol_outline_width := 0.1 # ~sprite_size
 
 @export_group("Powerups")
 @export var powerup_spawn_tick := 0.2 # ~day_duration
 var powerup_spawn_bounds := Bounds.new(1,4)
-var powerups_radius_bounds := Bounds.new(0.75, 1.5) # ~sprite_size
+var powerups_radius_bounds := Bounds.new(1.0, 1.55) # ~sprite_size
 @export var powerup_spawn_prob := 0.66
 @export var powerups_min_dist := 2.5 # ~sprite_size
 @export var powerups_base_completion_value := 100.0

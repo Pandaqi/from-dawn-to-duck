@@ -5,8 +5,6 @@
 [ext_resource type="Texture2D" uid="uid://c57f5ftmdknaq" path="res://game_loop/main/shader_placeholder.webp" id="3_6wy3g"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_3pdby"]
-resource_local_to_scene = false
-resource_name = ""
 shader = ExtResource("2_ithqo")
 shader_parameter/color = Color(0.46, 0.250853, 0.0552, 1)
 shader_parameter/diameter = 1.0

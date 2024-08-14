@@ -11,10 +11,10 @@ enum ProgressionState
 
 
 var state := ProgressionState.PREGAME
-var day := 0
-var time := 0.0 # 0.0 = start day, 1.0 = end day
-var lives := 1
-var coins := 0
+var day := -1
+var time := -1.0 # 0.0 = start day, 1.0 = end day
+var lives := -1
+var coins := -1
 
 signal day_ended()
 signal day_started()
@@ -62,16 +62,18 @@ func reset_lives() -> void:
 	change_lives(-lives + start_num)
 
 func change_lives(dl:int) -> void:
+	var old_lives := lives
 	lives = clamp(lives + dl, 0, 9)
-	lives_changed.emit(lives)
+	if old_lives != lives: lives_changed.emit(lives)
 
 func reset_coins() -> void:
 	var start_num := Global.config.coins_starting_num
 	change_coins(-coins + start_num)
 
 func change_coins(dc:int) -> void:
+	var old_coins := coins
 	coins = clamp(coins + dc, 0, 99)
-	coins_changed.emit(coins)
+	if old_coins != coins: coins_changed.emit(coins)
 
 func is_day() -> bool:
 	return (state == ProgressionState.DAY)

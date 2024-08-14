@@ -28,4 +28,4 @@ func place_player(num:int) -> void:
 	# the player can only grab and move parasols if that system is active
 	p.parasol_grabber.button_drops_parasol = parasols.enabled
 	p.parasol_grabber.enabled = parasols.enabled
-	p.tourist_lure.enabled = not parasols.enabled
+	p.tourist_lure.enabled = not parasols.enabled or Global.config.lure_on_button_press

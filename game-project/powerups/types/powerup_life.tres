@@ -6,7 +6,7 @@
 script = ExtResource("1_shywp")
 frame = 3
 desc = "Gain an extra life."
-color = Color(1, 1, 1, 1)
+color = Color(0.858824, 0.435294, 0.454902, 1)
 instant_process = false
 single_use = true
 continuous = false

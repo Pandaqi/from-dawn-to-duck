@@ -56,6 +56,7 @@ func leave() -> void:
 	
 	var reward : int = round(Global.config.tourist_coin_reward.rand_float() * Global.config.base_price)
 	prog_data.change_coins(reward)
+	GSignal.feedback.emit(global_position, "+" + str(reward) + " coins!")
 
 func is_burnable() -> bool:
-	return state == TouristState.SUNBATHING
+	return state == TouristState.SUNBATHING or state == TouristState.WALKING

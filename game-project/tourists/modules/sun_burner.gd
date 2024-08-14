@@ -15,6 +15,8 @@ signal burned()
 
 func activate() -> void:
 	GSignal.hand_to_ui.emit(prog_bar_cont)
+	keep_prog_bar_with_us()
+	
 	set_base_burn(Global.config.burn_base_health)
 	state.died.connect(on_died)
 

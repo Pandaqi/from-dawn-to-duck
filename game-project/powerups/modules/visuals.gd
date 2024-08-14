@@ -10,6 +10,7 @@ func activate(type:PowerupType, radius:float) -> void:
 	
 	bg.material = bg.material.duplicate(false)
 	bg.material.set_shader_parameter("color", type.color)
+	
 	bg.set_scale(Vector2.ONE * 2 * radius / Global.config.sprite_size)
 	bg.scale.y *= Global.config.y_squash_factor
 	
@@ -24,6 +25,8 @@ func activate(type:PowerupType, radius:float) -> void:
 	
 	# scale everything accordingly
 	var min_size := Global.config.powerups_radius_bounds.start
-	icon.set_scale(Vector2.ONE * 2 * min_size)
+	icon.set_scale(Vector2.ONE * 0.75 * min_size)
+	icon.position.y = -0.75 * Global.config.sprite_size * icon.scale.y
+	
 	price_cont.set_scale(Vector2.ONE * 0.75 * min_size)
-	price_cont.position.y = 0.66 * Global.config.sprite_size * price_cont.scale.y
+	price_cont.position.y = 0.75 * Global.config.sprite_size * price_cont.scale.y

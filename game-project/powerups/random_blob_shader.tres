@@ -9,10 +9,9 @@ seamless = true
 noise = SubResource("FastNoiseLite_m0o1r")
 
 [resource]
-resource_local_to_scene = false
-resource_name = ""
 shader = ExtResource("1_5pfow")
 shader_parameter/speed = 0.1
-shader_parameter/circle_radius = 0.4
-shader_parameter/amplitude = 0.25
+shader_parameter/circle_radius = 0.485
+shader_parameter/amplitude = 0.2
+shader_parameter/color = Color(1, 0, 0, 1)
 shader_parameter/noise_tex = SubResource("NoiseTexture2D_dabg3")

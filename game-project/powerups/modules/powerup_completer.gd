@@ -15,6 +15,8 @@ func activate(tp:PowerupType) -> void:
 	type = tp
 	
 	GSignal.hand_to_ui.emit(prog_bar_cont)
+	keep_prog_bar_with_us()
+	
 	entity.died.connect(on_died)
 	
 	var val := Global.config.powerups_base_completion_value * tp.completion_duration_factor
@@ -29,6 +31,7 @@ func set_base_value(val:float, refresh := true) -> void:
 
 func reset() -> void:
 	change(-value)
+	if type.instant_process: complete()
 
 func complete() -> void:
 	change(base_value)
@@ -57,9 +60,13 @@ func change(db:float) -> void:
 	prog_bar.set_value(ratio * 100.0)
 	prog_bar.tint_progress = Global.config.powerups_progress_color_start.lerp(Global.config.powerups_progress_color_end, ratio)
 	
-	
 	if ratio >= 1.0:
-		completed.emit(type)
+		on_completion()
+
+func on_completion() -> void:
+	if type.needs_visit or type.continuous:
+		GSignal.feedback.emit(global_position, "Powerup Ready!")
+	completed.emit(type)
 
 func on_died(_p:Powerup) -> void:
 	prog_bar_cont.queue_free()

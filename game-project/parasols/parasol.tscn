@@ -1,17 +1,17 @@
-[gd_scene load_steps=6 format=3 uid="uid://d1eqndktyw2nh"]
+[gd_scene load_steps=7 format=3 uid="uid://d1eqndktyw2nh"]
 
 [ext_resource type="Script" path="res://parasols/modules/shadow_caster.gd" id="1_b4vnv"]
 [ext_resource type="Script" path="res://parasols/parasol.gd" id="1_nta3i"]
+[ext_resource type="Texture2D" uid="uid://c57f5ftmdknaq" path="res://game_loop/main/shader_placeholder.webp" id="2_pfu4x"]
 [ext_resource type="Shader" path="res://parasols/shapes/striped_shape.gdshader" id="3_fsixp"]
-[ext_resource type="Texture2D" uid="uid://cv647ka5rxl4e" path="res://icon.svg" id="3_n85eq"]
+[ext_resource type="Script" path="res://parasols/modules/outline_drawer.gd" id="5_rjrdk"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_abbio"]
-resource_local_to_scene = false
-resource_name = ""
 shader = ExtResource("3_fsixp")
 shader_parameter/scale = 5.0
 shader_parameter/color1 = Color(1, 1, 1, 1)
 shader_parameter/color2 = Color(1, 0, 0, 1)
+shader_parameter/alpha = 1.0
 
 [node name="Parasol" type="Node2D" groups=["Parasols"]]
 script = ExtResource("1_nta3i")
@@ -19,12 +19,16 @@ script = ExtResource("1_nta3i")
 [node name="Handle" type="Node2D" parent="."]
 
 [node name="Sprite2D" type="Sprite2D" parent="Handle"]
-position = Vector2(0, -65)
-scale = Vector2(0.109375, 1)
-texture = ExtResource("3_n85eq")
+modulate = Color(0, 0, 0, 1)
+position = Vector2(0, -128)
+scale = Vector2(0.2, 1)
+texture = ExtResource("2_pfu4x")
 
 [node name="ShadowCaster" type="Node2D" parent="." groups=["ShadowCasters"]]
 material = SubResource("ShaderMaterial_abbio")
 position = Vector2(0, -128)
 script = ExtResource("1_b4vnv")
 poly = Array[Vector2]([Vector2(100, 0), Vector2(0, 100), Vector2(-100, 0), Vector2(0, -100)])
+
+[node name="OutlineDrawer" type="Node2D" parent="ShadowCaster"]
+script = ExtResource("5_rjrdk")

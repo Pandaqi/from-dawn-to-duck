@@ -8,7 +8,7 @@ class_name ParasolShape
 func get_points() -> Array[Vector2]:
 	if circle_resolution > 0 and points.size() <= 0:
 		create_circle_points()
-	return points
+	return points.duplicate(false)
 
 func create_circle_points() -> void:
 	points = []

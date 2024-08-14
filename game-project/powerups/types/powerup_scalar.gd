@@ -10,4 +10,5 @@ func execute(pe:ModulePowerupExecuter, _dt:float) -> bool:
 		var pg : ModuleParasolGrabber = player.parasol_grabber
 		if not pg.has_parasol(): continue
 		pg.parasol.shadow_caster.scale_shape(scale_vec)
+		GSignal.feedback.emit(pe.global_position, "Supersize!")
 	return true

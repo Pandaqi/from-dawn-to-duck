@@ -32,6 +32,7 @@ func query_position(params: Dictionary = {}) -> Vector2:
 	var avoid = params.avoid if ("avoid" in params) else []
 	var min_dist = params.dist if ("dist" in params) else 0.0
 	var fixed_points = params.points if ("points" in params) else []
+	var area_margin = params.area_margin if ("area_margin" in params) else 0.0
 	
 	var area : MapArea = null
 	if "area" in params:
@@ -45,7 +46,7 @@ func query_position(params: Dictionary = {}) -> Vector2:
 		rand_pos = get_random_position()
 		
 		if area:
-			rand_pos = area.get_random_position()
+			rand_pos = area.get_random_position(area_margin)
 		
 		if fixed_points.size() > 0:
 			rand_pos = fixed_points.pick_random()

@@ -6,7 +6,7 @@
 script = ExtResource("1_33hdb")
 frame = 6
 desc = "Speeds up time."
-color = Color(1, 1, 1, 1)
+color = Color(0.278431, 0.431373, 0.776471, 1)
 instant_process = false
 single_use = false
 continuous = false
