@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://cmglwu6iyaalg"]
+[gd_scene load_steps=7 format=3 uid="uid://cmglwu6iyaalg"]
 
 [ext_resource type="Script" path="res://weather/sun.gd" id="1_8gapa"]
 [ext_resource type="Script" path="res://weather/modules/sun_rotator.gd" id="2_ardx4"]
 [ext_resource type="Resource" uid="uid://bfvbjf7w1catl" path="res://progression/data/progression_data.tres" id="3_3y31m"]
 [ext_resource type="PackedScene" uid="uid://dovns8xh36uru" path="res://game_loop/main/misc_sprite.tscn" id="4_0h3r5"]
 [ext_resource type="PackedScene" uid="uid://fw8nddm4510o" path="res://weather/modules/light_source.tscn" id="4_5n6py"]
+[ext_resource type="Script" path="res://weather/modules/cloud_sensor.gd" id="6_iugcr"]
 
 [node name="Sun" type="Node2D"]
 script = ExtResource("1_8gapa")
@@ -20,4 +21,9 @@ prog_data = ExtResource("3_3y31m")
 scale = Vector2(0.5, 0.5)
 frame = 4
 
-[node name="LightSource" parent="." instance=ExtResource("4_5n6py")]
+[node name="LightSource" parent="." node_paths=PackedStringArray("cloud_sensor") instance=ExtResource("4_5n6py")]
+cloud_sensor = NodePath("../CloudSensor")
+
+[node name="CloudSensor" type="Node2D" parent="." node_paths=PackedStringArray("sun_rotator")]
+script = ExtResource("6_iugcr")
+sun_rotator = NodePath("../SunRotator")

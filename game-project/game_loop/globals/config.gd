@@ -7,6 +7,7 @@ class_name Config
 
 @export_group("Map")
 @export var sprite_size := 256.0
+@export var entity_size := 0.5 # ~sprite_size; generally, players and tourists are just half as large as everything else
 @export var map_size := Vector2(16, 9)
 @export var map_y_beach_line := 0.1
 @export var map_y_water_line := 0.8
@@ -24,7 +25,7 @@ var shadow_length_bounds := Bounds.new(0.6, 1.66) # ~sprite_size
 @export var burn_base_health := 100.0
 @export var burn_speed := 9.0 # per second
 @export var cooldown_speed := 3.5
-var burn_factor_bounds := Bounds.new(0.475, 1.0) ## how the sun's intensity changes during the day
+var burn_factor_bounds := Bounds.new(0.85, 1.0) ## how the sun's intensity changes during the day automatically (based on time)
 @export var burn_color_start := Color(1,1,1)
 @export var burn_color_end := Color(1,1,1)
 
@@ -53,6 +54,23 @@ var stay_duration_bounds := Bounds.new(0.25, 0.66)
 var tourist_body_scale_bounds := Bounds.new(0.5, 2.0) # ~sprite_size
 @export var tourist_parasol_forbid_range := 1.5 # ~ sprite_size * personal scale
 
+@export_group("Weather")
+@export_subgroup("Heat")
+var heat_bounds_min := Bounds.new(10, 22)
+var heat_bounds_max := Bounds.new(25, 37)
+var heat_extreme := 30 # above this number, the heat is considered extreme and dangerous
+@export var heat_color_low := Color(1,1,1)
+@export var heat_color_high := Color(1,1,1)
+var heat_burn_factor_bounds := Bounds.new(0.475, 1.0) ## how the burn factor changes over time based on raw HEAT
+
+@export_subgroup("Clouds")
+var cloud_y := Bounds.new(0.01, 0.25) ## the y-pos at which clouds spawn
+@export var cloud_alpha := 0.66
+var cloud_size_bounds := Bounds.new(1.5, 3.5) # ~sprite_size
+var cloud_num_bounds := Bounds.new(0,3)
+var cloud_stay_duration_bounds := Bounds.new(0.25, 0.66)
+@export var weather_cloudy_darken_factor := 0.285
+
 @export_group("Progression")
 @export_subgroup("Day & Night")
 @export var day_duration := 47.5
@@ -68,11 +86,14 @@ var day_time_bounds_hours := Bounds.new(6, 18) ## from 6 AM to 18 PM; must be sy
 
 @export_subgroup("Coins")
 @export var coins_starting_num := 0
-@export var base_price := 5
-var tourist_coin_reward := Bounds.new(0.33, 0.66) # ~base_price
+@export var base_price := 10
+var tourist_coin_reward := Bounds.new(0.25, 0.5) ## ~base_price; this is related to the shop which always asks 1.0 for a new umbrella
+var tourist_reward_scales_with_burn_factor := true
+@export var lure_action_cost := 1
 
 @export_subgroup("Lives")
 @export var lives_starting_num := 1
+@export var life_lost_means_parasol_lost := true
 
 @export_group("Parasols")
 @export var parasols_min_spawn_dist := 150.0
@@ -90,22 +111,28 @@ var shape_scale_bounds := Bounds.new(0.9, 1.35)
 @export var parasol_outline_width := 0.1 # ~sprite_size
 
 @export_group("Powerups")
-@export var powerup_spawn_tick := 0.2 # ~day_duration
-var powerup_spawn_bounds := Bounds.new(1,4)
+@export var powerup_spawn_tick := 0.225 # ~day_duration
+var powerup_spawn_bounds := Bounds.new(1,3)
 var powerups_radius_bounds := Bounds.new(1.0, 1.55) # ~sprite_size
 @export var powerup_spawn_prob := 0.66
 @export var powerups_min_dist := 2.5 # ~sprite_size
 @export var powerups_base_completion_value := 100.0
-@export var powerups_completion_speed := 10.0 # per second
+@export var powerups_completion_speed := 25.0 # per second
 @export var powerups_day_stay_duration := 2 ## how many days a powerup stays before it removes itself (if not used before then)
 @export var powerup_scalar_scale_factor := 1.25
 @export var powerups_time_scale_factor := 1.2
 @export var powerups_tutorials_min_dist := 3.0 # ~sprite_size
 @export var powerups_progress_color_start := Color(1,1,1)
 @export var powerups_progress_color_end := Color(1,1,1)
+var powerup_coin_reward := Bounds.new(0.1, 0.3) # ~base_price
+@export var powerup_heat_scale_factor := 0.725
 
 @export_group("UI")
 @export var progress_bars_scale := 0.15
+
+@export_subgroup("Tutorial")
+@export var tutorial_sprite_delay_time := 2.0
+@export var tutorial_sprite_stay_time := 10.0
 
 func scale(val:float) -> float:
 	return val * sprite_size

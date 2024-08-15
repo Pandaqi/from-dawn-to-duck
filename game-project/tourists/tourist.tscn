@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://b8m1s3o1gkuyn"]
+[gd_scene load_steps=17 format=3 uid="uid://b8m1s3o1gkuyn"]
 
 [ext_resource type="Texture2D" uid="uid://cv647ka5rxl4e" path="res://icon.svg" id="1_ab5xh"]
 [ext_resource type="Script" path="res://tourists/tourist.gd" id="1_juevs"]
@@ -11,7 +11,11 @@
 [ext_resource type="Resource" uid="uid://bfvbjf7w1catl" path="res://progression/data/progression_data.tres" id="6_gpbxq"]
 [ext_resource type="Texture2D" uid="uid://bjeny631rg5qp" path="res://ui/progbar_sunburn_tex.tres" id="9_n0el7"]
 [ext_resource type="Resource" uid="uid://x8qqsqbmai1n" path="res://map/data/map_data.tres" id="9_pkx2e"]
+[ext_resource type="Resource" uid="uid://b2jfk46w23ddu" path="res://weather/data/weather_data.tres" id="9_qtbn0"]
 [ext_resource type="PackedScene" uid="uid://rmrmkkrdksey" path="res://tourists/modules/body.tscn" id="11_844bp"]
+[ext_resource type="Script" path="res://tourists/modules/repeller.gd" id="14_wi8k7"]
+[ext_resource type="Resource" uid="uid://b6l60klui64s7" path="res://powerups/data/powerups_data.tres" id="15_7sstr"]
+[ext_resource type="Resource" uid="uid://cicq7qf5egxwd" path="res://powerups/types/powerup_repel.tres" id="16_x11s3"]
 
 [node name="Tourist" type="Node2D" groups=["Entities", "Tourists"]]
 position = Vector2(331, 204)
@@ -46,6 +50,7 @@ vertical_alignment = 1
 [node name="ShadowTracker" type="Node2D" parent="." node_paths=PackedStringArray("body")]
 script = ExtResource("2_hdg86")
 body = NodePath("../Body")
+weather_data = ExtResource("9_qtbn0")
 
 [node name="LabelDebug" type="Label" parent="ShadowTracker"]
 offset_left = -58.0
@@ -63,6 +68,7 @@ script = ExtResource("3_rt4ha")
 shadow_tracker = NodePath("../ShadowTracker")
 state_tourist = NodePath("../StateTourist")
 prog_data = ExtResource("6_gpbxq")
+weather_data = ExtResource("9_qtbn0")
 state = NodePath("../State")
 
 [node name="ProgBar" type="Node2D" parent="SunBurner"]
@@ -78,8 +84,15 @@ texture_progress = ExtResource("9_n0el7")
 tint_under = Color(0.493545, 0.493546, 0.493546, 1)
 tint_progress = Color(1, 0, 0, 1)
 
-[node name="TargetFollower" type="Node2D" parent="."]
+[node name="TargetFollower" type="Node2D" parent="." node_paths=PackedStringArray("repeller")]
 script = ExtResource("5_6s6p5")
 map_data = ExtResource("9_pkx2e")
+repeller = NodePath("../Repeller")
 
 [node name="Body" parent="." instance=ExtResource("11_844bp")]
+
+[node name="Repeller" type="Node2D" parent="."]
+script = ExtResource("14_wi8k7")
+map_data = ExtResource("9_pkx2e")
+powerups_data = ExtResource("15_7sstr")
+type_repel = ExtResource("16_x11s3")

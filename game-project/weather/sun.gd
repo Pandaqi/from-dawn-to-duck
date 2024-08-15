@@ -4,4 +4,5 @@ class_name Sun extends Node2D
 @onready var sun_rotator : ModuleSunRotator = $SunRotator
 
 func activate() -> void:
+	light_source.activate()
 	sun_rotator.activate()

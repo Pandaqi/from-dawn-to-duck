@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="PowerupsData" load_steps=10 format=3 uid="uid://b6l60klui64s7"]
+[gd_resource type="Resource" script_class="PowerupsData" load_steps=15 format=3 uid="uid://b6l60klui64s7"]
 
 [ext_resource type="Script" path="res://powerups/types/powerup_type.gd" id="1_nk4tu"]
 [ext_resource type="Resource" uid="uid://bfb33bfnfxibg" path="res://powerups/types/powerup_drop.tres" id="2_1qoxf"]
@@ -9,7 +9,12 @@
 [ext_resource type="Resource" uid="uid://csq4w5rul5by" path="res://powerups/types/powerup_scalar.tres" id="6_jl7h1"]
 [ext_resource type="Resource" uid="uid://bgat7kwp01frp" path="res://powerups/types/powerup_shop.tres" id="7_sdfni"]
 [ext_resource type="Resource" uid="uid://bt1725cq66387" path="res://powerups/types/powerup_time.tres" id="8_w1gq5"]
+[ext_resource type="Resource" uid="uid://bj6p2o65ckaye" path="res://powerups/types/powerup_cloud.tres" id="9_vqj0u"]
+[ext_resource type="Resource" uid="uid://cig6km3366opy" path="res://powerups/types/powerup_coin.tres" id="10_mgggn"]
+[ext_resource type="Resource" uid="uid://coc3yntcx0pls" path="res://powerups/types/powerup_heat.tres" id="11_jhuur"]
+[ext_resource type="Resource" uid="uid://1hqguq2iu1w4" path="res://powerups/types/powerup_shapelock.tres" id="12_mwqfr"]
+[ext_resource type="Resource" uid="uid://cicq7qf5egxwd" path="res://powerups/types/powerup_repel.tres" id="13_pawhn"]
 
 [resource]
 script = ExtResource("2_r5kki")
-all_powerups = Array[ExtResource("1_nk4tu")]([ExtResource("2_1qoxf"), ExtResource("3_h6olx"), ExtResource("4_x6uby"), ExtResource("5_wxbdo"), ExtResource("6_jl7h1"), ExtResource("7_sdfni"), ExtResource("8_w1gq5")])
+all_powerups = Array[ExtResource("1_nk4tu")]([ExtResource("2_1qoxf"), ExtResource("3_h6olx"), ExtResource("4_x6uby"), ExtResource("5_wxbdo"), ExtResource("6_jl7h1"), ExtResource("7_sdfni"), ExtResource("8_w1gq5"), ExtResource("9_vqj0u"), ExtResource("10_mgggn"), ExtResource("11_jhuur"), ExtResource("12_mwqfr"), ExtResource("13_pawhn")])

@@ -14,7 +14,7 @@ func activate() -> void:
 	GSignal.game_over.connect(on_game_over)
 
 func on_life_lost() -> void:
-	prog_data.change_lives(-1)
+	prog_data.lose_life()
 
 func on_lives_changed(new_lives:int) -> void:
 	if new_lives > 0: return
@@ -55,7 +55,13 @@ func advance_time(dt:float) -> void:
 		blend = (prog_data.time - 0.5) / 0.5
 	
 	var world_color := color_a.lerp(color_b, blend)
-	canv_mod.color = world_color
+	if weather_data.cloudy:
+		world_color = world_color.darkened(Global.config.weather_cloudy_darken_factor)
+	
+	var cur_color := canv_mod.color
+	var color_smoothed := cur_color.lerp(world_color, 4.0*dt)
+	
+	canv_mod.color = color_smoothed
 	
 	if prog_data.time < 1.0: return
 	end_day()

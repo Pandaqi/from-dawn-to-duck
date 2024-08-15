@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://qjnt52kcxcvi"]
+[gd_scene load_steps=15 format=3 uid="uid://qjnt52kcxcvi"]
 
 [ext_resource type="Script" path="res://powerups/powerup.gd" id="1_ng4j8"]
 [ext_resource type="Script" path="res://powerups/modules/visuals.gd" id="2_vngvt"]
@@ -13,6 +13,7 @@
 [ext_resource type="Script" path="res://powerups/modules/powerup_executer.gd" id="8_eehdv"]
 [ext_resource type="Resource" uid="uid://bfvbjf7w1catl" path="res://progression/data/progression_data.tres" id="9_fksc6"]
 [ext_resource type="Texture2D" uid="uid://d4ks7dxeborwo" path="res://ui/progbar_powerup_tex.tres" id="11_sm124"]
+[ext_resource type="Resource" uid="uid://b2jfk46w23ddu" path="res://weather/data/weather_data.tres" id="14_ldoy1"]
 
 [node name="Powerup" type="Node2D" groups=["Powerups"]]
 script = ExtResource("1_ng4j8")
@@ -52,6 +53,7 @@ frame = 3
 
 [node name="ShadowTracker" type="Node2D" parent="."]
 script = ExtResource("6_xfkce")
+weather_data = ExtResource("14_ldoy1")
 
 [node name="LabelDebug" type="Label" parent="ShadowTracker"]
 offset_right = 40.0
@@ -77,3 +79,4 @@ tint_progress = Color(0.411927, 0.98, 0.0588, 1)
 script = ExtResource("8_eehdv")
 powerup_completer = NodePath("../PowerupCompleter")
 prog_data = ExtResource("9_fksc6")
+weather_data = ExtResource("14_ldoy1")

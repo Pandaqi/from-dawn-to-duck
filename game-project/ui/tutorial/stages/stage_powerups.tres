@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="TutorialStage" load_steps=2 format=3 uid="uid://csoj5vvfq27p7"]
+
+[ext_resource type="Script" path="res://ui/tutorial/stages/tutorial_stage.gd" id="1_4w0qe"]
+
+[resource]
+script = ExtResource("1_4w0qe")
+day = 2
+order = 0
+frame = 5
+desc = "Powerups appear. Keep in shade to activate."
+powerups_enabled = true
+luring_enabled = false

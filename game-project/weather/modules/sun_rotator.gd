@@ -105,6 +105,9 @@ func point_sun_at_beach() -> void:
 	var angle := (target_point - global_position).angle()
 	entity.set_rotation(angle)
 
+func get_sight_line() -> Line:
+	return Line.new(global_position, arc_center)
+
 func _input(ev:InputEvent) -> void:
 	if move_with_mouse and (ev is InputEventMouseMotion):
 		entity.set_position(ev.position)

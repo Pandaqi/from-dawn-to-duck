@@ -54,7 +54,16 @@ func leave() -> void:
 	target_follower.reset_to_starting_target()
 	state = TouristState.LEAVING
 	
-	var reward : int = round(Global.config.tourist_coin_reward.rand_float() * Global.config.base_price)
+	var reward_bounds := Global.config.tourist_coin_reward
+	var reward := 0.0
+	if Global.config.tourist_reward_scales_with_burn_factor:
+		var ratio_inv := 1.0 - sun_burner.get_burn_ratio()
+		reward = reward_bounds.interpolate(ratio_inv)
+	else:
+		reward = Global.config.tourist_coin_reward.rand_float()
+	
+	reward = int( round(reward * Global.config.base_price) )
+	reward = max(reward, 1)
 	prog_data.change_coins(reward)
 	GSignal.feedback.emit(global_position, "+" + str(reward) + " coins!")
 

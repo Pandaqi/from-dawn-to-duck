@@ -2,6 +2,7 @@ class_name ModuleTargetFollower extends Node2D
 
 @onready var entity = get_parent()
 @export var map_data : MapData
+@export var repeller : ModuleRepeller
 
 var target := Vector2.ZERO
 var starting_target := Vector2.ZERO
@@ -29,6 +30,7 @@ func has_target() -> bool:
 
 func move_to_target(dt:float) -> void:
 	if not has_target(): return
+	
 	var base_speed := Global.config.scale(Global.config.move_speed_tourist)
 	
 	var vec := (target - global_position).normalized()
@@ -39,6 +41,12 @@ func move_to_target(dt:float) -> void:
 	var error_margin := 5 * base_speed * dt
 	if dist <= error_margin:
 		reach_target()
+	
+	# if we're inside the range of something that repels us
+	# pick a new target outside of that range.
+	var repel_center := repeller.get_repel_center(new_pos)
+	if repel_center.length() > 0.003:
+		repel(repel_center)
 
 func reach_target() -> void:
 	target = Vector2.ZERO
@@ -53,6 +61,10 @@ func reposition() -> void:
 
 func lure(pos:Vector2) -> void:
 	set_target(pos)
+
+func repel(pos:Vector2) -> void:
+	var final_pos := repeller.get_repel_pos_within_bounds(pos)
+	set_target(final_pos)
 
 func is_done() -> bool:
 	return repositions.size() <= 1

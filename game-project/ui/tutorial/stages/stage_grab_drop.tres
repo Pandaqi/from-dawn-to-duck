@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="TutorialStage" load_steps=2 format=3 uid="uid://bdc4e1ef5ysy2"]
+
+[ext_resource type="Script" path="res://ui/tutorial/stages/tutorial_stage.gd" id="1_ukeea"]
+
+[resource]
+script = ExtResource("1_ukeea")
+day = 0
+order = 1
+frame = 2
+desc = "Grab parasols automatically, drop with space."
+powerups_enabled = false
+luring_enabled = false
+rotate_enabled = false
+drop_enabled = true

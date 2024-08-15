@@ -5,3 +5,5 @@ class_name MainSystem extends Node2D
 @export var players : Players
 @export var tourists : Tourists
 @export var parasols : Parasols
+@export var powerups : Powerups
+@export var tutorial : Tutorial

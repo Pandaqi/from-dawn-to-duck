@@ -9,6 +9,7 @@ enum ProgressionState
 	POSTGAME
 }
 
+var is_paused := false
 
 var state := ProgressionState.PREGAME
 var day := -1
@@ -19,9 +20,11 @@ var coins := -1
 signal day_ended()
 signal day_started()
 signal lives_changed(new_lives:int)
+signal life_lost()
 signal day_changed(new_day:int)
 signal time_changed(new_time:float)
 signal coins_changed(new_coins:int)
+signal paused(p:bool)
 
 func reset() -> void:
 	state = ProgressionState.PREGAME
@@ -29,6 +32,14 @@ func reset() -> void:
 	reset_time()
 	reset_lives()
 	reset_coins()
+
+func pause() -> void:
+	is_paused = true
+	paused.emit(true)
+
+func unpause() -> void:
+	is_paused = false
+	paused.emit(false)
 
 func start_day() -> void:
 	state = ProgressionState.DAY
@@ -54,12 +65,17 @@ func reset_time() -> void:
 	advance_time(-time)
 
 func advance_time(dt:float) -> void:
+	if is_paused: return
 	time += dt
 	time_changed.emit(time)
 
 func reset_lives() -> void:
 	var start_num := Global.config.lives_starting_num
 	change_lives(-lives + start_num)
+
+func lose_life() -> void:
+	change_lives(-1)
+	life_lost.emit()
 
 func change_lives(dl:int) -> void:
 	var old_lives := lives
@@ -80,3 +96,8 @@ func is_day() -> bool:
 
 func goto_game_over() -> void:
 	state = ProgressionState.POSTGAME
+
+# returns 0->1 in first half of day, then 1->0 in second half
+# hence, symmetric ratio around noon
+func get_time_symmetric() -> float:
+	return 1.0 - abs(time - 0.5) / 0.5

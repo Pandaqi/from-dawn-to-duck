@@ -14,6 +14,9 @@ class_name PowerupType
 @export var days_until_removal_factor := 1.0
 @export var never_remove := false
 
+@export var min_num := 0
+@export var max_num := 5
+
 ## returns if it was a success (true) or if it failed (false)
 func execute(_pe:ModulePowerupExecuter, _dt:float) -> bool:
 	return true

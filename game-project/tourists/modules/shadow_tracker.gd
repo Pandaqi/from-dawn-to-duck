@@ -4,6 +4,7 @@ var shadows : Array[Shadow] = []
 
 @export var body : ModuleBody
 @onready var label_debug := $LabelDebug
+@export var weather_data : WeatherData
 
 signal shadow_changed(val:bool)
 
@@ -17,7 +18,7 @@ func get_center() -> Vector2:
 	return global_position
 
 func is_in_shadow() -> bool:
-	return shadows.size() > 0
+	return shadows.size() > 0 or weather_data.cloudy
 
 func check_if_in_shadow() -> void:
 	var was_in_shadow := is_in_shadow()

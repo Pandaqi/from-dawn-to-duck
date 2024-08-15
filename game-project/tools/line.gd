@@ -9,6 +9,9 @@ func _init(a:Vector2, b:Vector2):
 	end = b
 	vec = end - start
 
+func clone() -> Line:
+	return Line.new(start, end)
+
 func interpolate(frac:float) -> Vector2:
 	return start + frac * vec
 
@@ -29,3 +32,9 @@ func as_array() -> PackedVector2Array:
 
 func rand_point() -> Vector2:
 	return start + randf() * vec
+
+func move(off:Vector2) -> Line:
+	start += off
+	end += off
+	vec = end - start
+	return self

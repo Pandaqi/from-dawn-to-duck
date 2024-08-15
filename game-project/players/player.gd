@@ -14,3 +14,4 @@ func activate(pnum:int) -> void:
 	tourist_lure.activate()
 	mover.activate()
 	parasol_grabber.activate()
+	light_source.activate()

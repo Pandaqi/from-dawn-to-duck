@@ -8,6 +8,7 @@ var shape : ParasolShape
 var color : Color
 var held_by_player : Player = null
 
+
 func activate() -> void:
 	position_handle()
 
@@ -34,3 +35,9 @@ func on_dropped() -> void:
 
 func is_held() -> bool:
 	return held_by_player != null
+
+# @TODO: animate, tween, delay, whatever
+func kill() -> void:
+	if held_by_player: held_by_player.drop()
+	GSignal.feedback.emit(global_position, "Parasol Lost!")
+	queue_free()

@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="PowerupHeat" load_steps=2 format=3 uid="uid://coc3yntcx0pls"]
+
+[ext_resource type="Script" path="res://powerups/types/powerup_heat.gd" id="1_04nqh"]
+
+[resource]
+script = ExtResource("1_04nqh")
+frame = 9
+desc = "Lowers the temperature (for today)."
+color = Color(0.407843, 0.792157, 0.698039, 1)
+instant_process = false
+single_use = true
+continuous = false
+needs_visit = true
+completion_duration_factor = 1.0
+cost = 0.25
+reset_on_failure_only = false
+days_until_removal_factor = 1.0
+never_remove = false
+max_num = 5

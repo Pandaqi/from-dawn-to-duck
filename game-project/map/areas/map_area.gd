@@ -37,9 +37,13 @@ func finalize(map_bounds:Rect2) -> void:
 		Vector2(bb_max.x, bb_min.y)
 	]
 
+func get_bounds() -> Rect2:
+	return Rect2(points_simple[0], points_simple[2] - points_simple[0])
+
 func get_random_position(edge_margin := 0.0) -> Vector2:
 	var m := Vector2(edge_margin, edge_margin)
-	return points_simple[0] + m + (points_simple[2] - points_simple[0] - 2*m) * Vector2(randf(), randf())
+	var b := get_bounds()
+	return b.position + m + (b.size - 2*m) * Vector2(randf(), randf())
 
 func contains(pos:Vector2) -> bool:
 	return Geometry2D.is_point_in_polygon(pos, points_simple)

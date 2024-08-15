@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://cpixp7bpg8lr8"]
+[gd_scene load_steps=15 format=3 uid="uid://cpixp7bpg8lr8"]
 
 [ext_resource type="Script" path="res://players/player.gd" id="1_nu2pa"]
 [ext_resource type="Texture2D" uid="uid://cv647ka5rxl4e" path="res://icon.svg" id="2_xjqjf"]
@@ -12,6 +12,7 @@
 [ext_resource type="Resource" uid="uid://dgpqocpqrqa00" path="res://powerups/types/powerup_rotate.tres" id="8_j73hv"]
 [ext_resource type="Resource" uid="uid://bfb33bfnfxibg" path="res://powerups/types/powerup_drop.tres" id="9_2st5l"]
 [ext_resource type="Script" path="res://players/modules/powerup_sensor.gd" id="9_3xkr1"]
+[ext_resource type="Resource" uid="uid://bfvbjf7w1catl" path="res://progression/data/progression_data.tres" id="11_r7f0u"]
 [ext_resource type="PackedScene" uid="uid://dc45fbxoj0qt" path="res://tourists/radius_viewer/radius_viewer.tscn" id="11_rhaod"]
 
 [node name="Player" type="Node2D" groups=["Entities"]]
@@ -40,6 +41,8 @@ drop_type = ExtResource("9_2st5l")
 script = ExtResource("5_kss0w")
 input = NodePath("../Input")
 parasol_grabber = NodePath("../ParasolGrabber")
+powerups_data = ExtResource("7_2cj21")
+prog_data = ExtResource("11_r7f0u")
 
 [node name="RadiusViewer" parent="TouristLure" instance=ExtResource("11_rhaod")]
 

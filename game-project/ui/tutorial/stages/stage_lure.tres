@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="TutorialStage" load_steps=2 format=3 uid="uid://ndisqvlb1b40"]
+
+[ext_resource type="Script" path="res://ui/tutorial/stages/tutorial_stage.gd" id="1_e6mkx"]
+
+[resource]
+script = ExtResource("1_e6mkx")
+day = 1
+order = 1
+frame = 4
+desc = "Press space without parasol to attract tourists."
+powerups_enabled = false
+luring_enabled = true

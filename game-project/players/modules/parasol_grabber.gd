@@ -39,10 +39,7 @@ func rotate_parasol_if_needed(dt:float) -> void:
 	if not holding_button: return
 	if not Global.config.parasol_rotate_button_hold: return
 	if not input_was_held(): return
-	
-	var can_rotate_another_way := powerups_data.has_of_type(rotate_type)
-	if can_rotate_another_way: return
-	
+	if not powerups_data.rotate_enabled: return
 	rotate_parasol(dt)
 
 func rotate_parasol(dt:float) -> void:
@@ -124,8 +121,7 @@ func on_button_released() -> void:
 	holding_button = false
 	
 	if button_drops_parasol and not input_was_held(): 
-		var can_drop_another_way := powerups_data.has_of_type(drop_type)
-		if not can_drop_another_way: 
+		if powerups_data.drop_enabled:
 			drop()
 	
 	if button_grabs_parasol and not input_was_held(): 

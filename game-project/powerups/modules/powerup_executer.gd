@@ -2,6 +2,7 @@ class_name ModulePowerupExecuter extends Node2D
 
 @export var powerup_completer : ModulePowerupCompleter
 @export var prog_data : ProgressionData
+@export var weather_data : WeatherData
 @onready var entity : Powerup = get_parent()
 
 var day_added := 0

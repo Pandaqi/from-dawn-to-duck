@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="TutorialStage" load_steps=2 format=3 uid="uid://dqqmxax1mmkjo"]
+
+[ext_resource type="Script" path="res://ui/tutorial/stages/tutorial_stage.gd" id="1_p33oj"]
+
+[resource]
+script = ExtResource("1_p33oj")
+day = 0
+order = 2
+frame = 1
+desc = "Don't let tourists burn, happy tourists give money."
+powerups_enabled = false
+luring_enabled = false
+rotate_enabled = false
+drop_enabled = false

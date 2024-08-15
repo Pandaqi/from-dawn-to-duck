@@ -5,6 +5,7 @@ class_name ModuleSunBurner extends Node2D
 @onready var prog_bar_cont := $ProgBar
 @onready var prog_bar := $ProgBar/TextureProgressBar
 @export var prog_data : ProgressionData
+@export var weather_data : WeatherData
 @export var state : ModuleState
 
 var burn := 0.0
@@ -47,8 +48,12 @@ func update_burn_status(dt:float) -> void:
 
 # this factor is 1.0 at the peak of the day (midday; hottest), 0 at the edges
 func get_burn_factor() -> float:
-	var factor : float = 1.0 - abs(prog_data.time - 0.5) / 0.5
-	return Global.config.burn_factor_bounds.interpolate(factor)
+	var frac_time := prog_data.get_time_symmetric()
+	var factor_time := Global.config.burn_factor_bounds.interpolate(frac_time)
+	
+	var frac_heat := weather_data.get_heat_ratio()
+	var factor_heat := Global.config.heat_burn_factor_bounds.interpolate(frac_heat)
+	return factor_time * factor_heat
 
 func get_burn_ratio() -> float:
 	return burn / base_burn

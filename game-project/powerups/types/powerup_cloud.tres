@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="PowerupCloud" load_steps=2 format=3 uid="uid://bj6p2o65ckaye"]
+
+[ext_resource type="Script" path="res://powerups/types/powerup_cloud.gd" id="1_7khn8"]
+
+[resource]
+script = ExtResource("1_7khn8")
+frame = 8
+desc = "Instantly spawns a cloud."
+color = Color(0.454902, 0.701961, 0.85098, 1)
+instant_process = false
+single_use = true
+continuous = false
+needs_visit = true
+completion_duration_factor = 1.0
+cost = 0.25
+reset_on_failure_only = false
+days_until_removal_factor = 1.0
+never_remove = false
+max_num = 5

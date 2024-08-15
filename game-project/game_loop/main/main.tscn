@@ -1,11 +1,11 @@
-[gd_scene load_steps=40 format=3 uid="uid://ocfbx6ggqvn2"]
+[gd_scene load_steps=56 format=3 uid="uid://ocfbx6ggqvn2"]
 
 [ext_resource type="PackedScene" uid="uid://d1eqndktyw2nh" path="res://parasols/parasol.tscn" id="1_06w87"]
 [ext_resource type="Script" path="res://game_loop/main/main.gd" id="1_8usxl"]
 [ext_resource type="Script" path="res://map/map.gd" id="2_1jgw0"]
 [ext_resource type="Script" path="res://tourists/tourists.gd" id="2_2keun"]
 [ext_resource type="Script" path="res://parasols/parasols.gd" id="2_gitjo"]
-[ext_resource type="Script" path="res://weather/suns.gd" id="2_hnb8u"]
+[ext_resource type="Script" path="res://weather/weather.gd" id="2_hnb8u"]
 [ext_resource type="Script" path="res://progression/progression.gd" id="2_i4iav"]
 [ext_resource type="Resource" uid="uid://bfvbjf7w1catl" path="res://progression/data/progression_data.tres" id="3_mk46c"]
 [ext_resource type="Script" path="res://map/map_layers.gd" id="3_ragrm"]
@@ -26,13 +26,88 @@
 [ext_resource type="Script" path="res://ui/game_ui.gd" id="19_o0jmb"]
 [ext_resource type="Theme" uid="uid://crexjyt0afkk7" path="res://ui/default_theme.tres" id="20_6yfs1"]
 [ext_resource type="Resource" uid="uid://b6l60klui64s7" path="res://powerups/data/powerups_data.tres" id="20_jdoce"]
+[ext_resource type="PackedScene" uid="uid://bif7sswhgd8qu" path="res://weather/clouds/cloud.tscn" id="21_qry13"]
 [ext_resource type="Script" path="res://powerups/tutorials/powerup_tutorials.gd" id="23_6csrg"]
 [ext_resource type="PackedScene" uid="uid://ksir5sff1si1" path="res://powerups/tutorials/powerup_tutorial.tscn" id="24_v4oxp"]
 [ext_resource type="Script" path="res://ui/feedback/feedback.gd" id="25_s7jby"]
 [ext_resource type="PackedScene" uid="uid://cpqplp2nlwr7n" path="res://ui/feedback/feedback_scene.tscn" id="26_acdh7"]
+[ext_resource type="Script" path="res://ui/tutorial/tutorial.gd" id="28_58swo"]
 [ext_resource type="Script" path="res://ui/game_over/game_over.gd" id="29_88oh1"]
 [ext_resource type="Script" path="res://ui/day_over/day_over.gd" id="29_xtt26"]
+[ext_resource type="Script" path="res://ui/tutorial/stages/tutorial_stage.gd" id="29_y5ije"]
 [ext_resource type="Texture2D" uid="uid://628wubg34qiv" path="res://ui/modals.webp" id="30_ffbii"]
+[ext_resource type="Resource" uid="uid://diotfs6suyk1m" path="res://ui/tutorial/stages/stage_rotate.tres" id="30_w0ln7"]
+[ext_resource type="Texture2D" uid="uid://cxmd8tf7785cd" path="res://ui/thermometer_over_tex.tres" id="31_5bboy"]
+[ext_resource type="Resource" uid="uid://g332rt3rrqmb" path="res://ui/tutorial/stages/stage_powerups_curses.tres" id="31_nobvn"]
+[ext_resource type="Texture2D" uid="uid://2ud4nmy2gs7k" path="res://ui/thermometer_progress_tex.tres" id="32_2nh1x"]
+[ext_resource type="Resource" uid="uid://csoj5vvfq27p7" path="res://ui/tutorial/stages/stage_powerups.tres" id="32_gipqa"]
+[ext_resource type="Resource" uid="uid://dqqmxax1mmkjo" path="res://ui/tutorial/stages/stage_objective.tres" id="33_smb53"]
+[ext_resource type="Resource" uid="uid://ndisqvlb1b40" path="res://ui/tutorial/stages/stage_lure.tres" id="34_mo2wn"]
+[ext_resource type="Resource" uid="uid://iggb34yr44xf" path="res://ui/tutorial/stages/stage_how_to_play.tres" id="35_axrhv"]
+[ext_resource type="Resource" uid="uid://bdc4e1ef5ysy2" path="res://ui/tutorial/stages/stage_grab_drop.tres" id="36_ides8"]
+[ext_resource type="PackedScene" uid="uid://djcl05q4vqn28" path="res://ui/tutorial/tutorial_sprite.tscn" id="37_vmwj5"]
+
+[sub_resource type="Animation" id="Animation_omhvw"]
+resource_name = "heat_blink"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Cont:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.2, 1.2)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Cont:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(2, 1.5, 1.5, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_kf0e4"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Cont:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Cont:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_fhnuf"]
+_data = {
+"RESET": SubResource("Animation_kf0e4"),
+"heat_blink": SubResource("Animation_omhvw")
+}
 
 [sub_resource type="Animation" id="Animation_x418c"]
 length = 0.001
@@ -254,6 +329,7 @@ weather_data = ExtResource("19_8ykcs")
 prog_data = ExtResource("3_mk46c")
 sun_scene = ExtResource("7_6iiti")
 map = NodePath("../Map")
+cloud_scene = ExtResource("21_qry13")
 suns = NodePath(".")
 players = NodePath("../Players")
 tourists = NodePath("../Tourists")
@@ -264,7 +340,6 @@ script = ExtResource("18_noreh")
 map = NodePath("../Map")
 powerup_scene = ExtResource("19_77uo7")
 powerups_data = ExtResource("20_jdoce")
-type_shop = ExtResource("13_mb2f3")
 
 [node name="Timer" type="Timer" parent="Powerups"]
 one_shot = true
@@ -279,6 +354,14 @@ powerup_tutorial_scene = ExtResource("24_v4oxp")
 script = ExtResource("25_s7jby")
 feedback_scene = ExtResource("26_acdh7")
 
+[node name="Tutorial" type="Node2D" parent="." node_paths=PackedStringArray("map")]
+script = ExtResource("28_58swo")
+powerups_data = ExtResource("20_jdoce")
+prog_data = ExtResource("3_mk46c")
+map = NodePath("../Map")
+all_stages = Array[ExtResource("29_y5ije")]([ExtResource("30_w0ln7"), ExtResource("31_nobvn"), ExtResource("32_gipqa"), ExtResource("33_smb53"), ExtResource("34_mo2wn"), ExtResource("35_axrhv"), ExtResource("36_ides8")])
+tutorial_scene = ExtResource("37_vmwj5")
+
 [node name="UI" type="CanvasLayer" parent="."]
 process_mode = 3
 script = ExtResource("18_3obf8")
@@ -289,6 +372,7 @@ script = ExtResource("18_3obf8")
 scale = Vector2(0.175, 0.175)
 script = ExtResource("19_o0jmb")
 prog_data = ExtResource("3_mk46c")
+weather_data = ExtResource("19_8ykcs")
 
 [node name="Time" type="Node2D" parent="UI/GameUI"]
 position = Vector2(0, 128)
@@ -328,6 +412,41 @@ theme_override_constants/outline_size = 32
 theme_override_font_sizes/font_size = 200
 text = "00:00"
 vertical_alignment = 1
+
+[node name="Heat" type="Node2D" parent="UI/GameUI"]
+position = Vector2(0, 640)
+
+[node name="Cont" type="Node2D" parent="UI/GameUI/Heat"]
+position = Vector2(137.143, 0)
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="UI/GameUI/Heat/Cont"]
+offset_left = -125.714
+offset_top = -120.0
+offset_right = 130.286
+offset_bottom = 136.0
+value = 50.0
+fill_mode = 3
+texture_over = ExtResource("31_5bboy")
+texture_progress = ExtResource("32_2nh1x")
+tint_progress = Color(1, 0.24, 0.24, 1)
+
+[node name="Label" type="Label" parent="UI/GameUI/Heat"]
+offset_left = 288.0
+offset_top = -119.0
+offset_right = 866.0
+offset_bottom = 154.0
+theme = ExtResource("20_6yfs1")
+theme_override_colors/font_color = Color(0.23, 0.134397, 0.0322, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 32
+theme_override_font_sizes/font_size = 200
+text = "15 °C"
+vertical_alignment = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="UI/GameUI/Heat"]
+libraries = {
+"": SubResource("AnimationLibrary_fhnuf")
+}
 
 [node name="Lives" type="Node2D" parent="UI/GameUI"]
 position = Vector2(0, 682)

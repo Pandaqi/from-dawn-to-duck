@@ -12,8 +12,15 @@ enum LightSourceType
 @export var shadow_dist_min := 10.0
 @export var shadow_dist_max := 50.0
 @onready var light_node : PointLight2D = $PointLight2D
+@export var cloud_sensor : ModuleCloudSensor
 
 var enabled := true
+
+func activate() -> void:
+	if cloud_sensor: cloud_sensor.blocked_changed.connect(on_blocked_changed)
+
+func on_blocked_changed(is_blocked:bool) -> void:
+	set_enabled(not is_blocked)
 
 func set_enabled(val:bool) -> void:
 	enabled = val

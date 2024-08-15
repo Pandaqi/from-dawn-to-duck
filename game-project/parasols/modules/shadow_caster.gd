@@ -10,10 +10,17 @@ var shape : ParasolShape
 var color : Color
 var scale_factor := Vector2.ONE
 
+var locked := false
+var last_light_dir : Vector2
+var last_light_dist : float
+
 signal shape_changed(shape:ParasolShape, polygon:Array[Vector2])
 
 func _ready() -> void:
 	material = material.duplicate(false)
+
+func set_locked(val:bool) -> void:
+	locked = val
 
 func set_color(c:Color) -> void:
 	# @NOTE: color1 is just the white or some other neutral
@@ -78,6 +85,10 @@ func cast_shadows() -> void:
 	
 	var points := get_polygon_global()
 	var lights := get_tree().get_nodes_in_group("LightSources")
+	
+	var new_dir : Vector2
+	var new_dist : float
+	
 	for i in range(lights.size()):
 		var light : ModuleLightSource = lights[i]
 		if not light.enabled: continue
@@ -94,8 +105,12 @@ func cast_shadows() -> void:
 		
 		# extend points from sun direction
 		for point in points:
-			var ray := light.get_shadow_dir(point)
-			var light_dist := light.get_shadow_distance(point)
+			var ray := last_light_dir if locked else light.get_shadow_dir(point)
+			var light_dist := last_light_dist if locked else light.get_shadow_distance(point)
+			
+			new_dir = ray
+			new_dist = light_dist
+			
 			shadow.add_point_raw(point)
 			shadow.add_point_raw(point + ray * light_dist)
 
@@ -104,6 +119,10 @@ func cast_shadows() -> void:
 	
 	outline_drawer.enabled = entity.is_held()
 	outline_drawer.update(get_polygon_local(), color)
+	
+	if not locked:
+		last_light_dir = new_dir
+		last_light_dist = new_dist
 	
 	queue_redraw()
 
@@ -116,7 +135,7 @@ func reveal_entities_below(dt:float) -> void:
 	
 	var target_alpha := Global.config.parasol_alpha_reveal_behind if should_fade else 1.0
 	var current_alpha : float = material.get_shader_parameter("alpha")
-	var smooth_alpha : float = lerp(current_alpha, target_alpha, 2.0*dt)
+	var smooth_alpha : float = lerp(current_alpha, target_alpha, 3.0*dt)
 	material.set_shader_parameter("alpha", smooth_alpha)
 
 func _draw() -> void:
