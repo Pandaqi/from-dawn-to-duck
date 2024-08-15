@@ -12,6 +12,12 @@ func activate() -> void:
 	set_visible(false)
 
 func appear() -> void:
+	var skip_postgame := OS.is_debug_build() and Global.config.skip_postgame
+	if skip_postgame:
+		await get_tree().process_frame
+		dismissed.emit()
+		return
+	
 	set_visible(true)
 	get_tree().paused = true
 	

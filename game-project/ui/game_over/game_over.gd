@@ -11,6 +11,11 @@ func activate() -> void:
 	set_visible(false)
 
 func on_game_over(we_won:bool) -> void:
+	var skip_postgame := OS.is_debug_build() and Global.config.skip_postgame
+	if skip_postgame:
+		get_tree().reload_current_scene()
+		return
+	
 	get_tree().paused = true
 	
 	set_visible(true)

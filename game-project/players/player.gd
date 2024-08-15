@@ -2,11 +2,11 @@ class_name Player extends Node2D
 
 var player_num := -1
 
-@onready var input := $Input
-@onready var tourist_lure := $TouristLure
-@onready var parasol_grabber := $ParasolGrabber
-@onready var light_source := $LightSource
-@onready var mover := $Mover
+@onready var input : ModuleInput = $Input
+@onready var tourist_lure : ModuleTouristLure = $TouristLure
+@onready var parasol_grabber : ModuleParasolGrabber = $ParasolGrabber
+@onready var light_source : ModuleLightSource = $LightSource
+@onready var mover : ModuleMover = $Mover
 
 func activate(pnum:int) -> void:
 	player_num = pnum

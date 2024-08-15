@@ -135,5 +135,6 @@ func can_drop() -> bool:
 	for body in bodies:
 		if body.is_in_range(pos):
 			GSignal.feedback.emit(global_position, "Too close!")
+			body.flash_radius()
 			return false
 	return true

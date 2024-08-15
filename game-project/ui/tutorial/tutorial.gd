@@ -36,6 +36,8 @@ func on_day_started() -> void:
 	var offset_per_stage := Vector2.RIGHT * size_per_stage
 	var global_offset := -0.5 * (stages.size() - 1) * offset_per_stage
 	
+	var skip_pregame := OS.is_debug_build() and Global.config.skip_pregame
+	
 	for i in range(stages.size()):
 		var stage := stages[i]
 		var t : TutorialSprite = tutorial_scene.instantiate()
@@ -45,6 +47,8 @@ func on_day_started() -> void:
 		map.layers.add_to_layer("floor", t)
 		t.set_stage(stage)
 		stage.execute(self)
+		
+		if skip_pregame: continue
 		await t.done
 	
 	prog_data.unpause()

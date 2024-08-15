@@ -60,5 +60,6 @@ func get_random_valid_position() -> Vector2:
 		"dist": Global.config.parasols_min_spawn_dist
 	})
 
-func on_spawn_requested() -> void:
-	spawn()
+func on_spawn_requested(add:bool) -> void:
+	if add: spawn()
+	else: despawn_random()

@@ -3,6 +3,7 @@ class_name Config
 
 @export_group("Debug")
 @export var skip_pregame := true
+@export var skip_postgame := true
 @export var debug_bodies := false
 
 @export_group("Map")
@@ -126,6 +127,7 @@ var powerups_radius_bounds := Bounds.new(1.0, 1.55) # ~sprite_size
 @export var powerups_progress_color_end := Color(1,1,1)
 var powerup_coin_reward := Bounds.new(0.1, 0.3) # ~base_price
 @export var powerup_heat_scale_factor := 0.725
+@export var powerups_invert_if_lacking_money := true
 
 @export_group("UI")
 @export var progress_bars_scale := 0.15

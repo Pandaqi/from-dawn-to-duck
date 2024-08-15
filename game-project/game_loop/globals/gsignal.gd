@@ -3,7 +3,7 @@ extends Node
 signal game_over(we_won:bool)
 signal life_lost()
 signal hand_to_ui(node:Node2D)
-signal spawn_parasol()
+signal spawn_parasol(add:bool)
 signal feedback(pos:Vector2, txt:String)
 
 func _ready() -> void:

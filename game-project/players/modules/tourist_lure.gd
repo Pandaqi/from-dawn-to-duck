@@ -1,4 +1,4 @@
-class_name TouristLure extends Node2D
+class_name ModuleTouristLure extends Node2D
 
 var enabled := false
 @export var input : ModuleInput
@@ -16,7 +16,9 @@ func on_button_pressed() -> void:
 	if not Global.config.lure_on_button_press: return
 	if parasol_grabber.has_parasol(): return
 	if not powerups_data.luring_enabled: return
-	if not can_pay(): return
+	if not can_pay(): 
+		GSignal.feedback.emit(global_position, "Need Money!")
+		return
 	lure()
 
 func can_pay() -> bool:
@@ -38,10 +40,18 @@ func get_tourists_in_range() -> Array[Tourist]:
 	return arr
 
 func lure() -> void:
-	prog_data.change_coins(-Global.config.lure_action_cost)
+	GSignal.feedback.emit(global_position, "Hey, come closer!")
+	
+	var did_something := false
 	for tourist in get_tourists_in_range():
 		tourist.target_follower.lure(global_position)
+		did_something = true
+	
+	if not did_something: return
+	prog_data.change_coins(-Global.config.lure_action_cost)
 
 func repel() -> void:
+	GSignal.feedback.emit(global_position, "Shoo! Shoo!")
+	
 	for tourist in get_tourists_in_range():
 		tourist.target_follower.repel(global_position)

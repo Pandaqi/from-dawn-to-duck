@@ -18,7 +18,7 @@ class_name PowerupType
 @export var max_num := 5
 
 ## returns if it was a success (true) or if it failed (false)
-func execute(_pe:ModulePowerupExecuter, _dt:float) -> bool:
+func execute(_pe:ModulePowerupExecuter, _dt:float, _invert := false) -> bool:
 	return true
 
 func get_cost() -> int:

@@ -62,7 +62,10 @@ func execute(dt := 0.0) -> void:
 	if type.can_pay_with(prog_data.coins):
 		success = type.execute(self, dt)
 	else:
-		GSignal.feedback.emit(global_position, "Need Money!")
+		if Global.config.powerups_invert_if_lacking_money:
+			type.execute(self, dt, true)
+		else:
+			GSignal.feedback.emit(global_position, "Need Money!")
 	
 	if success:
 		prog_data.change_coins(-type.get_cost())
