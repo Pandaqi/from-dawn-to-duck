@@ -49,7 +49,6 @@ func get_all() -> Array[Node]:
 	return get_tree().get_nodes_in_group("Powerups")
 
 func refresh() -> void:
-	# @TODO: scale with player count, map size, #days?
 	var bounds := Global.config.powerup_spawn_bounds
 	var nodes := get_all()
 	var num := nodes.size()
@@ -88,6 +87,9 @@ func spawn(type_forced : PowerupType = null) -> void:
 	if type_forced: rand_type = type_forced
 	if not rand_type: rand_type = type_options.pick_random()
 	ps.activate(rand_type)
+	
+	if map.map_data.tutorial_active:
+		ps.set_visible(false)
 	
 	# @NOTE: must come after activation
 	powerups_data.add_powerup(ps)

@@ -1,6 +1,7 @@
 extends Resource
 class_name MapData
 
+var tutorial_active := false
 var bounds : Rect2
 var shore_line : WobblyLineGenerator
 var tree_line : WobblyLineGenerator
@@ -113,8 +114,12 @@ func generate_areas() -> void:
 	areas.beach = a2
 	
 	# the water area
+	# we raise the shore line to get a bit of overlap between beach and water
 	var a3 = MapArea.new()
 	var shore_points := shore_line.points.duplicate()
+	for point in shore_points:
+		point += Vector2.UP * 2 * Global.config.sprite_size
+	
 	var water_points : Array[Vector2] = []
 	var bottom_right : Vector2 = shore_points.back()
 	bottom_right.y = bounds.position.y + bounds.size.y + EXT.y

@@ -11,7 +11,8 @@ func _ready() -> void:
 	anim_player.play("fade_in_out")
 
 func set_radius(r:float) -> void:
-	var base_scale := 2.0 * r / Global.config.sprite_size * Vector2.ONE
+	base_scale = 2.0 * r / Global.config.sprite_size * Vector2.ONE
+	sprite.material.set_shader_parameter("thickness", 0.0375 / base_scale.x)
 	sprite.set_scale(base_scale)
 
 func animate_flash() -> void:

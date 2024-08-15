@@ -8,6 +8,9 @@ class_name Tutorial extends MainSystem
 
 var nodes : Array[TutorialSprite] = []
 
+signal started()
+signal done()
+
 func activate() -> void:
 	prog_data.day_started.connect(on_day_started)
 
@@ -26,8 +29,10 @@ func on_day_started() -> void:
 	
 	prog_data.pause()
 	
+	started.emit()
+	
 	var beach_bounds : Rect2 = map.map_data.areas.beach.get_bounds()
-	var edge_margin := Global.config.scale(Global.config.shore_line_displacement)
+	var edge_margin := 2.0 * Global.config.scale(Global.config.shore_line_displacement)
 	var max_available_height = beach_bounds.size.y - edge_margin
 	var tutorial_raw_size := Vector2(375, 600)
 	var size_per_stage := Vector2(tutorial_raw_size.x / tutorial_raw_size.y * max_available_height, max_available_height)
@@ -48,10 +53,17 @@ func on_day_started() -> void:
 		t.set_stage(stage)
 		stage.execute(self)
 		
+		t.died.connect(on_tutorial_died)
+		
 		if skip_pregame: continue
 		await t.done
 	
 	prog_data.unpause()
+
+func on_tutorial_died(t:TutorialSprite) -> void:
+	nodes.erase(t)
+	if nodes.size() > 0: return
+	done.emit()
 
 func get_stages_for_day(day:int) -> Array[TutorialStage]:
 	var arr : Array[TutorialStage] = []

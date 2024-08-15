@@ -5,6 +5,7 @@ var edge_margin := 32.0
 
 @onready var continue_btn := $Container/Button/Continue
 @onready var anim_player : AnimationPlayer = $AnimationPlayer
+@onready var audio_player : AudioStreamPlayer = $AudioStreamPlayer
 
 signal dismissed()
 
@@ -20,6 +21,7 @@ func appear() -> void:
 	
 	set_visible(true)
 	get_tree().paused = true
+	audio_player.play()
 	
 	var vp_size := get_viewport_rect().size
 	set_position(0.5 * vp_size)

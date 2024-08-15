@@ -4,6 +4,7 @@ class_name TutorialSprite extends Node2D
 @onready var anim_player : AnimationPlayer = $AnimationPlayer
 
 signal done()
+signal died(t:TutorialSprite)
 
 func set_stage(t:TutorialStage) -> void:
 	sprite.set_frame(t.frame)
@@ -16,3 +17,4 @@ func set_stage(t:TutorialStage) -> void:
 	anim_player.play_backwards("fade_in")
 	await anim_player.animation_finished
 	self.queue_free()
+	died.emit(self)

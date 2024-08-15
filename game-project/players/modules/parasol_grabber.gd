@@ -17,6 +17,9 @@ var button_press_time := 0.0
 
 @onready var entity = get_parent()
 
+@onready var audio_grab_drop : AudioStreamPlayer2D = $AudioGrabDrop
+@onready var audio_rotate : AudioStreamPlayer2D = $AudioRotate
+
 signal changed(p:Parasol)
 signal dropped()
 
@@ -43,8 +46,13 @@ func rotate_parasol_if_needed(dt:float) -> void:
 	rotate_parasol(dt)
 
 func rotate_parasol(dt:float) -> void:
+	if not has_parasol(): return
 	var rotate_speed := Global.config.parasol_rotate_speed * dt
 	parasol.shadow_caster.update_rotation(rotate_speed)
+	
+	if not audio_rotate.playing:
+		audio_rotate.pitch_scale = randf_range(0.9, 1.1)
+		audio_rotate.play()
 
 func check_for_parasols_in_range() -> void:
 	if has_parasol(): return
@@ -80,6 +88,7 @@ func grab(p:Parasol) -> void:
 	if not can_grab(p): return
 	parasol = p
 	parasol.on_grabbed(entity)
+	play_grab_drop_audio()
 	animate_pop_up(parasol)
 	changed.emit(parasol)
 
@@ -92,6 +101,7 @@ func drop() -> void:
 	parasol.on_dropped()
 	parasol = null
 	animate_pop_up(last_parasol_dropped)
+	play_grab_drop_audio()
 	dropped.emit()
 
 func animate_pop_up(p:Parasol) -> void:
@@ -138,3 +148,8 @@ func can_drop() -> bool:
 			body.flash_radius()
 			return false
 	return true
+
+func play_grab_drop_audio() -> void:
+	if audio_grab_drop.playing: audio_grab_drop.stop()
+	audio_grab_drop.pitch_scale = randf_range(0.9, 1.1)
+	audio_grab_drop.play()

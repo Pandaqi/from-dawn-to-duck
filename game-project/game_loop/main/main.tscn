@@ -1,4 +1,4 @@
-[gd_scene load_steps=56 format=3 uid="uid://ocfbx6ggqvn2"]
+[gd_scene load_steps=67 format=3 uid="uid://ocfbx6ggqvn2"]
 
 [ext_resource type="PackedScene" uid="uid://d1eqndktyw2nh" path="res://parasols/parasol.tscn" id="1_06w87"]
 [ext_resource type="Script" path="res://game_loop/main/main.gd" id="1_8usxl"]
@@ -13,8 +13,13 @@
 [ext_resource type="Script" path="res://map/camera.gd" id="4_n6in6"]
 [ext_resource type="Resource" uid="uid://x8qqsqbmai1n" path="res://map/data/map_data.tres" id="5_52y3m"]
 [ext_resource type="PackedScene" uid="uid://cmglwu6iyaalg" path="res://weather/sun.tscn" id="7_6iiti"]
+[ext_resource type="Shader" path="res://map/beach/beach_shader.gdshader" id="8_2mx1c"]
+[ext_resource type="Material" uid="uid://csro03ukmky1k" path="res://map/water/water_shader_v2.tres" id="8_2ujws"]
 [ext_resource type="Script" path="res://map/areas/area_drawer.gd" id="8_3sibe"]
+[ext_resource type="Material" uid="uid://juatc0q1efrp" path="res://map/beach/beach_shader.tres" id="9_0cybg"]
 [ext_resource type="Script" path="res://players/players.gd" id="9_i06n6"]
+[ext_resource type="Texture2D" uid="uid://cv647ka5rxl4e" path="res://icon.svg" id="10_4qp6a"]
+[ext_resource type="PackedScene" uid="uid://bal3aqako5u1r" path="res://map/map_deco_scene.tscn" id="10_yrbjx"]
 [ext_resource type="PackedScene" uid="uid://cpixp7bpg8lr8" path="res://players/player.tscn" id="11_h3yax"]
 [ext_resource type="Resource" uid="uid://deg0e6fl14je3" path="res://parasols/data/parasols_data.tres" id="12_a2ij7"]
 [ext_resource type="Resource" uid="uid://bgat7kwp01frp" path="res://powerups/types/powerup_shop.tres" id="13_mb2f3"]
@@ -46,6 +51,49 @@
 [ext_resource type="Resource" uid="uid://iggb34yr44xf" path="res://ui/tutorial/stages/stage_how_to_play.tres" id="35_axrhv"]
 [ext_resource type="Resource" uid="uid://bdc4e1ef5ysy2" path="res://ui/tutorial/stages/stage_grab_drop.tres" id="36_ides8"]
 [ext_resource type="PackedScene" uid="uid://djcl05q4vqn28" path="res://ui/tutorial/tutorial_sprite.tscn" id="37_vmwj5"]
+[ext_resource type="AudioStream" uid="uid://3fyke6l1xtl4" path="res://progression/life_lost.ogg" id="44_2wx2c"]
+[ext_resource type="AudioStream" uid="uid://qsb4hcc0jn3x" path="res://progression/money.ogg" id="45_hgnvb"]
+[ext_resource type="AudioStream" uid="uid://duotrg7kr72kq" path="res://ui/day_over/day_over.ogg" id="46_occ36"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_7futy"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_oopgw"]
+seamless = true
+noise = SubResource("FastNoiseLite_7futy")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7oqb7"]
+shader = ExtResource("8_2mx1c")
+shader_parameter/color = Color(0.462745, 0.576471, 0.168627, 1)
+shader_parameter/color_edge = Color(0.135802, 0.17, 0.0493, 1)
+shader_parameter/fade_alpha = false
+shader_parameter/noise_tex = SubResource("NoiseTexture2D_oopgw")
+
+[sub_resource type="Animation" id="Animation_kf0e4"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Cont:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Cont:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
 
 [sub_resource type="Animation" id="Animation_omhvw"]
 resource_name = "heat_blink"
@@ -74,33 +122,6 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 1), Color(2, 1.5, 1.5, 1)]
-}
-
-[sub_resource type="Animation" id="Animation_kf0e4"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Cont:scale")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(1, 1)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Cont:modulate")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 1)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_fhnuf"]
@@ -267,21 +288,33 @@ day_over = NodePath("../UI/DayOver")
 
 [node name="CanvasModulate" type="CanvasModulate" parent="Progression"]
 
-[node name="Map" type="Node2D" parent="."]
+[node name="Map" type="Node2D" parent="." node_paths=PackedStringArray("tutorial")]
 script = ExtResource("2_1jgw0")
 map_data = ExtResource("5_52y3m")
+tutorial = NodePath("../Tutorial")
+map_deco_scene = ExtResource("10_yrbjx")
 
 [node name="BG" type="Node2D" parent="Map"]
+y_sort_enabled = true
+material = SubResource("ShaderMaterial_7oqb7")
 script = ExtResource("8_3sibe")
 color = Color(0.462745, 0.576471, 0.168627, 1)
 
 [node name="Beach" type="Node2D" parent="Map"]
+material = ExtResource("9_0cybg")
 script = ExtResource("8_3sibe")
 color = Color(0.988235, 0.878431, 0.682353, 1)
 
 [node name="Water" type="Node2D" parent="Map"]
+material = ExtResource("8_2ujws")
 script = ExtResource("8_3sibe")
 color = Color(0.4, 0.760784, 0.768627, 1)
+
+[node name="Sprite2D" type="Sprite2D" parent="Map/Water"]
+material = ExtResource("8_2ujws")
+position = Vector2(0, 32.5)
+scale = Vector2(1, 1.50781)
+texture = ExtResource("10_4qp6a")
 
 [node name="MapLayers" type="Node2D" parent="Map"]
 script = ExtResource("3_ragrm")
@@ -469,6 +502,9 @@ text = "00:00"
 horizontal_alignment = 2
 vertical_alignment = 1
 
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="UI/GameUI/Lives"]
+stream = ExtResource("44_2wx2c")
+
 [node name="Coins" type="Node2D" parent="UI/GameUI"]
 position = Vector2(0, 941)
 
@@ -489,6 +525,10 @@ theme_override_font_sizes/font_size = 200
 text = "00:00"
 horizontal_alignment = 2
 vertical_alignment = 1
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="UI/GameUI/Coins"]
+stream = ExtResource("45_hgnvb")
+volume_db = -3.0
 
 [node name="DayOver" type="Node2D" parent="UI"]
 script = ExtResource("29_xtt26")
@@ -517,6 +557,9 @@ offset_bottom = 70.0
 theme = ExtResource("20_6yfs1")
 theme_override_font_sizes/font_size = 48
 text = "Continue!"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="UI/DayOver"]
+stream = ExtResource("46_occ36")
 
 [node name="GameOver" type="Node2D" parent="UI"]
 script = ExtResource("29_88oh1")

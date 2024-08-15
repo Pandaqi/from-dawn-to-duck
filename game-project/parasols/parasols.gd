@@ -28,7 +28,7 @@ func auto_buy_parasols_if_needed() -> void:
 	spawn_multiple(Global.config.parasols_auto_spawn_per_day)
 
 func on_life_lost() -> void:
-	if Global.config.life_lost_means_parasol_lost:
+	if Global.config.life_lost_means_parasol_lost and not prog_data.is_game_over():
 		despawn_random()
 
 func spawn_multiple(num:int) -> void:

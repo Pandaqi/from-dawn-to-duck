@@ -7,6 +7,8 @@ var enabled := false
 @export var powerups_data : PowerupsData
 @export var prog_data : ProgressionData
 
+@onready var audio_player : AudioStreamPlayer2D = $AudioStreamPlayer2D
+
 func activate() -> void:
 	input.button_released.connect(on_button_pressed)
 	radius_viewer.set_radius(get_lure_range())
@@ -41,6 +43,7 @@ func get_tourists_in_range() -> Array[Tourist]:
 
 func lure() -> void:
 	GSignal.feedback.emit(global_position, "Hey, come closer!")
+	play_audio()
 	
 	var did_something := false
 	for tourist in get_tourists_in_range():
@@ -52,6 +55,11 @@ func lure() -> void:
 
 func repel() -> void:
 	GSignal.feedback.emit(global_position, "Shoo! Shoo!")
+	play_audio()
 	
 	for tourist in get_tourists_in_range():
 		tourist.target_follower.repel(global_position)
+
+func play_audio() -> void:
+	audio_player.pitch_scale = randf_range(0.9, 1.1)
+	audio_player.play()

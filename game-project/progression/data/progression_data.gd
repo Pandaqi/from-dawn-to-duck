@@ -97,6 +97,12 @@ func is_day() -> bool:
 func goto_game_over() -> void:
 	state = ProgressionState.POSTGAME
 
+func is_pre_game() -> bool:
+	return state == ProgressionState.PREGAME
+
+func is_game_over() -> bool:
+	return state == ProgressionState.POSTGAME
+
 # returns 0->1 in first half of day, then 1->0 in second half
 # hence, symmetric ratio around noon
 func get_time_symmetric() -> float:

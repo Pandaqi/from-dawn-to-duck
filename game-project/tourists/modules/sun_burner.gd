@@ -15,11 +15,18 @@ signal protected()
 signal burned()
 
 func activate() -> void:
+	prog_bar_cont.set_visible(true)
 	GSignal.hand_to_ui.emit(prog_bar_cont)
 	keep_prog_bar_with_us()
 	
+	state_tourist.state_changed.connect(on_state_changed)
+	
 	set_base_burn(Global.config.burn_base_health)
 	state.died.connect(on_died)
+
+func on_state_changed(new_state:ModuleStateTourist.TouristState) -> void:
+	if new_state != ModuleStateTourist.TouristState.LEAVING: return
+	prog_bar_cont.set_visible(false)
 
 func set_base_burn(bb:float, refresh := true) -> void:
 	base_burn = bb

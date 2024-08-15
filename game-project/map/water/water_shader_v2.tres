@@ -1,0 +1,16 @@
+[gd_resource type="ShaderMaterial" load_steps=4 format=3 uid="uid://csro03ukmky1k"]
+
+[ext_resource type="Shader" path="res://map/water/water.gdshader" id="1_b3vlc"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_3o5mp"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_b8kn1"]
+seamless = true
+noise = SubResource("FastNoiseLite_3o5mp")
+
+[resource]
+shader = ExtResource("1_b3vlc")
+shader_parameter/color = Color(0.2912, 0.55552, 0.56, 1)
+shader_parameter/color_shore = Color(0.533, 0.815217, 0.82, 1)
+shader_parameter/color_foam = Color(0.9216, 0.95936, 0.96, 1)
+shader_parameter/noise_tex = SubResource("NoiseTexture2D_b8kn1")

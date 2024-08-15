@@ -7,7 +7,6 @@ var active := false
 
 var material_res = preload("res://parasols/shadows/shadow_pretty_shader.tres")
 
-# @TODO: probably need unique shader and more tweaks, but this is a start
 func _ready() -> void:
 	material = material_res.duplicate(false)
 	material.set_shader_parameter("color", Global.config.shadow_color)

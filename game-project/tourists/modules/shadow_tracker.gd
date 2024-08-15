@@ -4,9 +4,15 @@ var shadows : Array[Shadow] = []
 
 @export var body : ModuleBody
 @onready var label_debug := $LabelDebug
+@onready var entity = get_parent()
 @export var weather_data : WeatherData
 
+@onready var audio_player : AudioStreamPlayer2D = $AudioStreamPlayer2D
+
 signal shadow_changed(val:bool)
+
+func _ready() -> void:
+	label_debug.set_visible(OS.is_debug_build() and Global.config.debug_labels)
 
 func _process(_dt:float) -> void:
 	check_if_in_shadow()
@@ -21,6 +27,8 @@ func is_in_shadow() -> bool:
 	return shadows.size() > 0 or weather_data.cloudy
 
 func check_if_in_shadow() -> void:
+	if not entity.is_visible(): return
+	
 	var was_in_shadow := is_in_shadow()
 	
 	reset_shadows()
@@ -45,8 +53,15 @@ func check_if_in_shadow() -> void:
 	
 	var is_shadowed := is_in_shadow()
 	if was_in_shadow != is_shadowed:
-		shadow_changed.emit(is_shadowed)
+		on_shadow_changed()
 	
 	label_debug.set_text("Burning")
 	if is_shadowed:
 		label_debug.set_text("SHADOW!")
+
+func on_shadow_changed() -> void:
+	var is_shadowed := is_in_shadow()
+	shadow_changed.emit(is_shadowed)
+	if not is_shadowed and audio_player:
+		audio_player.pitch_scale = randf_range(0.93, 1.07)
+		audio_player.play()

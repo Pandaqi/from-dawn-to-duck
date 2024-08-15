@@ -1,0 +1,16 @@
+[gd_resource type="ShaderMaterial" load_steps=4 format=3 uid="uid://juatc0q1efrp"]
+
+[ext_resource type="Shader" path="res://map/beach/beach_shader.gdshader" id="1_soctn"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_7futy"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_oopgw"]
+seamless = true
+noise = SubResource("FastNoiseLite_7futy")
+
+[resource]
+shader = ExtResource("1_soctn")
+shader_parameter/color = Color(0.988235, 0.878431, 0.682353, 1)
+shader_parameter/color_edge = Color(0.24, 0.19248, 0.1104, 1)
+shader_parameter/fade_alpha = true
+shader_parameter/noise_tex = SubResource("NoiseTexture2D_oopgw")

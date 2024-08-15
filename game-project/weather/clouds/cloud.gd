@@ -9,6 +9,7 @@ var end_pos : Vector2
 var time_start : float
 var time_leave : float
 var speed := 1.0
+var is_blocking_light := false
 
 var line : Line
 
@@ -27,13 +28,14 @@ func activate(ep:Vector2, tml:float) -> void:
 		Vector2(-0.5*size, 0),
 		Vector2(0.5*size, 0)
 	)
-	
-	modulate.a = Global.config.cloud_alpha
 
 func _process(_dt:float) -> void:
 	var frac := (prog_data.time - time_start) / (time_leave - time_start)
 	var new_pos := start_pos.lerp(end_pos, frac)
 	set_position(new_pos)
+	
+	var mod_col := Color(2,2,2,2) if is_blocking_light else Color(1,1,1,Global.config.cloud_alpha)
+	modulate = mod_col
 	
 	var reached_end_pos := frac >= 1.0
 	if reached_end_pos:

@@ -28,6 +28,7 @@ func check_overlapping_powerups() -> void:
 			entered.emit(p)
 	
 	for p in old_powerups:
+		if not is_instance_valid(p): continue
 		if not powerups.has(p):
-			if is_instance_valid(p): p.powerup_executer.on_player_exited(entity)
+			p.powerup_executer.on_player_exited(entity)
 			exited.emit(p)

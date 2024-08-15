@@ -293,7 +293,51 @@ For this jam, all tourists and parasols are just the same old regular thing. The
 
 ## Day 4: Finishing
 
+### Polishing: Sound
+
 This day started by adding sound effects, some background music, some more shaders or decorations to make the beach look more alive. The usual polishing that takes a few hours but simply makes the game feel so much more alive.
+
+I decided to record an upbeat Spanish/tango song (with my Spanish guitar) as the background music. Because it fits the summer/beach vibe and it's something I can actually do with my very limited means. (I just have a tiny old guitar and I record all this with the terrible speakers from my tablet.)
+
+When I was done, I realized I could just record the sound effects too with the guitar, so I kept going and was done with all the sound in about an hour. As I always say: I am actually a musician first and foremost, so this is the easy and fun part :p I can come up with nice melodies on the spot, I know all the tricks to get weird sounds out of a guitar, and it sounds better than it should on such terrible hardware.
+
+{{% remark %}}
+I literally used an AAA battery I had lying around for a sliding effect. Because I know that if you put something metal on the strings and then slide up/down, you get that nice twangy slide sound out of any guitar. So by doing that, I could record some nice sound effects that go up/down smoothly in pitch (for something good/bad that happened) in no more than a minute or two.
+{{% /remark %}}
+
+### Polishing: The Rest
+
+To make the game look a bit better, I used some more shader magic. For example, the shadows used to have extremely hard edges, because they were literally just a polygon drawn by the engine.
+
+Using a shader, however, I can use a random noise texture to get wobbly and fuzzy edges. This looks far more realistic and less amateurish/harsh.
+
+Similarly, a shader adds some gradient and movement to the water. All other details are just sprites randomly placed and oriented, after I drew a few rocks and other beach decorations.
+
+### Aaaargh
+
+As usual, when you do things for the first time, you're going to make mistakes.
+
+I lost a _lot_ of time doing some shaders and decoration work for the overall map ... then doing it again ... then doing it again. Every time I made a new mistake, or had a new oversight, which taught me I had to approach it completely differently. It's obviously frustrating when that happens. You feel absolutely demotivated, unable to redo _the thing you just did for an hour_. At the same time, if you take a short break, you realize you've learned a lot from this challenge and can get back into making a better version.
+
+Similarly, all sorts of issues cropped up with my "interactive tutorial". For example, now that there were decorations (or powerups) on the beach ... they could cover the tutorial image on the floor! This made it annoying (or simply impossible) to read. And so I had to add an entire new system to _hide_ anything that might get in the way for as long as the tutorial was visible, then make all that _reappear_ when the tutorial was done.
+
+And then, when testing the game with everything mostly done, I realized we had some (potentially major) game design issues.
+
+* The first few days can have quite some "downtime". You have a parasol for every tourist, nobody else is arriving, so you have nothing to do for 5--10 seconds.
+* At the same time, I often lost as early as the second day, because of the enormous _variation_ in heat and burn speed and such from day to day.
+
+I had to work a bit more on the _progression_ of the game to fix both issues at once.
+
+* At the start, the heat of the day doesn't fluctuate much, and days are much _shorter_.
+* Only as you progress (day 3, day 4, day 5, ...) do the really hot and really cool days appear, and do they grow to their final duration.
+
+This finally made the game quick and easy at the start, yet challenging as you went further.
+
+
+I thought I'd be able to have quite some free hours this day to take a break and enjoy the sun, but I was wrong :p I lost a lot of time on all those mistakes, all those issues I'd never seen before because I did something I never did before. I even started to fear I'd run out of time at one point.
+
+
+### Polishing: The most important bit
 
 I couldn't delay any longer: I had to start drawing the actual ducks for the players and tourists. Those were the only sprites missing at this point. 
 
@@ -308,3 +352,4 @@ And then the game was _done_.
 Just in time, because the GMTK Jam started that same evening. Being a far shorter (and perhaps more prestigious) jam, I knew I needed all my time for that.
 
 @TODO
+

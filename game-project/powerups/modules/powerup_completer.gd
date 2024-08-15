@@ -8,6 +8,7 @@ class_name ModulePowerupCompleter extends Node2D
 var value := 0.0
 var base_value := 100.0
 var type : PowerupType
+var num_completes := 0
 
 signal completed(tp:PowerupType)
 
@@ -44,6 +45,7 @@ func keep_prog_bar_with_us() -> void:
 	var screen_pos := (get_viewport().get_screen_transform() * get_viewport().get_canvas_transform()) * global_position
 	prog_bar_cont.set_position(screen_pos)
 	prog_bar_cont.set_scale(Global.config.progress_bars_scale*Vector2.ONE)
+	prog_bar_cont.set_visible(entity.is_visible())
 
 func update_status(dt:float) -> void:
 	if not shadow_tracker.is_in_shadow(): return
@@ -64,7 +66,8 @@ func change(db:float) -> void:
 		on_completion()
 
 func on_completion() -> void:
-	if type.needs_visit or type.continuous:
+	num_completes += 1
+	if type.needs_visit or (type.continuous and num_completes <= 1):
 		GSignal.feedback.emit(global_position, "Powerup Ready!")
 	completed.emit(type)
 

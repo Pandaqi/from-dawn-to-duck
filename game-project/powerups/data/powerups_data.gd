@@ -40,7 +40,6 @@ func remove_powerup(ps:Powerup) -> void:
 func count() -> int:
 	return powerups.size()
 
-# @TODO: actually track those powerup nodes being created/destroyed
 func get_of_type(tp:PowerupType) -> Array[Powerup]:
 	var arr : Array[Powerup] = []
 	for p in powerups:

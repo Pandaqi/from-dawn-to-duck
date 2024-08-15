@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://bal3aqako5u1r"]
+
+[ext_resource type="Texture2D" uid="uid://e4tehpvq63wc" path="res://map/map.webp" id="1_m88me"]
+[ext_resource type="Texture2D" uid="uid://bhpylh6fjw75y" path="res://game_loop/main/misc.webp" id="2_h7dta"]
+
+[node name="Sprite2D" type="Sprite2D"]
+position = Vector2(0, -128)
+texture = ExtResource("1_m88me")
+hframes = 4
+vframes = 2
+frame = 4
+
+[node name="Shadow" type="Sprite2D" parent="."]
+modulate = Color(0, 0, 0, 0.321569)
+show_behind_parent = true
+position = Vector2(0, 116)
+scale = Vector2(1.45, 0.491)
+texture = ExtResource("2_h7dta")
+hframes = 4
+vframes = 4

@@ -4,9 +4,5 @@
 
 [resource]
 shader = ExtResource("1_aictj")
-shader_parameter/WATER_COL = Color(0.044, 0.88, 0.8382, 1)
-shader_parameter/WATER2_COL = Color(0.2184, 0.78, 0.74256, 1)
-shader_parameter/FOAM_COL = Color(0.7826, 0.91, 0.907877, 1)
-shader_parameter/distortion_speed = 2.0
-shader_parameter/tile = Vector2(10, 10)
-shader_parameter/wave_speed = 1.5
+shader_parameter/color = Color(0.4, 0.760784, 0.768627, 1)
+shader_parameter/color_foam = Color(0.9216, 0.95936, 0.96, 1)

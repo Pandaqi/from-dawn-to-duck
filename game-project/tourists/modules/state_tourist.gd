@@ -17,6 +17,8 @@ var spawn_event : SpawnEvent
 @export var target_follower : ModuleTargetFollower
 @export var prog_data : ProgressionData
 
+signal state_changed(s:TouristState)
+
 func activate() -> void:
 	sun_burner.burned.connect(on_burned)
 	target_follower.target_reached.connect(on_target_reached)
@@ -44,15 +46,15 @@ func on_target_reached() -> void:
 	if state == TouristState.LEAVING:
 		state_module.kill()
 		return
-	state = TouristState.SUNBATHING
+	change_state(TouristState.SUNBATHING)
 
 func reposition() -> void:
-	state = TouristState.WALKING
+	change_state(TouristState.WALKING)
 	target_follower.reposition()
 
 func leave() -> void:
-	target_follower.reset_to_starting_target()
-	state = TouristState.LEAVING
+	target_follower.leave()
+	change_state(TouristState.LEAVING)
 	
 	var reward_bounds := Global.config.tourist_coin_reward
 	var reward := 0.0
@@ -64,8 +66,12 @@ func leave() -> void:
 	
 	reward = int( round(reward * Global.config.base_price) )
 	reward = max(reward, 1)
-	prog_data.change_coins(reward)
+	prog_data.change_coins(int(reward))
 	GSignal.feedback.emit(global_position, "+" + str(reward) + " coins!")
+
+func change_state(new_state:TouristState) -> void:
+	state = new_state
+	state_changed.emit(state)
 
 func is_burnable() -> bool:
 	return state == TouristState.SUNBATHING or state == TouristState.WALKING

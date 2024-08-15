@@ -11,14 +11,18 @@ class_name GameUI extends Node2D
 
 @onready var lives_cont := $Lives
 @onready var lives_label := $Lives/Label
+@onready var lives_audio : AudioStreamPlayer = $Lives/AudioStreamPlayer
 
 @onready var coins_cont := $Coins
 @onready var coins_label := $Coins/Label
+@onready var coins_audio : AudioStreamPlayer = $Coins/AudioStreamPlayer
 
 @onready var heat_cont := $Heat
 @onready var heat_label := $Heat/Label
 @onready var heat_thermometer := $Heat/Cont/TextureProgressBar
 @onready var heat_anim_player := $Heat/AnimationPlayer
+
+
 
 var offset_per_node : float
 var margin_per_node := 0.075
@@ -36,17 +40,20 @@ func activate() -> void:
 	get_viewport().size_changed.connect(on_resize)
 	on_resize()
 
-# @TODO: pull out reused values (for x/y pos and such), make cleaner
 func on_resize() -> void:
 	var vp_size := get_viewport_rect().size
 	var edge_margin := Global.config.sprite_size * margin_to_edge * Vector2.ONE
 	
-	time_cont.set_position( Vector2(edge_margin.x / scale.x, 0.5 * offset_per_node + edge_margin.y / scale.y) )
-	day_cont.set_position( Vector2(edge_margin.x / scale.x, 1.5 * offset_per_node + edge_margin.y / scale.y) )
-	heat_cont.set_position( Vector2(edge_margin.x / scale.x, 2.5 * offset_per_node + edge_margin.y / scale.y) )
+	var edge_left := edge_margin.x / scale.x
+	var edge_right := (vp_size.x - edge_margin.x) / scale.x
+	var edge_top := edge_margin.y / scale.y
 	
-	lives_cont.set_position( Vector2((vp_size.x - edge_margin.x) / scale.x, 0.5 * offset_per_node + edge_margin.y / scale.y) )
-	coins_cont.set_position( Vector2((vp_size.x - edge_margin.x) / scale.x, 1.5 * offset_per_node + edge_margin.y / scale.y) )
+	time_cont.set_position( Vector2(edge_left, 0.5 * offset_per_node + edge_top) )
+	day_cont.set_position( Vector2(edge_left, 1.5 * offset_per_node + edge_top) )
+	heat_cont.set_position( Vector2(edge_left, 2.5 * offset_per_node + edge_top) )
+	
+	lives_cont.set_position( Vector2(edge_right, 0.5 * offset_per_node + edge_top) )
+	coins_cont.set_position( Vector2(edge_right, 1.5 * offset_per_node + edge_top) )
 
 func on_time_changed(t:float) -> void:
 	time_label.set_text(to_pretty_time_string(t))
@@ -58,10 +65,18 @@ func on_day_changed(d:int) -> void:
 func on_lives_changed(l:int) -> void:
 	lives_label.set_text(str(l))
 	animate_pop_up(lives_cont)
+	
+	if not prog_data.is_pre_game():
+		lives_audio.pitch_scale = randf_range(0.96, 1.04)
+		lives_audio.play()
 
 func on_coins_changed(c:int) -> void:
 	coins_label.set_text(str(c))
 	animate_pop_up(coins_cont)
+	
+	if not prog_data.is_pre_game():
+		coins_audio.pitch_scale = randf_range(0.96, 1.04)
+		coins_audio.play()
 
 func on_heat_changed(h:float) -> void:
 	var heat_nice := int( round(h) )
