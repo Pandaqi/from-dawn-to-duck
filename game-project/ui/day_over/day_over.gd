@@ -21,6 +21,8 @@ func appear() -> void:
 	
 	set_visible(true)
 	get_tree().paused = true
+	
+	await get_tree().create_timer(0.75).timeout
 	audio_player.play()
 	
 	var vp_size := get_viewport_rect().size

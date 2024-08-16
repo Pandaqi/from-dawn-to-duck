@@ -65,12 +65,7 @@ func refresh() -> void:
 
 func spawn(type_forced : PowerupType = null) -> void:
 	var ps : Powerup = powerup_scene.instantiate()
-	var rand_pos := map.map_data.query_position({
-		"avoid": get_all(),
-		"area": "beach",
-		"area_margin": 2.0 * Global.config.sprite_size,
-		"dist": Global.config.scale(Global.config.powerups_min_dist)
-	})
+	var rand_pos := get_random_valid_position()
 	
 	ps.set_position( rand_pos )
 	map.layers.add_to_layer("floor", ps)
@@ -95,3 +90,11 @@ func spawn(type_forced : PowerupType = null) -> void:
 	# @NOTE: must come after activation
 	powerups_data.add_powerup(ps)
 	ps.died.connect(func(_n): powerups_data.remove_powerup(ps))
+
+func get_random_valid_position() -> Vector2:
+	return map.map_data.query_position({
+		"avoid": get_all() + tourists.get_all(),
+		"area": "beach",
+		"area_margin": 2.0 * Global.config.sprite_size,
+		"dist": Global.config.scale(Global.config.powerups_min_dist)
+	})

@@ -118,7 +118,7 @@ func get_time_since_button_press() -> float:
 	return (Time.get_ticks_msec() - button_press_time) / 1000.0
 
 func get_drop_position() -> Vector2:
-	return global_position + 0.35*Vector2.UP * Global.config.player_sprite_scale * Global.config.sprite_size
+	return global_position + Global.config.player_parasol_pos_offset*Vector2.UP * Global.config.scale(Global.config.player_sprite_scale)
 
 func on_button_pressed() -> void:
 	holding_button = true

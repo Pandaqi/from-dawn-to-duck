@@ -86,5 +86,5 @@ func change(db:float) -> void:
 		GSignal.feedback.emit(global_position, "Burned!")
 		burned.emit()
 
-func on_died(_n:Node2D) -> void:
+func on_died(_n:Node2D, _is_bad:bool) -> void:
 	prog_bar_cont.queue_free()

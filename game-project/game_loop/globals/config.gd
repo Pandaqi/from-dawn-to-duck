@@ -10,7 +10,6 @@ class_name Config
 
 @export_group("Map")
 @export var sprite_size := 256.0
-@export var player_sprite_scale := 1.66
 @export var entity_size := 0.5 # ~sprite_size; generally, players and tourists are just half as large as everything else
 @export var map_size := Vector2(16, 9)
 @export var map_y_beach_line := 0.1
@@ -22,6 +21,10 @@ class_name Config
 
 @export_subgroup("Camera")
 @export var camera_edge_margin := Vector2.ZERO
+
+@export_group("Players")
+@export var player_parasol_pos_offset := 0.075 ## how much higher it holds the parasol than its actual center
+@export var player_sprite_scale := 1.66
 
 @export_group("Light & Shadows")
 var shadow_length_bounds := Bounds.new(0.6, 1.66) # ~sprite_size
@@ -45,6 +48,7 @@ var burn_factor_bounds := Bounds.new(0.85, 1.0) ## how the sun's intensity chang
 @export var walk_anim_base_speed := 2.0 # ~sprite_size
 @export var walk_anim_max_speed_scale := 2.5
 @export var lure_dist := 2.0 # ~sprite_size
+@export var lure_repel_dist := 2.0
 @export var lure_on_button_press := true
 @export var grab_dist := 1.0 # ~sprite_size
 @export var move_speed_player := 6.0 # ~sprite_size
@@ -59,7 +63,7 @@ var burn_factor_bounds := Bounds.new(0.85, 1.0) ## how the sun's intensity chang
 var stay_duration_bounds := Bounds.new(0.25, 0.66)
 @export var stay_duration_increase_per_day := 0.05
 @export var stay_duration_max := 0.8
-@export var tourists_min_spawn_dist := 80.0
+@export var tourists_min_spawn_dist := 2.0 # ~sprite_size
 var tourist_body_scale_bounds := Bounds.new(0.5, 1.0) # ~sprite_size
 @export var tourist_parasol_forbid_range := 1.5 # ~ sprite_size * personal scale
 
@@ -77,9 +81,9 @@ var heat_burn_factor_bounds := Bounds.new(0.65, 1.0) ## how the burn factor chan
 @export_subgroup("Clouds")
 var cloud_y := Bounds.new(0.005, 0.25) ## the y-pos at which clouds spawn; starts from beach line, not top of screen
 @export var cloud_alpha := 0.66
-var cloud_size_bounds := Bounds.new(1.5, 3.5) # ~sprite_size
+var cloud_size_bounds := Bounds.new(1.35, 3.5) # ~sprite_size
 var cloud_num_bounds := Bounds.new(0,2)
-var cloud_stay_duration_bounds := Bounds.new(0.33, 0.75)
+var cloud_stay_duration_bounds := Bounds.new(0.425, 0.8)
 @export var weather_cloudy_darken_factor := 0.285
 
 @export_group("Progression")
@@ -132,7 +136,7 @@ var shape_scale_bounds := Bounds.new(0.9, 1.35)
 @export_group("Powerups")
 @export var powerup_spawn_tick := 0.225 # ~day_duration
 var powerup_spawn_bounds := Bounds.new(1,3)
-var powerups_radius_bounds := Bounds.new(1.0, 1.55) # ~sprite_size
+var powerups_radius_bounds := Bounds.new(0.75, 1.25) # ~sprite_size
 @export var powerup_spawn_prob := 0.66
 @export var powerups_min_dist := 2.5 # ~sprite_size
 @export var powerups_base_completion_value := 100.0
@@ -153,6 +157,7 @@ var powerup_coin_reward := Bounds.new(0.1, 0.3) # ~base_price
 @export_subgroup("Tutorial")
 @export var tutorial_sprite_delay_time := 2.0
 @export var tutorial_sprite_stay_time := 10.0
+@export var tutorial_speed_up_repeat_plays := 1.66
 
 func scale(val:float) -> float:
 	return val * sprite_size

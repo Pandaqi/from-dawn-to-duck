@@ -284,6 +284,7 @@ _data = {
 script = ExtResource("1_8usxl")
 
 [node name="Progression" type="Node2D" parent="." node_paths=PackedStringArray("tourists", "day_over")]
+process_mode = 3
 script = ExtResource("2_i4iav")
 prog_data = ExtResource("3_mk46c")
 tourists = NodePath("../Tourists")
@@ -340,7 +341,7 @@ players = NodePath("../Players")
 tourists = NodePath("../Tourists")
 parasols = NodePath(".")
 
-[node name="Tourists" type="Node2D" parent="." node_paths=PackedStringArray("map", "suns", "players", "tourists", "parasols")]
+[node name="Tourists" type="Node2D" parent="." node_paths=PackedStringArray("map", "suns", "players", "tourists", "parasols", "powerups")]
 script = ExtResource("2_2keun")
 tourist_scene = ExtResource("4_8rgfn")
 map = NodePath("../Map")
@@ -349,6 +350,7 @@ suns = NodePath("../Weather")
 players = NodePath("../Players")
 tourists = NodePath(".")
 parasols = NodePath("../Parasols")
+powerups = NodePath("../Powerups")
 
 [node name="Players" type="Node2D" parent="." node_paths=PackedStringArray("map", "suns", "players", "tourists", "parasols")]
 script = ExtResource("9_i06n6")
@@ -371,12 +373,17 @@ players = NodePath("../Players")
 tourists = NodePath("../Tourists")
 parasols = NodePath("../Parasols")
 
-[node name="Powerups" type="Node2D" parent="." node_paths=PackedStringArray("map")]
+[node name="Powerups" type="Node2D" parent="." node_paths=PackedStringArray("map", "suns", "players", "tourists", "parasols", "powerups")]
 script = ExtResource("18_noreh")
 map = NodePath("../Map")
 powerup_scene = ExtResource("19_77uo7")
 powerups_data = ExtResource("20_jdoce")
 prog_data = ExtResource("3_mk46c")
+suns = NodePath("../Weather")
+players = NodePath("../Players")
+tourists = NodePath("../Tourists")
+parasols = NodePath("../Parasols")
+powerups = NodePath(".")
 
 [node name="Timer" type="Timer" parent="Powerups"]
 one_shot = true
@@ -398,6 +405,7 @@ prog_data = ExtResource("3_mk46c")
 map = NodePath("../Map")
 all_stages = Array[ExtResource("29_y5ije")]([ExtResource("30_w0ln7"), ExtResource("31_nobvn"), ExtResource("32_gipqa"), ExtResource("33_smb53"), ExtResource("34_mo2wn"), ExtResource("35_axrhv"), ExtResource("36_ides8")])
 tutorial_scene = ExtResource("37_vmwj5")
+enabled = null
 
 [node name="UI" type="CanvasLayer" parent="."]
 process_mode = 3
@@ -532,7 +540,7 @@ vertical_alignment = 1
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="UI/GameUI/Coins"]
 stream = ExtResource("45_hgnvb")
-volume_db = -3.0
+volume_db = -7.0
 
 [node name="DayOver" type="Node2D" parent="UI"]
 script = ExtResource("29_xtt26")

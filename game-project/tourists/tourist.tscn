@@ -23,6 +23,33 @@
 [ext_resource type="PackedScene" uid="uid://dovns8xh36uru" path="res://game_loop/main/misc_sprite.tscn" id="15_pd57f"]
 [ext_resource type="Resource" uid="uid://cicq7qf5egxwd" path="res://powerups/types/powerup_repel.tres" id="16_x11s3"]
 
+[sub_resource type="Animation" id="Animation_788dg"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../SpriteCont/Sprite2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("..:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
 [sub_resource type="Animation" id="Animation_boxcu"]
 resource_name = "near_burn_flash"
 length = 0.4
@@ -53,37 +80,25 @@ tracks/1/keys = {
 "values": [Vector2(1, 1), Vector2(1.1, 1.1)]
 }
 
-[sub_resource type="Animation" id="Animation_788dg"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_4l2j8"]
+_data = {
+"RESET": SubResource("Animation_788dg"),
+"near_burn_flash": SubResource("Animation_boxcu")
+}
+
+[sub_resource type="Animation" id="Animation_0rydg"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("../SpriteCont/Sprite2D:modulate")
+tracks/0/path = NodePath("Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 1)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("..:scale")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(1, 1)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_4l2j8"]
-_data = {
-"RESET": SubResource("Animation_788dg"),
-"near_burn_flash": SubResource("Animation_boxcu")
+"update": 1,
+"values": [12]
 }
 
 [sub_resource type="Animation" id="Animation_0uxiv"]
@@ -104,25 +119,25 @@ tracks/0/keys = {
 "values": [12, 13, 14, 15]
 }
 
-[sub_resource type="Animation" id="Animation_0rydg"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_j1hcm"]
+_data = {
+"RESET": SubResource("Animation_0rydg"),
+"flicker": SubResource("Animation_0uxiv")
+}
+
+[sub_resource type="Animation" id="Animation_01rbf"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/path = NodePath("SpriteCont/Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [12]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_j1hcm"]
-_data = {
-"RESET": SubResource("Animation_0rydg"),
-"flicker": SubResource("Animation_0uxiv")
+"values": [0]
 }
 
 [sub_resource type="Animation" id="Animation_wtodh"]
@@ -143,21 +158,6 @@ tracks/0/keys = {
 "values": [0, 1, 0, 2]
 }
 
-[sub_resource type="Animation" id="Animation_01rbf"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("SpriteCont/Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_8ptti"]
 _data = {
 "RESET": SubResource("Animation_01rbf"),
@@ -170,9 +170,10 @@ script = ExtResource("1_juevs")
 
 [node name="Body" parent="." instance=ExtResource("11_844bp")]
 
-[node name="Visuals" type="Node2D" parent="." node_paths=PackedStringArray("body", "target_follower")]
+[node name="Visuals" type="Node2D" parent="." node_paths=PackedStringArray("body", "state", "target_follower")]
 script = ExtResource("2_unlv4")
 body = NodePath("../Body")
+state = NodePath("../State")
 target_follower = NodePath("../TargetFollower")
 
 [node name="Shadow" parent="Visuals" instance=ExtResource("15_pd57f")]
@@ -195,11 +196,12 @@ shadow_tracker = NodePath("../../ShadowTracker")
 [node name="Timer" type="Timer" parent="Visuals/InSunWigglies"]
 one_shot = true
 
-[node name="BurnEffects" type="Node2D" parent="Visuals" node_paths=PackedStringArray("sun_burner", "shadow_tracker")]
+[node name="BurnEffects" type="Node2D" parent="Visuals" node_paths=PackedStringArray("sun_burner", "shadow_tracker", "state_tourist")]
 show_behind_parent = true
 script = ExtResource("8_bmam2")
 sun_burner = NodePath("../../SunBurner")
 shadow_tracker = NodePath("../../ShadowTracker")
+state_tourist = NodePath("../../StateTourist")
 
 [node name="AnimationPlayerFlash" type="AnimationPlayer" parent="Visuals/BurnEffects"]
 libraries = {

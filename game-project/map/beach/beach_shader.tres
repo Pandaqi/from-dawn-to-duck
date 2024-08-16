@@ -10,7 +10,11 @@ noise = SubResource("FastNoiseLite_7futy")
 
 [resource]
 shader = ExtResource("1_soctn")
+shader_parameter/pixel_size = Vector2(512, 512)
 shader_parameter/color = Color(0.988235, 0.878431, 0.682353, 1)
 shader_parameter/color_edge = Color(0.24, 0.19248, 0.1104, 1)
 shader_parameter/fade_alpha = true
+shader_parameter/tile_size = Vector2(128, 128)
+shader_parameter/falloff_dist = 32.0
+shader_parameter/gradient_dist = 64.0
 shader_parameter/noise_tex = SubResource("NoiseTexture2D_oopgw")

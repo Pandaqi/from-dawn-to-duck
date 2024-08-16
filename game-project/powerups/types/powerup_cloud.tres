@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1_7khn8")
 frame = 8
-desc = "Instantly spawns a cloud."
+desc = "Instantly spawns multiple clouds."
 color = Color(0.454902, 0.701961, 0.85098, 1)
 instant_process = false
 single_use = true
@@ -16,4 +16,5 @@ cost = 0.25
 reset_on_failure_only = false
 days_until_removal_factor = 1.0
 never_remove = false
+min_num = 0
 max_num = 5

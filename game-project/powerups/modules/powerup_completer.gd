@@ -4,11 +4,13 @@ class_name ModulePowerupCompleter extends Node2D
 @onready var prog_bar_cont := $ProgBar
 @onready var prog_bar := $ProgBar/TextureProgressBar
 @onready var entity : Powerup = get_parent()
+@onready var audio_player : AudioStreamPlayer2D = $AudioStreamPlayer2D
 
 var value := 0.0
 var base_value := 100.0
 var type : PowerupType
 var num_completes := 0
+var is_already_completed := false
 
 signal completed(tp:PowerupType)
 
@@ -31,8 +33,10 @@ func set_base_value(val:float, refresh := true) -> void:
 	if refresh: reset()
 
 func reset() -> void:
+	if type.instant_process: return
+	
+	is_already_completed = false
 	change(-value)
-	if type.instant_process: complete()
 
 func complete() -> void:
 	change(base_value)
@@ -66,9 +70,16 @@ func change(db:float) -> void:
 		on_completion()
 
 func on_completion() -> void:
+	if is_already_completed: return
+	
+	is_already_completed = true
 	num_completes += 1
-	if type.needs_visit or (type.continuous and num_completes <= 1):
+	
+	if type.needs_visit:
 		GSignal.feedback.emit(global_position, "Powerup Ready!")
+	audio_player.pitch_scale = randf_range(0.9, 1.1)
+	audio_player.play()
+	
 	completed.emit(type)
 
 func on_died(_p:Powerup) -> void:

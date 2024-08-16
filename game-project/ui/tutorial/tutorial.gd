@@ -28,8 +28,8 @@ func on_day_started() -> void:
 	if stages.size() <= 0: return
 	
 	var num_times_played := prog_data.get_num_plays()
-	var tut_speed := 1.0 + 2.0 * (num_times_played - 1)
-	var seen_this_often_enough := tut_speed > 5
+	var tut_speed := 1.0 + Global.config.tutorial_speed_up_repeat_plays * (num_times_played - 1)
+	var seen_this_often_enough := tut_speed > 6
 
 	prog_data.pause()
 	

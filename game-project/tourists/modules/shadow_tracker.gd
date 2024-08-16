@@ -8,6 +8,7 @@ var in_shadow := false
 @onready var entity = get_parent()
 @export var weather_data : WeatherData
 @export var state_tourist : ModuleStateTourist
+@export var cloudy_is_shadow := true
 
 @onready var audio_player : AudioStreamPlayer2D = $AudioStreamPlayer2D
 
@@ -31,7 +32,7 @@ func is_in_shadow() -> bool:
 
 func calculate_if_in_shadow() -> bool:
 	if state_tourist and not state_tourist.is_burnable(): return true
-	return shadows.size() > 0 or weather_data.cloudy
+	return shadows.size() > 0 or (cloudy_is_shadow and weather_data.cloudy)
 
 func check_if_in_shadow() -> void:
 	if not entity.is_visible(): return

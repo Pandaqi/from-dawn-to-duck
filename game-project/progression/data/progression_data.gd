@@ -64,6 +64,9 @@ func end_day() -> void:
 	reset_time()
 	advance_day(1)
 
+func day_is_over() -> bool:
+	return state == ProgressionState.NIGHT
+
 func reset_day() -> void:
 	advance_day(-day)
 

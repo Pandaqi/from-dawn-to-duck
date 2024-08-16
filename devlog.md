@@ -369,7 +369,36 @@ So no, I don't make all these improvements and keep the game interesting for lon
 
 Finally, I snuck in one final quick playtest.
 
+* There was one major bug that I'm glad I caught. (I coded that "whenever it's cloudy, everything is considered in shadow". But I completely forgot that this messes up the powerups, because now they auto-progress when it's cloudy, which can often lead to curses/inverted powerups you don't want!)
+* When a tourist stands on top of such a powerup, it's way too hard to juggle. I should make them avoid those locations.
+* A little more breathing room at the edges of the screen, otherwise easy to miss a tourist.
+* A more violent explosion animation (in the sense of: easier to spot/draw attention) when a tourist burns, otherwise players miss it.
+
+These are, as always, really tiny/quick tweaks and fixes. But they change the game from "pretty annoying to play" to "actually as intended". 
+
+This is also perhaps one of my biggest gripes with video game development. One misplaced comma, one wrong number, and the whole game just crashes or becomes severely less playable. It's so ... fragile. You're always worried you forgot something, or accidentally changed a number somewhere (especially with terrible hardware like mine that sometimes repeats keystrokes or hangs on mouse clicks), and that game you spent days crafting ... is completely unplayable to most.
+
+Boardgames are less fragile in that sense. If material is missing, or a rule doesn't make sense, the player can just decide to do something else to make the game work. (In fact, people even do that when nothing is wrong with a game but they just want certain house rules for fun :p)
+
 ## Conclusion
 
+Another game jam, another game done from start to finish!
 
+I'm proud of the things I'm making and how far I'm able to take those. I'm also still not sure if this is something I want to do full-time.
+
+As stated, video games are fragile. And there's always a pile of work, even on the simplest of ideas, and you never know it it's going to be fun until you try ... and then try something else ... and iterate on the idea five times until you're sick of playing your own game.
+
+I think this game ended up quite good. It's a shame that I'm not great at animation or visual effects, but at least I was able to learn a little bit thanks to this project. The core loop is simple and engaging, tense and challenging from the start. At the same time, it's really hard to even make it past day 7, and perhaps the game became a little too challenging :p
+
+But that's fine. That's already ~10 minutes of solid gameplay out of a product that took ~3.5 days to make.
+
+I would've loved to create something more _different_ than what I usually make. And I'd actually planned that! My original idea for the jam (which was something else entirely, until I pivoted because it was extremely hot in the Netherlands) _was_ different. So it's more or less an unfortunate accidental event that I didn't end up making _that idea_. Hopefully, my next jam (the final one of this summer) provides this opportunity to do something radically different. 
+
+Even if not, simple ideas that you've partially done before _still_ provide new challenges---always. I thought I'd be done a day earlier with this game; I ended up scrapping certain ideas and saying "enough is enough" just to get it done in time.
+
+We finish the game, we send it in, we get a good ranking but never win, hopefully some people found some enjoyment in it, and we move on with life!
+
+Keep playing,
+
+Pandaqi
 

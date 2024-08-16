@@ -9,6 +9,7 @@ enum TouristState
 
 var state := TouristState.WALKING
 var spawn_event : SpawnEvent
+var epsilon := 0.0003
 
 @onready var label_debug := $LabelDebug
 
@@ -24,18 +25,24 @@ func activate() -> void:
 	target_follower.target_reached.connect(on_target_reached)
 	target_follower.generate_changes(prog_data.time, spawn_event.time_leave)
 	
+	prog_data.day_ended.connect(on_day_ended)
+	
 	label_debug.set_visible(OS.is_debug_build() and Global.config.debug_labels)
 	label_debug.set_text(str(spawn_event.time_leave))
 
 func on_burned() -> void:
 	state_module.kill(true)
 
+# @NOTE: this is just a fail-safe because I can't figure out why SOMETIMES people want to stay for longer than the day
+func on_day_ended() -> void:
+	leave()
+
 func _process(_dt:float) -> void:
 	check_if_should_change()
 
 func check_if_should_change() -> void:
-	if state != TouristState.SUNBATHING: return
-	if target_follower.get_next_change_time() > prog_data.time: return
+	if not is_burnable(): return
+	if target_follower.get_next_change_time() >= (prog_data.time - epsilon): return
 	
 	if target_follower.is_done():
 		leave()
@@ -50,10 +57,13 @@ func on_target_reached() -> void:
 	change_state(TouristState.SUNBATHING)
 
 func reposition() -> void:
+	if is_leaving(): return
 	change_state(TouristState.WALKING)
 	target_follower.reposition()
 
 func leave() -> void:
+	if is_leaving(): return
+	
 	target_follower.leave()
 	change_state(TouristState.LEAVING)
 	
@@ -69,6 +79,9 @@ func leave() -> void:
 	reward = max(reward, 0)
 	prog_data.change_coins(int(reward))
 	GSignal.feedback.emit(global_position, "+" + str(reward) + " coins!")
+
+func is_leaving() -> bool:
+	return state == TouristState.LEAVING
 
 func change_state(new_state:TouristState) -> void:
 	state = new_state

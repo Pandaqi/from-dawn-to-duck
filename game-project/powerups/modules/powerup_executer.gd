@@ -5,7 +5,6 @@ class_name ModulePowerupExecuter extends Node2D
 @export var weather_data : WeatherData
 @onready var entity : Powerup = get_parent()
 
-@onready var audio_player : AudioStreamPlayer2D = $AudioStreamPlayer2D
 
 var day_added := 0
 var open_for_visit := false
@@ -39,10 +38,7 @@ func reset() -> void:
 func on_completed(tp:PowerupType) -> void:
 	type = tp
 	open_for_visit = true
-	
-	audio_player.pitch_scale = randf_range(0.9, 1.1)
-	audio_player.play()
-	
+
 	if tp.needs_visit: return
 	execute()
 

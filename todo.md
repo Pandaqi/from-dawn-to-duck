@@ -4,7 +4,7 @@
 
 ## Future To-Do / Discarded
 
-* Powerup: use actual body (like tourist) to detect shadows; instead of center-point-only checking I do now
+* Powerup: use actual body (like tourist) to detect shadows; instead of center-point-only checking I do now => THEN AGAIN, because of this, you're more able to _miss_ powerups to prevent accidentally triggering them. So I think it's FINE.
 * Should we split WALKING and ARRIVING again? (Really not sure. Already burning people as they enter is realistic and preventable if you just follow them around.)
 * @IDEA: A "backwards day" once in a while => all powerups are _inverted_ and the sun moves from right to left. (Would be part of Weather, which has some sort of Events subsystem.)
 * Add clouds over the thermometer when it's cloudy
@@ -14,6 +14,9 @@
 * MOVEMENT: if we're going to wrap, we should show a clear outline of where the beach ends!
 * @BUG: Sun always offscreen _is not correct_?
 
+@IDEA: DIFFERENT MAPS?
+* I'd need to generalize my current system of map areas slightly more.
+* But then we can create islands, other shapes, etcetera => and actually use the water for cooldown, other effects, etcetera.
 
 @IDEA: DIFFERENT TOURIST TYPES:
 
@@ -29,13 +32,3 @@
 
 @IDEA: MORE POWERUPS
 * (SHAPER => changes shape of parasol? Is this useful enough?)
-
-
-
-## NOTES TO PUT ELSEWHERE
-
-@ARTICLE: "Every game is a distribution problem." (The challenge comes from the fact that the player can't do everything, they must divide attention/resources/moves/energy between multiple things. That's where the challenge and the strategy/tactics come from.)
-
-@ARTICLE: PirateJam issues and stuff with GDD.
-
-"I'm sorry I wrote you such a long letter; I didn't have time to write a short one."  - Blaise Pascal

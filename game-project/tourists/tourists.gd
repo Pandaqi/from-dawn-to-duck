@@ -44,10 +44,10 @@ func count() -> int:
 
 func get_random_valid_position() -> Vector2:
 	return map.map_data.query_position({ 
-		"avoid": get_all(),
+		"avoid": get_all() + powerups.get_all(),
 		"area": "beach",
 		"area_margin": 1.5*Global.config.sprite_size,
-		"dist": Global.config.tourists_min_spawn_dist
+		"dist": Global.config.scale(Global.config.tourists_min_spawn_dist)
 	})
 
 func can_end_day() -> bool:

@@ -25,13 +25,37 @@ func start_day() -> void:
 
 func end_day() -> void:
 	prog_data.end_day()
-	canv_mod.color = Global.config.night_color
 	day_over.appear()
 	await day_over.dismissed
 	start_day()
 
 func _process(dt:float) -> void:
 	advance_time(dt)
+	update_canvas_modulate(dt)
+
+func update_canvas_modulate(dt:float) -> void:
+	# change the sky to the right color
+	var color_a := Global.config.dawn_color
+	var color_b := Global.config.midday_color
+	var blend := prog_data.time / 0.5
+	if prog_data.time >= 0.5:
+		color_a = Global.config.midday_color
+		color_b = Global.config.dusk_color
+		blend = (prog_data.time - 0.5) / 0.5
+	
+	var world_color := color_a.lerp(color_b, blend)
+	
+	# darken if cloudy
+	if weather_data.cloudy:
+		world_color = world_color.darkened(Global.config.weather_cloudy_darken_factor)
+	
+	if prog_data.day_is_over():
+		world_color = Global.config.night_color
+	
+	var cur_color := canv_mod.color
+	var color_smoothed := cur_color.lerp(world_color, 4.0*dt)
+	
+	canv_mod.color = color_smoothed
 
 func advance_time(dt:float) -> void:
 	if not prog_data.is_day(): return
@@ -44,24 +68,6 @@ func advance_time(dt:float) -> void:
 	factor *= weather_data.time_scale
 	
 	prog_data.advance_time(factor)
-	
-	# change the sky to the right color
-	var color_a := Global.config.dawn_color
-	var color_b := Global.config.midday_color
-	var blend := prog_data.time / 0.5
-	if prog_data.time >= 0.5:
-		color_a = Global.config.midday_color
-		color_b = Global.config.dusk_color
-		blend = (prog_data.time - 0.5) / 0.5
-	
-	var world_color := color_a.lerp(color_b, blend)
-	if weather_data.cloudy:
-		world_color = world_color.darkened(Global.config.weather_cloudy_darken_factor)
-	
-	var cur_color := canv_mod.color
-	var color_smoothed := cur_color.lerp(world_color, 4.0*dt)
-	
-	canv_mod.color = color_smoothed
 	
 	if prog_data.time < 1.0: return
 	end_day()

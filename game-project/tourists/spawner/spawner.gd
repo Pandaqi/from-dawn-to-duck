@@ -50,7 +50,7 @@ func regenerate(prog_data:ProgressionData) -> void:
 		var final_dur : float = lerp(dur_bounds.start, max_dur, randf())
 		if(dur_bounds.start >= max_dur): final_dur = max_dur
 		
-		ev.time_leave = ev.time + final_dur
+		ev.time_leave = clamp(ev.time + final_dur, 0.01, 0.99)
 	
 	# sort so that we only ever need to check the first one
 	events.sort_custom(func(a:SpawnEvent, b:SpawnEvent):
