@@ -14,6 +14,7 @@ var button_press_time := 0.0
 @export var powerups_data : PowerupsData
 @export var rotate_type : PowerupType
 @export var drop_type : PowerupType
+@export var weather_data : WeatherData
 
 @onready var entity = get_parent()
 
@@ -35,7 +36,7 @@ func _process(dt:float) -> void:
 
 func keep_with_player() -> void:
 	if not has_parasol(): return
-	parasol.set_position(global_position)
+	parasol.set_position(get_drop_position())
 
 func rotate_parasol_if_needed(dt:float) -> void:
 	if not has_parasol(): return
@@ -117,7 +118,7 @@ func get_time_since_button_press() -> float:
 	return (Time.get_ticks_msec() - button_press_time) / 1000.0
 
 func get_drop_position() -> Vector2:
-	return global_position
+	return global_position + 0.35*Vector2.UP * Global.config.player_sprite_scale * Global.config.sprite_size
 
 func on_button_pressed() -> void:
 	holding_button = true
@@ -139,6 +140,7 @@ func on_button_released() -> void:
 
 func can_drop() -> bool:
 	if Global.config.parasols_can_be_inside_tourists: return true
+	if Global.config.parasol_drop_anywhere_if_cloudy and weather_data.cloudy: return true
 	
 	var bodies = get_tree().get_nodes_in_group("Bodies")
 	var pos := get_drop_position()

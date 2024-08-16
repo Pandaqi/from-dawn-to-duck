@@ -18,9 +18,19 @@ func activate() -> void:
 func on_day_started() -> void:
 	weather_data.reset_for_day()
 	
+	# @TODO: is this the best place? Or should this be on WeatherData itself?
+	# the amount of variance/extremes in heat grow by day
+	var variation_raw := Global.config.weather_variation + Global.config.weather_variation_increase_per_day * prog_data.day
+	var variation_clamped : float = clamp(variation_raw, 0.0, 1.0)
+	weather_data.weather_variation = variation_clamped
+
+	# only pick from the heat_bound values that fit within our current variance
+	var min_frac := 1.0 - randf() * variation_clamped
+	var max_frac := randf() * variation_clamped
+
 	weather_data.heat_bounds = Bounds.new(
-		Global.config.heat_bounds_min.rand_float(),
-		Global.config.heat_bounds_max.rand_float()
+		Global.config.heat_bounds_min.interpolate(min_frac),
+		Global.config.heat_bounds_max.interpolate(max_frac)
 	)
 	
 	spawner_clouds.generate()

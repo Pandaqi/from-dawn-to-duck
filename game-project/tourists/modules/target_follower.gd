@@ -9,6 +9,7 @@ class_name ModuleTargetFollower extends Node2D
 var target := Vector2.ZERO
 var starting_target := Vector2.ZERO
 var repositions : Array[float] = []
+var leaving := false
 
 @onready var sprite_home : Sprite2D = $SpriteHome
 @export var body : ModuleBody
@@ -16,6 +17,8 @@ var repositions : Array[float] = []
 const MOVE_SPEED := 50.0
 
 signal target_reached()
+signal moved(vec:Vector2, speed:float)
+signal stopped()
 
 func activate() -> void:
 	starting_target = global_position
@@ -23,7 +26,7 @@ func activate() -> void:
 	if body: body.size_changed.connect(on_size_changed)
 
 func on_size_changed(new_size : float) -> void:
-	sprite_home.set_position(0.66 * Vector2.UP * new_size)
+	sprite_home.set_position(1.25 * Vector2.UP * new_size)
 	sprite_home.set_scale(new_size / Global.config.sprite_size * Vector2.ONE)
 
 # @TODO: a special type of tourist that repositions a few times, which would just cut the time between now and time_leave into bits
@@ -38,6 +41,7 @@ func set_target(pos:Vector2) -> void:
 
 func reset_target() -> void:
 	target = Vector2.ZERO
+	stopped.emit()
 	audio_player.stop()
 
 func has_target() -> bool:
@@ -51,6 +55,7 @@ func move_to_target(dt:float) -> void:
 	var vec := (target - global_position).normalized()
 	var new_pos = entity.get_position() + vec * base_speed * dt
 	entity.set_position(new_pos)
+	moved.emit(vec, base_speed)
 	
 	if not audio_player.playing:
 		audio_player.pitch_scale = randf_range(0.9, 1.1)
@@ -74,6 +79,7 @@ func reach_target() -> void:
 	target_reached.emit()
 
 func leave() -> void:
+	leaving = true
 	reset_to_starting_target()
 	sprite_home.set_visible(true)
 
@@ -85,9 +91,11 @@ func reposition() -> void:
 	set_target(map_data.query_position())
 
 func lure(pos:Vector2) -> void:
+	if leaving: return
 	set_target(pos)
 
 func repel(pos:Vector2) -> void:
+	if leaving: return
 	var final_pos := repeller.get_repel_pos_within_bounds(pos)
 	set_target(final_pos)
 

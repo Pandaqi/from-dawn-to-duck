@@ -7,6 +7,7 @@ var heat := 0.0
 var heat_scale := 1.0
 var spawner : SpawnerClouds
 var cloudy := false
+var weather_variation := 0.0
 
 signal time_scale_changed(ts:float)
 signal heat_scale_changed(hs:float)
@@ -14,6 +15,7 @@ signal heat_changed(h:float)
 signal cloudy_changed(c:bool)
 
 func reset() -> void:
+	cloudy = false
 	reset_for_day()
 
 func set_cloudy(c:bool) -> void:
@@ -25,6 +27,7 @@ func reset_for_day() -> void:
 	time_scale = 1.0
 	heat_scale = 1.0
 	heat = 0.0
+	weather_variation = 0.0
 
 func change_time_scale(ds:float) -> void:
 	time_scale = clamp(time_scale * ds, 0.25, 4.0)

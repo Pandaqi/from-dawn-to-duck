@@ -13,4 +13,6 @@ func activate() -> void:
 	state_tourist.activate()
 	target_follower.activate()
 	sun_burner.activate()
+	shadow_tracker.activate()
 	body.activate() # should come later, because its size changes are a signal that should be listened to by some others 
+	

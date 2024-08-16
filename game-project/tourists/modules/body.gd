@@ -17,7 +17,8 @@ func set_body_scale(bs:float) -> void:
 	var points = shape.get_points()
 	polygon = []
 	for point in points:
-		polygon.append(point * body_scale * 0.5 * Global.config.sprite_size)
+		var new_point : Vector2 = (point + Vector2.UP) * body_scale * 0.5 * Global.config.sprite_size
+		polygon.append(new_point)
 	
 	radius_viewer.set_radius(get_forbid_range())
 	
@@ -32,6 +33,9 @@ func get_polygon_global() -> Array[Vector2]:
 
 func get_size() -> float:
 	return body_scale * Global.config.sprite_size
+
+func get_position_above() -> Vector2:
+	return global_position + 1.25 * Vector2.UP * get_size()
 
 func get_forbid_range() -> float:
 	return 0.5 * Global.config.tourist_parasol_forbid_range * get_size()

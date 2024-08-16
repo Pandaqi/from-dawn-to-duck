@@ -23,7 +23,8 @@ func activate() -> void:
 	sun_burner.burned.connect(on_burned)
 	target_follower.target_reached.connect(on_target_reached)
 	target_follower.generate_changes(prog_data.time, spawn_event.time_leave)
-
+	
+	label_debug.set_visible(OS.is_debug_build() and Global.config.debug_labels)
 	label_debug.set_text(str(spawn_event.time_leave))
 
 func on_burned() -> void:
@@ -64,8 +65,8 @@ func leave() -> void:
 	else:
 		reward = Global.config.tourist_coin_reward.rand_float()
 	
-	reward = int( round(reward * Global.config.base_price) )
-	reward = max(reward, 1)
+	reward = int( floor(reward * Global.config.base_price) )
+	reward = max(reward, 0)
 	prog_data.change_coins(int(reward))
 	GSignal.feedback.emit(global_position, "+" + str(reward) + " coins!")
 

@@ -3,6 +3,7 @@ class_name Powerups extends MainSystem
 @export var map : Map
 @export var powerup_scene : PackedScene
 @export var powerups_data : PowerupsData
+@export var prog_data : ProgressionData
 @onready var timer : Timer = $Timer
 
 @onready var tutorials : PowerupTutorials = $PowerupTutorials
@@ -35,7 +36,7 @@ func place_starting_powerups() -> void:
 func restart_timer() -> void:
 	if not enabled: return
 	
-	timer.wait_time = Global.config.powerup_spawn_tick * Global.config.day_duration
+	timer.wait_time = Global.config.powerup_spawn_tick * prog_data.get_day_duration()
 	timer.start()
 
 func stop_timer() -> void:

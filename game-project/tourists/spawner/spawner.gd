@@ -9,6 +9,7 @@ func regenerate(prog_data:ProgressionData) -> void:
 	var num_events_from_day := Global.config.spawner_extra_tourists_per_day * prog_data.day
 	var num_events := Global.config.spawner_starting_tourists
 	num_events = int( round(num_events + num_events_from_day) )
+	num_events = min(num_events, Global.config.spawner_max_tourists)
 	
 	for i in range(num_events):
 		var time := i / float(num_events)

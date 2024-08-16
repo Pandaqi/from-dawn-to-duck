@@ -1,7 +1,6 @@
-[gd_scene load_steps=19 format=3 uid="uid://cpixp7bpg8lr8"]
+[gd_scene load_steps=25 format=3 uid="uid://cpixp7bpg8lr8"]
 
 [ext_resource type="Script" path="res://players/player.gd" id="1_nu2pa"]
-[ext_resource type="Texture2D" uid="uid://cv647ka5rxl4e" path="res://icon.svg" id="2_xjqjf"]
 [ext_resource type="Script" path="res://players/modules/input.gd" id="3_gth62"]
 [ext_resource type="Script" path="res://players/modules/mover.gd" id="4_cyjhf"]
 [ext_resource type="Script" path="res://players/modules/parasol_grabber.gd" id="4_gj6w2"]
@@ -13,18 +12,57 @@
 [ext_resource type="Resource" uid="uid://dgpqocpqrqa00" path="res://powerups/types/powerup_rotate.tres" id="8_j73hv"]
 [ext_resource type="Resource" uid="uid://bfb33bfnfxibg" path="res://powerups/types/powerup_drop.tres" id="9_2st5l"]
 [ext_resource type="Script" path="res://players/modules/powerup_sensor.gd" id="9_3xkr1"]
+[ext_resource type="Resource" uid="uid://b2jfk46w23ddu" path="res://weather/data/weather_data.tres" id="10_0xw5d"]
 [ext_resource type="AudioStream" uid="uid://dag6ryqbto8iw" path="res://parasols/parasol_grab_drop.ogg" id="10_h0ksr"]
 [ext_resource type="AudioStream" uid="uid://cl0bhhgsw1qgf" path="res://parasols/parasol_rotate.ogg" id="11_o62wo"]
 [ext_resource type="Resource" uid="uid://bfvbjf7w1catl" path="res://progression/data/progression_data.tres" id="11_r7f0u"]
 [ext_resource type="PackedScene" uid="uid://dc45fbxoj0qt" path="res://tourists/radius_viewer/radius_viewer.tscn" id="11_rhaod"]
 [ext_resource type="AudioStream" uid="uid://dwh3xuehpwcxs" path="res://players/lure_repel.ogg" id="15_1tfg6"]
+[ext_resource type="PackedScene" uid="uid://dovns8xh36uru" path="res://game_loop/main/misc_sprite.tscn" id="18_32qc6"]
+[ext_resource type="Script" path="res://players/modules/visuals.gd" id="18_hjak8"]
+[ext_resource type="Texture2D" uid="uid://bn2dunxujrtf4" path="res://tourists/ducks.webp" id="19_hxs6l"]
+
+[sub_resource type="Animation" id="Animation_ldr3f"]
+resource_name = "walk"
+length = 0.8
+loop_mode = 1
+step = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SpriteCont/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [4, 5, 4, 6]
+}
+
+[sub_resource type="Animation" id="Animation_sb1nv"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SpriteCont/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [4]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_tejrs"]
+_data = {
+"RESET": SubResource("Animation_sb1nv"),
+"walk": SubResource("Animation_ldr3f")
+}
 
 [node name="Player" type="Node2D" groups=["Entities"]]
 script = ExtResource("1_nu2pa")
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
-modulate = Color(0.21, 1, 0.539167, 1)
-texture = ExtResource("2_xjqjf")
 
 [node name="Input" type="Node" parent="."]
 script = ExtResource("3_gth62")
@@ -45,6 +83,7 @@ input = NodePath("../Input")
 powerups_data = ExtResource("7_2cj21")
 rotate_type = ExtResource("8_j73hv")
 drop_type = ExtResource("9_2st5l")
+weather_data = ExtResource("10_0xw5d")
 
 [node name="AudioGrabDrop" type="AudioStreamPlayer2D" parent="ParasolGrabber"]
 stream = ExtResource("10_h0ksr")
@@ -72,3 +111,26 @@ type = 1
 
 [node name="PowerupSensor" type="Node2D" parent="."]
 script = ExtResource("9_3xkr1")
+
+[node name="Visuals" type="Node2D" parent="." node_paths=PackedStringArray("mover")]
+script = ExtResource("18_hjak8")
+mover = NodePath("../Mover")
+
+[node name="Shadow" parent="Visuals" instance=ExtResource("18_32qc6")]
+modulate = Color(0, 0, 0, 0.278431)
+scale = Vector2(1.125, 0.36)
+
+[node name="SpriteCont" type="Node2D" parent="Visuals"]
+scale = Vector2(1.66, 1.66)
+
+[node name="Sprite2D" type="Sprite2D" parent="Visuals/SpriteCont"]
+position = Vector2(0, -115)
+texture = ExtResource("19_hxs6l")
+hframes = 4
+vframes = 4
+frame = 4
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Visuals"]
+libraries = {
+"": SubResource("AnimationLibrary_tejrs")
+}

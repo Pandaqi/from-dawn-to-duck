@@ -10,13 +10,16 @@ func activate() -> void:
 	GSignal.game_over.connect(on_game_over)
 	set_visible(false)
 
-func on_game_over(we_won:bool) -> void:
+func on_game_over(_we_won:bool) -> void:
 	var skip_postgame := OS.is_debug_build() and Global.config.skip_postgame
 	if skip_postgame:
 		get_tree().reload_current_scene()
 		return
 	
 	get_tree().paused = true
+	
+	# always nice to have a short wait so the player actually understands what happened
+	await get_tree().create_timer(1.0).timeout
 	
 	set_visible(true)
 	anim_player.play("appear")

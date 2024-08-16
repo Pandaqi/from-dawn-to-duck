@@ -22,8 +22,6 @@ class_name GameUI extends Node2D
 @onready var heat_thermometer := $Heat/Cont/TextureProgressBar
 @onready var heat_anim_player := $Heat/AnimationPlayer
 
-
-
 var offset_per_node : float
 var margin_per_node := 0.075
 var margin_to_edge := 0.1
@@ -75,7 +73,7 @@ func on_coins_changed(c:int) -> void:
 	animate_pop_up(coins_cont)
 	
 	if not prog_data.is_pre_game():
-		coins_audio.pitch_scale = randf_range(0.96, 1.04)
+		coins_audio.pitch_scale = randf_range(0.995, 1.005)
 		coins_audio.play()
 
 func on_heat_changed(h:float) -> void:

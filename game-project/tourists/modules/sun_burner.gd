@@ -7,11 +7,14 @@ class_name ModuleSunBurner extends Node2D
 @export var prog_data : ProgressionData
 @export var weather_data : WeatherData
 @export var state : ModuleState
+@export var body : ModuleBody
 
 var burn := 0.0
 var base_burn := 100.0
+var locked := false
 
 signal protected()
+signal changed(ratio:float)
 signal burned()
 
 func activate() -> void:
@@ -26,6 +29,7 @@ func activate() -> void:
 
 func on_state_changed(new_state:ModuleStateTourist.TouristState) -> void:
 	if new_state != ModuleStateTourist.TouristState.LEAVING: return
+	locked = true
 	prog_bar_cont.set_visible(false)
 
 func set_base_burn(bb:float, refresh := true) -> void:
@@ -40,7 +44,7 @@ func _process(dt:float) -> void:
 	update_burn_status(dt)
 
 func keep_prog_bar_with_us() -> void:
-	var screen_pos := (get_viewport().get_screen_transform() * get_viewport().get_canvas_transform()) * global_position
+	var screen_pos : Vector2 = (get_viewport().get_screen_transform() * get_viewport().get_canvas_transform()) * body.get_position_above()
 	prog_bar_cont.set_position(screen_pos)
 	prog_bar_cont.set_scale(Global.config.progress_bars_scale*Vector2.ONE)
 
@@ -66,15 +70,20 @@ func get_burn_ratio() -> float:
 	return burn / base_burn
 
 func change(db:float) -> void:
+	if locked: return
+	
 	burn = clamp(burn + db, 0.0, base_burn)
 	
 	var ratio := get_burn_ratio()
 	prog_bar.set_value(ratio * 100.0)
 	prog_bar.tint_progress = Global.config.burn_color_start.lerp(Global.config.burn_color_end, ratio)
 	
+	changed.emit(ratio)
+	
 	if ratio <= 0.0:
 		protected.emit()
 	elif ratio >= 1.0:
+		GSignal.feedback.emit(global_position, "Burned!")
 		burned.emit()
 
 func on_died(_n:Node2D) -> void:

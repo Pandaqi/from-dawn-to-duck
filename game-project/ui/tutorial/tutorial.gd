@@ -27,6 +27,10 @@ func on_day_started() -> void:
 	var stages := get_stages_for_day(prog_data.day)
 	if stages.size() <= 0: return
 	
+	var num_times_played := prog_data.get_num_plays()
+	var tut_speed := 1.0 + 2.0 * (num_times_played - 1)
+	var seen_this_often_enough := tut_speed > 5
+
 	prog_data.pause()
 	
 	started.emit()
@@ -50,12 +54,12 @@ func on_day_started() -> void:
 		t.set_scale(max_available_height / tutorial_raw_size.y * Vector2.ONE)
 		t.set_position(anchor_point + global_offset + i * offset_per_stage)
 		map.layers.add_to_layer("floor", t)
-		t.set_stage(stage)
+		t.set_stage(stage, tut_speed)
 		stage.execute(self)
 		
 		t.died.connect(on_tutorial_died)
 		
-		if skip_pregame: continue
+		if skip_pregame or seen_this_often_enough: continue
 		await t.done
 	
 	prog_data.unpause()

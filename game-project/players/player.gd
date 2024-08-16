@@ -7,6 +7,7 @@ var player_num := -1
 @onready var parasol_grabber : ModuleParasolGrabber = $ParasolGrabber
 @onready var light_source : ModuleLightSource = $LightSource
 @onready var mover : ModuleMover = $Mover
+@onready var visuals : ModuleVisualsPlayer = $Visuals
 
 func activate(pnum:int) -> void:
 	player_num = pnum
@@ -15,3 +16,4 @@ func activate(pnum:int) -> void:
 	mover.activate()
 	parasol_grabber.activate()
 	light_source.activate()
+	visuals.activate()

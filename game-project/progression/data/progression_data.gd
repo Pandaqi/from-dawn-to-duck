@@ -17,6 +17,10 @@ var time := -1.0 # 0.0 = start day, 1.0 = end day
 var lives := -1
 var coins := -1
 
+# this is a persistent array that tracks how often you restarted
+# to prevent displaying the tutorial EVERY TIME
+var num_plays_per_day : Array[int] = []
+
 signal day_ended()
 signal day_started()
 signal lives_changed(new_lives:int)
@@ -43,6 +47,12 @@ func unpause() -> void:
 
 func start_day() -> void:
 	state = ProgressionState.DAY
+	
+	if num_plays_per_day.size() <= day:
+		num_plays_per_day.resize(day + 1)
+		num_plays_per_day[day] = 0
+	num_plays_per_day[day] += 1
+	
 	print("DAY STARTED", day)
 	day_started.emit()
 
@@ -107,3 +117,12 @@ func is_game_over() -> bool:
 # hence, symmetric ratio around noon
 func get_time_symmetric() -> float:
 	return 1.0 - abs(time - 0.5) / 0.5
+
+func get_day_duration() -> float:
+	var val_raw := Global.config.day_duration + Global.config.day_duration_increase_per_day * self.day
+	var val_clamped : float = min(val_raw, Global.config.day_duration_max)
+	return val_clamped
+
+func get_num_plays() -> int:
+	if day >= num_plays_per_day.size(): return 0
+	return num_plays_per_day[day]

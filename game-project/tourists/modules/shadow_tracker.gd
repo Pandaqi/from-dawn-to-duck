@@ -1,18 +1,21 @@
 class_name ModuleShadowTracker extends Node2D
 
 var shadows : Array[Shadow] = []
+var in_shadow := false
 
 @export var body : ModuleBody
 @onready var label_debug := $LabelDebug
 @onready var entity = get_parent()
 @export var weather_data : WeatherData
+@export var state_tourist : ModuleStateTourist
 
 @onready var audio_player : AudioStreamPlayer2D = $AudioStreamPlayer2D
 
-signal shadow_changed(val:bool)
+signal shadow_changed(is_shadowed:bool)
 
-func _ready() -> void:
+func activate() -> void:
 	label_debug.set_visible(OS.is_debug_build() and Global.config.debug_labels)
+	on_shadow_changed()
 
 func _process(_dt:float) -> void:
 	check_if_in_shadow()
@@ -24,12 +27,16 @@ func get_center() -> Vector2:
 	return global_position
 
 func is_in_shadow() -> bool:
+	return in_shadow
+
+func calculate_if_in_shadow() -> bool:
+	if state_tourist and not state_tourist.is_burnable(): return true
 	return shadows.size() > 0 or weather_data.cloudy
 
 func check_if_in_shadow() -> void:
 	if not entity.is_visible(): return
 	
-	var was_in_shadow := is_in_shadow()
+	var was_in_shadow := in_shadow
 	
 	reset_shadows()
 	
@@ -51,17 +58,16 @@ func check_if_in_shadow() -> void:
 			if ratio_overlapped < target_ratio_overlap: continue
 			shadows.append(shadow)
 	
-	var is_shadowed := is_in_shadow()
-	if was_in_shadow != is_shadowed:
+	in_shadow = calculate_if_in_shadow()
+	if was_in_shadow != in_shadow:
 		on_shadow_changed()
 	
 	label_debug.set_text("Burning")
-	if is_shadowed:
+	if in_shadow:
 		label_debug.set_text("SHADOW!")
 
 func on_shadow_changed() -> void:
-	var is_shadowed := is_in_shadow()
-	shadow_changed.emit(is_shadowed)
-	if not is_shadowed and audio_player:
+	shadow_changed.emit(in_shadow)
+	if (not in_shadow) and audio_player:
 		audio_player.pitch_scale = randf_range(0.93, 1.07)
 		audio_player.play()

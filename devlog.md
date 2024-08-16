@@ -333,9 +333,7 @@ I had to work a bit more on the _progression_ of the game to fix both issues at 
 
 This finally made the game quick and easy at the start, yet challenging as you went further.
 
-
 I thought I'd be able to have quite some free hours this day to take a break and enjoy the sun, but I was wrong :p I lost a lot of time on all those mistakes, all those issues I'd never seen before because I did something I never did before. I even started to fear I'd run out of time at one point.
-
 
 ### Polishing: The most important bit
 
@@ -351,5 +349,27 @@ And then the game was _done_.
 
 Just in time, because the GMTK Jam started that same evening. Being a far shorter (and perhaps more prestigious) jam, I knew I needed all my time for that.
 
-@TODO
+### Polishing: Game Rules & Playtest
+
+As I worked on the game longer, some more opportunities for improved rules showed up. That's typical and I always _hope_ they come, because the day before the jam deadline I always feel like my game is "meh, not quite there yet".
+
+I realized I had a bug in the scaling of the "forbid radius" on tourists. Now that it scaled properly, the game was obviously less frustrating to play, because the forbid radius you saw actually matched the real one (and is smaller).
+
+I made the lure distance bigger and I decided to make the action cost 1 coin. Luring is pretty essential if you want to go past the first few days. Making it cost a coin assures players don't just spam the action _and_ helps balance the money flow. 
+
+I made the reward for a tourist depend on how burned they are---but then I forgot that their burn timer keeps updating as they walk away from the beach. This means they might actually be 50% burned ... but when they leave, that has already dropped, giving you more coins than you deserve!
+
+After fixing all those tiny errors or miscalculations, I _thought_ I ended up with the proper difficulty and money in/out flow. 
+
+Honestly though, for a game jam, I don't think many people will play long enough to actually get to the point where most powerups and money management matters. People give your game 30 seconds and continue. 
+
+It's a shame. I once saw a judge (from quite a big, prestigious jam) test my game on stream, literally not read the single line of instruction, complain about not understanding the game for 60 seconds, then turn it off and give 1 star because they "didn't see the connection to the theme"---even though all other players gave the feedback that the theme was so well and creatively used. Yeah, not great.
+
+So no, I don't make all these improvements and keep the game interesting for longer _for the jam_. I do it for the game and to make it much easier to build it into something slightly bigger and more engaging in a future update.
+
+Finally, I snuck in one final quick playtest.
+
+## Conclusion
+
+
 

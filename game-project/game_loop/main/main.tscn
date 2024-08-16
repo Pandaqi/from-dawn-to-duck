@@ -63,9 +63,13 @@ noise = SubResource("FastNoiseLite_7futy")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_7oqb7"]
 shader = ExtResource("8_2mx1c")
+shader_parameter/pixel_size = Vector2(512, 512)
 shader_parameter/color = Color(0.462745, 0.576471, 0.168627, 1)
 shader_parameter/color_edge = Color(0.135802, 0.17, 0.0493, 1)
 shader_parameter/fade_alpha = false
+shader_parameter/tile_size = Vector2(128, 128)
+shader_parameter/falloff_dist = 32.0
+shader_parameter/gradient_dist = 64.0
 shader_parameter/noise_tex = SubResource("NoiseTexture2D_oopgw")
 
 [sub_resource type="Animation" id="Animation_kf0e4"]
@@ -313,7 +317,6 @@ color = Color(0.4, 0.760784, 0.768627, 1)
 [node name="Sprite2D" type="Sprite2D" parent="Map/Water"]
 material = ExtResource("8_2ujws")
 position = Vector2(0, 32.5)
-scale = Vector2(1, 1.50781)
 texture = ExtResource("10_4qp6a")
 
 [node name="MapLayers" type="Node2D" parent="Map"]
@@ -373,6 +376,7 @@ script = ExtResource("18_noreh")
 map = NodePath("../Map")
 powerup_scene = ExtResource("19_77uo7")
 powerups_data = ExtResource("20_jdoce")
+prog_data = ExtResource("3_mk46c")
 
 [node name="Timer" type="Timer" parent="Powerups"]
 one_shot = true

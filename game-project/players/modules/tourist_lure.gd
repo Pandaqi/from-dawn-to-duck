@@ -61,5 +61,5 @@ func repel() -> void:
 		tourist.target_follower.repel(global_position)
 
 func play_audio() -> void:
-	audio_player.pitch_scale = randf_range(0.9, 1.1)
+	audio_player.pitch_scale = randf_range(0.995, 1.005)
 	audio_player.play()

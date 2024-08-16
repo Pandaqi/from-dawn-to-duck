@@ -1,14 +1,17 @@
-[gd_scene load_steps=20 format=3 uid="uid://b8m1s3o1gkuyn"]
+[gd_scene load_steps=32 format=3 uid="uid://b8m1s3o1gkuyn"]
 
-[ext_resource type="Texture2D" uid="uid://cv647ka5rxl4e" path="res://icon.svg" id="1_ab5xh"]
 [ext_resource type="Script" path="res://tourists/tourist.gd" id="1_juevs"]
 [ext_resource type="Script" path="res://tourists/modules/shadow_tracker.gd" id="2_hdg86"]
 [ext_resource type="Script" path="res://tourists/modules/visuals.gd" id="2_unlv4"]
 [ext_resource type="Script" path="res://players/modules/state.gd" id="3_kp2qp"]
 [ext_resource type="Script" path="res://tourists/modules/sun_burner.gd" id="3_rt4ha"]
+[ext_resource type="Texture2D" uid="uid://bn2dunxujrtf4" path="res://tourists/ducks.webp" id="4_0lhbt"]
 [ext_resource type="Script" path="res://tourists/modules/state_tourist.gd" id="4_6elje"]
 [ext_resource type="Script" path="res://tourists/modules/target_follower.gd" id="5_6s6p5"]
 [ext_resource type="Resource" uid="uid://bfvbjf7w1catl" path="res://progression/data/progression_data.tres" id="6_gpbxq"]
+[ext_resource type="Script" path="res://tourists/effects/in_sun_wigglies.gd" id="6_skgro"]
+[ext_resource type="PackedScene" uid="uid://xu5w3xa2bfi8" path="res://tourists/effects/squiggly_line.tscn" id="7_w4bh0"]
+[ext_resource type="Script" path="res://tourists/effects/burn_effects.gd" id="8_bmam2"]
 [ext_resource type="AudioStream" uid="uid://b44ufedkxhhmf" path="res://tourists/shadow_change.ogg" id="9_gcugl"]
 [ext_resource type="Texture2D" uid="uid://bjeny631rg5qp" path="res://ui/progbar_sunburn_tex.tres" id="9_n0el7"]
 [ext_resource type="Resource" uid="uid://x8qqsqbmai1n" path="res://map/data/map_data.tres" id="9_pkx2e"]
@@ -20,16 +23,206 @@
 [ext_resource type="PackedScene" uid="uid://dovns8xh36uru" path="res://game_loop/main/misc_sprite.tscn" id="15_pd57f"]
 [ext_resource type="Resource" uid="uid://cicq7qf5egxwd" path="res://powerups/types/powerup_repel.tres" id="16_x11s3"]
 
+[sub_resource type="Animation" id="Animation_boxcu"]
+resource_name = "near_burn_flash"
+length = 0.4
+loop_mode = 1
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../SpriteCont/Sprite2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(2, 1.5, 1.5, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("..:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.1, 1.1)]
+}
+
+[sub_resource type="Animation" id="Animation_788dg"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../SpriteCont/Sprite2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("..:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_4l2j8"]
+_data = {
+"RESET": SubResource("Animation_788dg"),
+"near_burn_flash": SubResource("Animation_boxcu")
+}
+
+[sub_resource type="Animation" id="Animation_0uxiv"]
+resource_name = "flicker"
+length = 0.4
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [12, 13, 14, 15]
+}
+
+[sub_resource type="Animation" id="Animation_0rydg"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [12]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_j1hcm"]
+_data = {
+"RESET": SubResource("Animation_0rydg"),
+"flicker": SubResource("Animation_0uxiv")
+}
+
+[sub_resource type="Animation" id="Animation_wtodh"]
+resource_name = "walk"
+length = 0.8
+loop_mode = 1
+step = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SpriteCont/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 0, 2]
+}
+
+[sub_resource type="Animation" id="Animation_01rbf"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SpriteCont/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8ptti"]
+_data = {
+"RESET": SubResource("Animation_01rbf"),
+"walk": SubResource("Animation_wtodh")
+}
+
 [node name="Tourist" type="Node2D" groups=["Entities", "Tourists"]]
 position = Vector2(331, 204)
 script = ExtResource("1_juevs")
 
-[node name="Visuals" type="Node2D" parent="." node_paths=PackedStringArray("body")]
+[node name="Body" parent="." instance=ExtResource("11_844bp")]
+
+[node name="Visuals" type="Node2D" parent="." node_paths=PackedStringArray("body", "target_follower")]
 script = ExtResource("2_unlv4")
 body = NodePath("../Body")
+target_follower = NodePath("../TargetFollower")
 
-[node name="Sprite2D" type="Sprite2D" parent="Visuals"]
-texture = ExtResource("1_ab5xh")
+[node name="Shadow" parent="Visuals" instance=ExtResource("15_pd57f")]
+modulate = Color(0, 0, 0, 0.207843)
+scale = Vector2(1.08, 0.199999)
+
+[node name="SpriteCont" type="Node2D" parent="Visuals"]
+
+[node name="Sprite2D" type="Sprite2D" parent="Visuals/SpriteCont"]
+position = Vector2(0, -121)
+texture = ExtResource("4_0lhbt")
+hframes = 4
+vframes = 4
+
+[node name="InSunWigglies" type="Node2D" parent="Visuals" node_paths=PackedStringArray("shadow_tracker")]
+script = ExtResource("6_skgro")
+squiggly_line = ExtResource("7_w4bh0")
+shadow_tracker = NodePath("../../ShadowTracker")
+
+[node name="Timer" type="Timer" parent="Visuals/InSunWigglies"]
+one_shot = true
+
+[node name="BurnEffects" type="Node2D" parent="Visuals" node_paths=PackedStringArray("sun_burner", "shadow_tracker")]
+show_behind_parent = true
+script = ExtResource("8_bmam2")
+sun_burner = NodePath("../../SunBurner")
+shadow_tracker = NodePath("../../ShadowTracker")
+
+[node name="AnimationPlayerFlash" type="AnimationPlayer" parent="Visuals/BurnEffects"]
+libraries = {
+"": SubResource("AnimationLibrary_4l2j8")
+}
+
+[node name="Sprite2D" type="Sprite2D" parent="Visuals/BurnEffects"]
+position = Vector2(0, -283)
+scale = Vector2(2.25, 2.25)
+texture = ExtResource("4_0lhbt")
+hframes = 4
+vframes = 4
+frame = 12
+
+[node name="AnimationPlayerFire" type="AnimationPlayer" parent="Visuals/BurnEffects"]
+libraries = {
+"": SubResource("AnimationLibrary_j1hcm")
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Visuals"]
+libraries = {
+"": SubResource("AnimationLibrary_8ptti")
+}
 
 [node name="State" type="Node2D" parent="."]
 script = ExtResource("3_kp2qp")
@@ -50,10 +243,11 @@ text = "Lala"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ShadowTracker" type="Node2D" parent="." node_paths=PackedStringArray("body")]
+[node name="ShadowTracker" type="Node2D" parent="." node_paths=PackedStringArray("body", "state_tourist")]
 script = ExtResource("2_hdg86")
 body = NodePath("../Body")
 weather_data = ExtResource("9_qtbn0")
+state_tourist = NodePath("../StateTourist")
 
 [node name="LabelDebug" type="Label" parent="ShadowTracker"]
 offset_left = -58.0
@@ -68,7 +262,7 @@ vertical_alignment = 1
 stream = ExtResource("9_gcugl")
 max_distance = 5000.0
 
-[node name="SunBurner" type="Node2D" parent="." node_paths=PackedStringArray("shadow_tracker", "state_tourist", "state")]
+[node name="SunBurner" type="Node2D" parent="." node_paths=PackedStringArray("shadow_tracker", "state_tourist", "state", "body")]
 position = Vector2(0, -91)
 scale = Vector2(0.66, 0.66)
 script = ExtResource("3_rt4ha")
@@ -77,14 +271,15 @@ state_tourist = NodePath("../StateTourist")
 prog_data = ExtResource("6_gpbxq")
 weather_data = ExtResource("9_qtbn0")
 state = NodePath("../State")
+body = NodePath("../Body")
 
 [node name="ProgBar" type="Node2D" parent="SunBurner"]
 
 [node name="TextureProgressBar" type="TextureProgressBar" parent="SunBurner/ProgBar"]
 offset_left = -128.0
-offset_top = -127.0
+offset_top = -128.0
 offset_right = 128.0
-offset_bottom = 129.0
+offset_bottom = 128.0
 value = 50.0
 texture_under = ExtResource("9_n0el7")
 texture_progress = ExtResource("9_n0el7")
@@ -103,11 +298,9 @@ volume_db = -12.0
 max_distance = 5000.0
 
 [node name="SpriteHome" parent="TargetFollower" instance=ExtResource("15_pd57f")]
-position = Vector2(0, -116)
+position = Vector2(0, -164)
 scale = Vector2(0.66, 0.66)
 frame = 13
-
-[node name="Body" parent="." instance=ExtResource("11_844bp")]
 
 [node name="Repeller" type="Node2D" parent="."]
 script = ExtResource("14_wi8k7")

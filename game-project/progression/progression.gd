@@ -36,7 +36,7 @@ func _process(dt:float) -> void:
 func advance_time(dt:float) -> void:
 	if not prog_data.is_day(): return
 	
-	var day_dur := Global.config.day_duration
+	var day_dur := prog_data.get_day_duration()
 	if tourists.can_end_day():
 		day_dur *= Global.config.day_duration_quick_end_factor
 	
