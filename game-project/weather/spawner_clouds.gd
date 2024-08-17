@@ -8,7 +8,7 @@ func generate() -> void:
 	var num_clouds := Global.config.cloud_num_bounds.rand_int()
 	var stay_dur_bounds := Global.config.cloud_stay_duration_bounds
 	for i in range(num_clouds):
-		var time_arrive : float = randf() * (1.0 - stay_dur_bounds.start)
+		var time_arrive : float = randf() * (1.0 - stay_dur_bounds.start) + 0.003
 		add_event(time_arrive)
 
 
@@ -17,7 +17,7 @@ func has_events() -> bool:
 
 func add_event(time_arrive:float) -> void:
 	var stay_dur_bounds := Global.config.cloud_stay_duration_bounds
-	var time_leave : float =  min(time_arrive + stay_dur_bounds.rand_float(), 1.0)
+	var time_leave : float =  min(time_arrive + stay_dur_bounds.rand_float(), 0.985)
 	var ev = SpawnEvent.new(time_arrive, time_leave)
 	events.append(ev)
 

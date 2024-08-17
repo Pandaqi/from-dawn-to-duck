@@ -22,6 +22,7 @@ func execute(_pe:ModulePowerupExecuter, _dt:float, _invert := false) -> bool:
 	return true
 
 func get_cost() -> int:
+	if continuous: return 0 ## because it triggers every frame, setting any price will make us lose money every single frame :p
 	return int(round(cost * Global.config.base_price))
 
 func can_pay_with(coins:int) -> bool:

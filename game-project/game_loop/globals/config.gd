@@ -7,6 +7,9 @@ class_name Config
 @export var debug_bodies := true
 @export var debug_disable_sound := false
 @export var debug_labels := false
+@export var debug_no_tourists := true
+@export var debug_day_start := 2
+@export var debug_powerups : Array[String] = []
 
 @export_group("Map")
 @export var sprite_size := 256.0
@@ -64,8 +67,13 @@ var stay_duration_bounds := Bounds.new(0.25, 0.66)
 @export var stay_duration_increase_per_day := 0.05
 @export var stay_duration_max := 0.8
 @export var tourists_min_spawn_dist := 2.0 # ~sprite_size
+
+@export_subgroup("Body & Size")
 var tourist_body_scale_bounds := Bounds.new(0.5, 1.0) # ~sprite_size
 @export var tourist_parasol_forbid_range := 1.5 # ~ sprite_size * personal scale
+
+@export_subgroup("Properties")
+@export var tourist_burn_scale_in_water := 0.375
 
 @export_group("Weather")
 @export_subgroup("Heat")

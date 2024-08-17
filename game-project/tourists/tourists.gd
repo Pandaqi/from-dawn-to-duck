@@ -13,6 +13,7 @@ func on_day_started() -> void:
 	spawner.regenerate(prog_data)
 
 func _process(_dt:float) -> void:
+	if OS.is_debug_build() and Global.config.debug_no_tourists: return
 	var ev := spawner.update(prog_data)
 	if not ev: return
 	spawn(ev)

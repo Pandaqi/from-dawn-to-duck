@@ -8,6 +8,7 @@ class_name ModuleSunBurner extends Node2D
 @export var weather_data : WeatherData
 @export var state : ModuleState
 @export var body : ModuleBody
+@export var map_tracker : ModuleMapTracker
 
 var burn := 0.0
 var base_burn := 100.0
@@ -22,13 +23,12 @@ func activate() -> void:
 	GSignal.hand_to_ui.emit(prog_bar_cont)
 	keep_prog_bar_with_us()
 	
-	state_tourist.state_changed.connect(on_state_changed)
+	state_tourist.leaving.connect(on_leaving)
 	
 	set_base_burn(Global.config.burn_base_health)
 	state.died.connect(on_died)
 
-func on_state_changed(new_state:ModuleStateTourist.TouristState) -> void:
-	if new_state != ModuleStateTourist.TouristState.LEAVING: return
+func on_leaving() -> void:
 	locked = true
 	prog_bar_cont.set_visible(false)
 
@@ -64,7 +64,12 @@ func get_burn_factor() -> float:
 	
 	var frac_heat := weather_data.get_heat_ratio()
 	var factor_heat := Global.config.heat_burn_factor_bounds.interpolate(frac_heat)
-	return factor_time * factor_heat
+	
+	var factor_area := 1.0
+	if map_tracker.on_water():
+		factor_area = Global.config.tourist_burn_scale_in_water
+	
+	return factor_time * factor_heat * factor_area
 
 func get_burn_ratio() -> float:
 	return burn / base_burn

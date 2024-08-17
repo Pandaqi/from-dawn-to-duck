@@ -9,6 +9,9 @@ class_name Progression extends Node2D
 func activate() -> void:
 	prog_data.reset()
 	
+	if OS.is_debug_build() and Global.config.debug_day_start > 0:
+		prog_data.advance_day(Global.config.debug_day_start)
+	
 	GSignal.life_lost.connect(on_life_lost)
 	prog_data.lives_changed.connect(on_lives_changed)
 	GSignal.game_over.connect(on_game_over)

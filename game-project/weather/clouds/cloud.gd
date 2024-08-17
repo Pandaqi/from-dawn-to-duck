@@ -44,7 +44,15 @@ func _process(_dt:float) -> void:
 func get_collider_line() -> Line:
 	return line.clone().move(get_position())
 
-# @TODO: death anim, wait for it to complete, etc
 func kill() -> void:
 	died.emit(self)
+	
+	var old_pos := get_position()
+	var tw := get_tree().create_tween()
+	tw.tween_property(self, "scale", Vector2.ONE*1.25, 0.075)
+	tw.tween_property(self, "scale", Vector2.ZERO, 0.15)
+	tw.parallel().tween_property(self, "position", old_pos + Vector2.DOWN*3.75*Global.config.sprite_size, 0.2)
+	tw.parallel().tween_property(self, "modulate:a", 0.0, 0.15)
+	await tw.finished
+	
 	self.queue_free()

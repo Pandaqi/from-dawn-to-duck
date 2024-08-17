@@ -9,10 +9,9 @@ extends Node2D
 
 func activate() -> void:
 	sun_burner.changed.connect(on_burn_changed)
-	state_tourist.state_changed.connect(on_state_changed)
+	state_tourist.leaving.connect(on_leaving)
 
-func on_state_changed(new_state:ModuleStateTourist.TouristState) -> void:
-	if new_state != ModuleStateTourist.TouristState.LEAVING: return
+func on_leaving() -> void:
 	on_burn_changed(0.0)
 
 func on_burn_changed(ratio:float) -> void:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://cpixp7bpg8lr8"]
+[gd_scene load_steps=29 format=3 uid="uid://cpixp7bpg8lr8"]
 
 [ext_resource type="Script" path="res://players/player.gd" id="1_nu2pa"]
 [ext_resource type="Script" path="res://players/modules/input.gd" id="3_gth62"]
@@ -21,6 +21,7 @@
 [ext_resource type="PackedScene" uid="uid://dovns8xh36uru" path="res://game_loop/main/misc_sprite.tscn" id="18_32qc6"]
 [ext_resource type="Script" path="res://players/modules/visuals.gd" id="18_hjak8"]
 [ext_resource type="Texture2D" uid="uid://bn2dunxujrtf4" path="res://tourists/ducks.webp" id="19_hxs6l"]
+[ext_resource type="Theme" uid="uid://crexjyt0afkk7" path="res://ui/default_theme.tres" id="22_a3ike"]
 
 [sub_resource type="Animation" id="Animation_sb1nv"]
 length = 0.001
@@ -59,6 +60,67 @@ tracks/0/keys = {
 _data = {
 "RESET": SubResource("Animation_sb1nv"),
 "walk": SubResource("Animation_ldr3f")
+}
+
+[sub_resource type="Animation" id="Animation_a1ugn"]
+resource_name = "fade"
+length = 3.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.36667, 3.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.433333, 0.866667, 1.33333, 1.76667, 2.23333, 3.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.15, 1.15), Vector2(1, 1), Vector2(1.15, 1.15), Vector2(1, 1), Vector2(1.15, 1.15), Vector2(1e-05, 1e-05)]
+}
+
+[sub_resource type="Animation" id="Animation_dvljt"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_df3bl"]
+_data = {
+"RESET": SubResource("Animation_dvljt"),
+"fade": SubResource("Animation_a1ugn")
 }
 
 [node name="Player" type="Node2D" groups=["Entities"]]
@@ -134,3 +196,26 @@ frame = 4
 libraries = {
 "": SubResource("AnimationLibrary_tejrs")
 }
+
+[node name="Tutorial" type="Node2D" parent="Visuals"]
+position = Vector2(0, -484)
+
+[node name="Label" type="Label" parent="Visuals/Tutorial"]
+offset_left = -264.0
+offset_top = -102.0
+offset_right = 267.0
+offset_bottom = 73.0
+theme = ExtResource("22_a3ike")
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 16
+theme_override_font_sizes/font_size = 128
+text = "This is you!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Visuals/Tutorial"]
+libraries = {
+"": SubResource("AnimationLibrary_df3bl")
+}
+autoplay = "fade"

@@ -49,7 +49,7 @@ func regenerate(prog_data:ProgressionData) -> void:
 		var max_dur : float = clamp(1.0 - ev.time, dur_bounds.start, dur_bounds.end)
 		var final_dur : float = lerp(dur_bounds.start, max_dur, randf())
 		if(dur_bounds.start >= max_dur): final_dur = max_dur
-		
+		ev.time = clamp(ev.time, 0.01, 0.99)
 		ev.time_leave = clamp(ev.time + final_dur, 0.01, 0.99)
 	
 	# sort so that we only ever need to check the first one

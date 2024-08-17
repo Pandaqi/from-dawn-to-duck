@@ -13,6 +13,10 @@ signal done()
 
 func activate() -> void:
 	prog_data.day_started.connect(on_day_started)
+	
+	if OS.is_debug_build() and Global.config.debug_day_start > 0:
+		for i in range(Global.config.debug_day_start):
+			load_stages_for_day(i)
 
 func on_day_started() -> void:
 	if not enabled: return
@@ -24,7 +28,10 @@ func on_day_started() -> void:
 	nodes = []
 	
 	# place the new ones (if there are any)
-	var stages := get_stages_for_day(prog_data.day)
+	load_stages_for_day(prog_data.day)
+
+func load_stages_for_day(d:int) -> void:
+	var stages := get_stages_for_day(d)
 	if stages.size() <= 0: return
 	
 	var num_times_played := prog_data.get_num_plays()

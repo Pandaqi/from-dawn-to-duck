@@ -19,6 +19,7 @@ var epsilon := 0.0003
 @export var prog_data : ProgressionData
 
 signal state_changed(s:TouristState)
+signal leaving()
 
 func activate() -> void:
 	sun_burner.burned.connect(on_burned)
@@ -41,7 +42,7 @@ func _process(_dt:float) -> void:
 	check_if_should_change()
 
 func check_if_should_change() -> void:
-	if not is_burnable(): return
+	if is_leaving(): return
 	if target_follower.get_next_change_time() >= (prog_data.time - epsilon): return
 	
 	if target_follower.is_done():
@@ -63,9 +64,10 @@ func reposition() -> void:
 
 func leave() -> void:
 	if is_leaving(): return
-	
+
 	target_follower.leave()
 	change_state(TouristState.LEAVING)
+	leaving.emit()
 	
 	var reward_bounds := Global.config.tourist_coin_reward
 	var reward := 0.0

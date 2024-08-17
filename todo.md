@@ -1,14 +1,13 @@
 
 
 
-
 ## Future To-Do / Discarded
 
+* STILL sometimes a tourist arrives while the tutorial is still playing
 * Powerup: use actual body (like tourist) to detect shadows; instead of center-point-only checking I do now => THEN AGAIN, because of this, you're more able to _miss_ powerups to prevent accidentally triggering them. So I think it's FINE.
 * Should we split WALKING and ARRIVING again? (Really not sure. Already burning people as they enter is realistic and preventable if you just follow them around.)
 * @IDEA: A "backwards day" once in a while => all powerups are _inverted_ and the sun moves from right to left. (Would be part of Weather, which has some sort of Events subsystem.)
 * Add clouds over the thermometer when it's cloudy
-* "Throwing" tourists in the water is a bit weird/inconsistent with the other mechanics, but we can surely LURE tourists to the water---and in there, you burn far more slowly?
 * @IDEA: Maybe we need a SECOND way in which powerups can fail? They start at 50%-->If they're not in shade, they also cool down, and they "fail" when they get to 0%?
 
 * MOVEMENT: if we're going to wrap, we should show a clear outline of where the beach ends!

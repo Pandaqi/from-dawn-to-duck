@@ -24,8 +24,9 @@ func activate(tp:PowerupType) -> void:
 	
 	var val := Global.config.powerups_base_completion_value * tp.completion_duration_factor
 	set_base_value(val)
-	
-	if tp.instant_process:
+
+func post_activate() -> void:
+	if type.instant_process:
 		complete()
 
 func set_base_value(val:float, refresh := true) -> void:

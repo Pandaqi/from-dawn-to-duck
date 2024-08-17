@@ -32,6 +32,8 @@ func is_valid() -> bool:
 	return type != null and open_for_visit
 
 func reset() -> void:
+	if type.instant_process: return
+	
 	open_for_visit = false
 	powerup_completer.reset()
 

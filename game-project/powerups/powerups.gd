@@ -14,6 +14,11 @@ func activate() -> void:
 
 	powerups_data.enable_changed.connect(on_enable_changed)
 	timer.timeout.connect(on_timer_timeout)
+	
+	# @NOTE: we load these dynamically, because setting them hardcoded in config creates cyclical references (config->powerup_type->config->...)
+	if OS.is_debug_build() and Global.config.debug_powerups.size() > 0:
+		for po in Global.config.debug_powerups:
+			spawn(load("res://powerups/types/powerup_" + po + ".tres"))
 
 func on_enable_changed(val:bool) -> void:
 	if not val: 
@@ -76,7 +81,7 @@ func spawn(type_forced : PowerupType = null) -> void:
 	var rand_type : PowerupType
 	for option in type_options:
 		var count := powerups_data.get_of_type(option).size()
-		if count > option.max_num: continue
+		if count >= option.max_num: continue
 		rand_type = option
 		break
 	

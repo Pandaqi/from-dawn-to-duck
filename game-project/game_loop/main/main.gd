@@ -9,12 +9,14 @@ extends Node2D
 @onready var ui : UI = $UI
 @onready var powerups : Powerups = $Powerups
 @onready var tutorial : Tutorial = $Tutorial
+@onready var camera : Camera2D = $Camera2D
 
 func _ready() -> void:
 	ui.activate() # before everything else, so the other systems initialize UI to right values as they activate
 	
 	progression.activate()
 	map.activate()
+	camera.activate()
 	players.activate()
 	parasols.activate()
 	tourists.activate()

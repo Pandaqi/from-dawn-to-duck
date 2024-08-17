@@ -1,4 +1,4 @@
-[gd_scene load_steps=67 format=3 uid="uid://ocfbx6ggqvn2"]
+[gd_scene load_steps=66 format=3 uid="uid://ocfbx6ggqvn2"]
 
 [ext_resource type="PackedScene" uid="uid://d1eqndktyw2nh" path="res://parasols/parasol.tscn" id="1_06w87"]
 [ext_resource type="Script" path="res://game_loop/main/main.gd" id="1_8usxl"]
@@ -18,7 +18,6 @@
 [ext_resource type="Script" path="res://map/areas/area_drawer.gd" id="8_3sibe"]
 [ext_resource type="Material" uid="uid://juatc0q1efrp" path="res://map/beach/beach_shader.tres" id="9_0cybg"]
 [ext_resource type="Script" path="res://players/players.gd" id="9_i06n6"]
-[ext_resource type="Texture2D" uid="uid://cv647ka5rxl4e" path="res://icon.svg" id="10_4qp6a"]
 [ext_resource type="PackedScene" uid="uid://bal3aqako5u1r" path="res://map/map_deco_scene.tscn" id="10_yrbjx"]
 [ext_resource type="PackedScene" uid="uid://cpixp7bpg8lr8" path="res://players/player.tscn" id="11_h3yax"]
 [ext_resource type="Resource" uid="uid://deg0e6fl14je3" path="res://parasols/data/parasols_data.tres" id="12_a2ij7"]
@@ -315,11 +314,6 @@ material = ExtResource("8_2ujws")
 script = ExtResource("8_3sibe")
 color = Color(0.4, 0.760784, 0.768627, 1)
 
-[node name="Sprite2D" type="Sprite2D" parent="Map/Water"]
-material = ExtResource("8_2ujws")
-position = Vector2(0, 32.5)
-texture = ExtResource("10_4qp6a")
-
 [node name="MapLayers" type="Node2D" parent="Map"]
 script = ExtResource("3_ragrm")
 layer_names = Array[String](["floor", "entities", "parasols", "top"])
@@ -405,7 +399,6 @@ prog_data = ExtResource("3_mk46c")
 map = NodePath("../Map")
 all_stages = Array[ExtResource("29_y5ije")]([ExtResource("30_w0ln7"), ExtResource("31_nobvn"), ExtResource("32_gipqa"), ExtResource("33_smb53"), ExtResource("34_mo2wn"), ExtResource("35_axrhv"), ExtResource("36_ides8")])
 tutorial_scene = ExtResource("37_vmwj5")
-enabled = null
 
 [node name="UI" type="CanvasLayer" parent="."]
 process_mode = 3
